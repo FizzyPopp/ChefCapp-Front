@@ -21,5 +21,5 @@ class Product {
   final String name;
   final int time;
 
-  String get assetName
+  //String get assetName
 }

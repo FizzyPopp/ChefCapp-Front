@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chef_capp/drawer.dart';
 import 'package:chef_capp/appbar.dart';
-import 'package:chef_capp/recipe-homepage.dart';
+import 'package:chef_capp/recipes/recipe_homepage.dart';
 import 'package:chef_capp/inventory-homepage.dart';
 import 'package:chef_capp/shopping-homepage.dart';
 
