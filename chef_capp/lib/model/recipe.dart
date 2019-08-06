@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 enum Category {all, beef, chicken, veggie, }
-
+/*
 class Product {
   const Product({
     @required this.category,
@@ -23,3 +23,4 @@ class Product {
 
   String get assetName
 }
+*/

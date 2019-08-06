@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:chef_capp/tabs.dart';
 
-class InventoryHomePage extends StatelessWidget {
+class ShoppingHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return new Container(
       child: new Center(
-        child: Icon(Icons.kitchen, size: 150, color: Colors.brown),
+        child: Icon(Icons.shopping_cart, size: 150, color: Colors.brown),
       ),
     );
   }
