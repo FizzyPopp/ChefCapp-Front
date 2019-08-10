@@ -64,7 +64,7 @@ class RecipeHomePage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: horizontalCardPadding),
             scrollDirection: Axis.horizontal,
-            children: buildWidgetList(5, HeroRecipeCard()),
+            children: buildWidgetList(5, HeroCard()),
           ),
         ),
         Container(
@@ -152,7 +152,7 @@ class RecipeHomePage extends StatelessWidget {
   }
 }
 
-class HeroRecipeCard extends StatelessWidget {
+class HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -266,6 +266,80 @@ class HeroRecipeCard extends StatelessWidget {
   }
 }
 
+class FullRecipeCard extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 140,
+      padding: EdgeInsets.symmetric(horizontal: heroCardMargins * 2,),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.all(heroCardMargins),
+        child: Row(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 7 / 6,
+              child: Image.asset(
+                'assets/food.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                    'Cold Noodles With Peanut Butter Sauce',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                    Row(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.access_time,
+                              size: 16,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text('20 min'),
+                          ],
+                        ),
+                        SizedBox(width: 16.0),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.whatshot,
+                              size: 16,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text('345 cal'),
+                          ],
+                        ),
+                      ],
+                    ),
+                    RecipeTag(
+                                    text: 'all ingredients on hand',
+                                    colors: <Color> [
+                                      Colors.lightBlue[400],
+                                      Colors.green,
+                                    ],
+                                  ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class MiniRecipeCard extends StatelessWidget {
 
   @override
@@ -292,29 +366,9 @@ class MiniRecipeCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                 ),
-              )
+              ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class FullRecipeCard extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.zero,
-      child: Card(
-        margin: EdgeInsets.symmetric(
-          horizontal: heroCardMargins * 3,
-          vertical: heroCardMargins,
-        ),
-        color: Colors.greenAccent,
-        child: SizedBox(
-          height: 160,
         ),
       ),
     );
@@ -379,12 +433,3 @@ class RecipeTag extends StatelessWidget {
     );
   }
 }
-
-
-/*
-
-new Center(
-        child: Icon(Icons.fastfood, size: 150, color: Colors.brown),
-      ),
-
- */

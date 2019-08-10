@@ -4,8 +4,9 @@ import 'package:chef_capp/app.dart';
 import 'package:chef_capp/tabs.dart';
 
 import 'package:chef_capp/recipe_homepage.dart';
+import 'package:chef_capp/recipe_overview.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(TestApp());
 
 class MyApp extends StatelessWidget {
   final appTitle = 'Chef Capp';
@@ -24,6 +25,20 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class TestApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      color: Colors.orange[800],
+      initialRoute: '/',
+      routes: {
+        '/': (context) => RecipeOverview(),
+      },
+    );
+  }
+}
+
 
 class Onboarding extends StatelessWidget {
   @override
@@ -84,64 +99,3 @@ class Onboarding extends StatelessWidget {
     );
   }
 }
-
-/*
-class MyApp extends StatelessWidget {
-  final appTitle = 'Chef Capp';
-
-  List<RecipeCard> _buildGridCards(int count) {
-    List<RecipeCard> cards = List.generate(
-      count,
-        (int index) => RecipeCard()
-    );
-
-    return cards;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          body: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                //expandedHeight: 200.0,
-                floating: true,
-                pinned: false,
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      semanticLabel: 'search',
-                    ),
-                    onPressed: () {
-                      print('Search Button');
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.tune,
-                      semanticLabel: 'filter',
-                    ),
-                    onPressed: () {
-                      print('Filter Button');
-                    },
-                  ),
-                ],
-                bottom: MainTabs(),
-              ),
-              SliverGrid.extent(
-                children: _buildGridCards(10),
-                maxCrossAxisExtent: 200.0,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/
