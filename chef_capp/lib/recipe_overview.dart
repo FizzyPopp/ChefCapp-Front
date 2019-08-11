@@ -25,7 +25,7 @@ class RecipeOverview extends StatelessWidget {
               return <Widget>[
                 SliverAppBar(
                   backgroundColor: Colors.white,
-                  expandedHeight: 380.0,
+                  expandedHeight: 400.0,
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
                     //titlePadding: EdgeInsets.only(left: 18, bottom: 16),
@@ -42,7 +42,7 @@ class RecipeOverview extends StatelessWidget {
                         },
                         blendMode: BlendMode.srcATop,
                         child: Image.asset(
-                          'assets/food.jpg',
+                          'assets/recipe00001.jpg',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -51,9 +51,8 @@ class RecipeOverview extends StatelessWidget {
                   actions: <Widget>[
                     Expanded(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          BackButton(),
                           IconButton(
                             icon: const Icon(Icons.share),
                             tooltip: 'Add new entry',
@@ -83,158 +82,100 @@ class RecipeOverview extends StatelessWidget {
 class RecipeTitle extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
-            child: Text(
-              'Rich In Protein Cobbe Salad',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            SizedBox(width: 16,),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                'SERVES 2',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                color: Colors.white,
               ),
             ),
+            SizedBox(width: 16,),
+          ],
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.access_time,
-                    size: 16.0,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
+                child: Text(
+                  'Rich In Protein Cobbe Salad',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(width: 8.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
-                      Text('20 min prep'),
-                      Text('+ 10 min cook')
+                      Icon(
+                        Icons.access_time,
+                        size: 16.0,
+                      ),
+                      SizedBox(width: 8.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('20 min prep'),
+                          Text('+ 10 min cook')
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.whatshot,
-                    size: 16.0,
                   ),
-                  SizedBox(width: 8.0),
-                  Text('140 cal / serving'),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.whatshot,
+                        size: 16.0,
+                      ),
+                      SizedBox(width: 8.0),
+                      Text('140 cal / serving'),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.0,),
+              TabBar(
+                labelColor: Colors.black,
+                indicatorColor: Colors.orange,
+                indicatorWeight: 4,
+                tabs: <Widget>[
+                  Tab(
+                    text: 'INGREDIENTS',
+                  ),
+                  Tab(
+                    text: 'DIRECTIONS',
+                  ),
                 ],
               ),
             ],
           ),
-          SizedBox(height: 10.0,),
-          TabBar(
-            labelColor: Colors.black,
-            indicatorColor: Colors.orange,
-            indicatorWeight: 4,
-            tabs: <Widget>[
-              Tab(
-                text: 'INGREDIENTS',
-              ),
-              Tab(
-                text: 'DIRECTIONS',
-              ),
-            ],
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   @override
   Size get preferredSize => Size.fromHeight(150);
 }
-
-/*
-Scaffold(
-              appBar: AppBar(
-                title: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.access_time,
-                              color: Colors.black,
-                              size: 18,
-                            ),
-                            SizedBox(width: 8,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  '20 min prep',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Text(
-                                  '+ 10 min cook',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.people_outline,
-                              color: Colors.black,
-                              size: 18,
-                            ),
-                            SizedBox(width: 8,),
-                            Text(
-                              'Serves two',
-                              style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                backgroundColor: Colors.white,
-                bottom: TabBar(
-                      labelColor: Colors.black,
-                      indicatorColor: Colors.orange[800],
-                      tabs: <Widget>[
-                        Tab(
-                          text: 'INGREDIENTS',
-                        ),
-                        Tab(
-                          text: 'DIRECTIONS',
-                        ),
-                      ],
-                    ),
-              ),
-              body: TabBarView(children: <Widget>[
-                IngredientsOverview(),
-                DirectionsOverview(),
-              ]),
-            ),
-*/
 
 class IngredientsOverview extends StatelessWidget {
   @override
@@ -243,13 +184,29 @@ class IngredientsOverview extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: ListView(
         children: <Widget>[
-          RaisedButton(
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.shopping_cart),
-                SizedBox(width: 16.0),
-                Text('Add All Missing To Shopping List'),
-              ],
+          RawMaterialButton(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.orange[800],),
+                borderRadius: BorderRadius.all(Radius.circular(12.0))
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.shopping_cart,
+                    color: Colors.orange[800],
+                  ),
+                  SizedBox(width: 16.0),
+                  Text(
+                    'Add All Missing To Shopping List',
+                    style: TextStyle(
+                      color: Colors.orange[800],
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
             onPressed: null,
           ),

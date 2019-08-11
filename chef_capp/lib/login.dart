@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:chef_capp/app.dart';
 
 class LoginPage extends StatefulWidget {
 

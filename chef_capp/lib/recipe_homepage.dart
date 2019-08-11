@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chef_capp/recipe_overview.dart';
 
 const double heroCardMargins = 6;
 const double horizontalCardPadding = 2 * heroCardMargins;
@@ -77,15 +78,32 @@ class RecipeHomePage extends StatelessWidget {
             children: <Widget>[
               Text(
                 'My History',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange[800],
+                ),
               ),
-              RaisedButton(
+              RawMaterialButton(
                 //padding: EdgeInsets.only(right: 0),
                 child: Row(
                   children: <Widget>[
-                    Text('See All'),
-                    Icon(Icons.chevron_right),
+                    Text(
+                      'SEE ALL',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.orange[800],
+                      ),
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      color: Colors.orange[800],
+                    ),
                   ],
                 ),
+                onPressed: (){
+                  print('Go to history');
+                },
               )
             ],
           ),
@@ -108,15 +126,32 @@ class RecipeHomePage extends StatelessWidget {
             children: <Widget>[
               Text(
                 'My Favorites',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange[800],
+                ),
               ),
-              RaisedButton(
+              RawMaterialButton(
                 //padding: EdgeInsets.only(right: 0),
                 child: Row(
                   children: <Widget>[
-                    Text('See All'),
-                    Icon(Icons.chevron_right),
+                    Text(
+                      'SEE ALL',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.orange[800],
+                      ),
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      color: Colors.orange[800],
+                    ),
                   ],
                 ),
+                onPressed: (){
+                  print('Go to favorites');
+                },
               )
             ],
           ),
@@ -132,13 +167,18 @@ class RecipeHomePage extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(
             horizontal: horizontalPadding,
-            //vertical: verticalTitlePadding,
+            vertical: verticalTitlePadding,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 'Recommended for Me',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange[800],
+                ),
               ),
             ],
           ),
@@ -270,70 +310,77 @@ class FullRecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 140,
-      padding: EdgeInsets.symmetric(horizontal: heroCardMargins * 2,),
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.all(heroCardMargins),
-        child: Row(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 7 / 6,
-              child: Image.asset(
-                'assets/food.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                    'Cold Noodles With Peanut Butter Sauce',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                    Row(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.access_time,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text('20 min'),
-                          ],
-                        ),
-                        SizedBox(width: 16.0),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.whatshot,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text('345 cal'),
-                          ],
-                        ),
-                      ],
-                    ),
-                    RecipeTag(
-                                    text: 'all ingredients on hand',
-                                    colors: <Color> [
-                                      Colors.lightBlue[400],
-                                      Colors.green,
-                                    ],
-                                  ),
-                  ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) => RecipeOverview()
+        ));
+      },
+      child: Container(
+        height: 140,
+        padding: EdgeInsets.symmetric(horizontal: heroCardMargins * 2,),
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.all(heroCardMargins),
+          child: Row(
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 7 / 6,
+                child: Image.asset(
+                  'assets/recipe00001.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                      'Cold Noodles With Peanut Butter Sauce',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                      Row(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.access_time,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text('20 min'),
+                            ],
+                          ),
+                          SizedBox(width: 16.0),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.whatshot,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text('345 cal'),
+                            ],
+                          ),
+                        ],
+                      ),
+                      RecipeTag(
+                                      text: 'all ingredients on hand',
+                                      colors: <Color> [
+                                        Colors.lightBlue[400],
+                                        Colors.green,
+                                      ],
+                                    ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -344,69 +391,46 @@ class MiniRecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      padding: EdgeInsets.zero,
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.all(heroCardMargins),
-        child: Column(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 7 / 6,
-              child: Image.asset(
-                'assets/food.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                'Cold Noodles With Peanut Butter Sauce',
-                style: TextStyle(
-                  fontSize: 16,
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) => RecipeOverview()
+        ));
+      },
+      child: Container(
+        width: 160,
+        padding: EdgeInsets.zero,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.all(heroCardMargins),
+          child: Column(
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 7 / 6,
+                child: Image.asset(
+                  'assets/recipe00001.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          ],
+              Container(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  'Cold Noodles With Peanut Butter Sauce',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class TestRecipeCard extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          AspectRatio(
-            aspectRatio: 18.0 / 11.0,
-            child: Image.asset('assets/food.jpg'),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('Title'),
-                SizedBox(height: 8.0),
-                Text('Secondary Text'),
-              ],
-            ),
-          )
-        ],
-      )
-    );
-  }
-}
-
 class RecipeTag extends StatelessWidget {
-  RecipeTag({this.colors,this.text,});
+  RecipeTag({this.colors, this.text,});
 
   final text;
   List<Color> colors;

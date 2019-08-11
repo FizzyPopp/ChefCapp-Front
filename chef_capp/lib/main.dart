@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:chef_capp/login.dart';
 import 'package:chef_capp/app.dart';
-import 'package:chef_capp/tabs.dart';
 
-import 'package:chef_capp/recipe_homepage.dart';
 import 'package:chef_capp/recipe_overview.dart';
 
-void main() => runApp(TestApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final appTitle = 'Chef Capp';
