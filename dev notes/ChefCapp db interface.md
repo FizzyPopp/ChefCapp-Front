@@ -1,0 +1,140 @@
+- if same thing in "in" and "out", have to send to server but might not have to send back
+- notification preferences are stored locally
+- should ingredients in the market be secretly pre-allocated to a recipe?
+- <span style="color:red">red</span> is get or set globally
+- <span style="color:blue">blue</span> is only available from admin / backend
+- json web tokens for session token?
+#Login
+- authenticate
+	- in: email, password (possibly encrypted)
+	- out: true, user id, <span style="color:red">session token</span>
+	- out: false
+- email already exists?
+	- in: email
+	- out: true
+	- out: false
+- create credentials
+	- in: email, password
+	- out: true, user id, <span style="color:red">session token</span>
+	- out: false
+- <span style="color:blue">remove credentials</span>
+	- in: session token
+	- out: true, username, email
+	- out: false
+- <span style="color:blue">query users</span>
+	- in: session token, number
+	- out: true, [email, username, user id] x number
+	- out: false
+#Settings
+- <span style="color:red">set food preferences</span>
+	- in: <span style="color:red">session token</span>, [all food preferences]
+	- out: true, <span style="color:red">[all food preferences]</span>
+	- out: false
+- <span style="color:red">set food allergies</span>
+	- in: <span style="color:red">session token</span>, [all food allergies]
+	- out: true, <span style="color:red">[all food allergies]</span>
+	- out: false
+- <span style="color:red">set username</span>
+	- in: <span style="color:red">session token</span>, new username
+	- out: true, <span style="color:red">new username</span>
+	- out: false
+- <span style="color:red">set units</span>
+	- in: <span style="color:red">session token</span>, [all units]
+	- out: true, <span style="color:red">[all units]</span>
+	- out: false
+- <span style="color:red">set usual number of people</span>
+	- in: <span style="color:red">session token</span>, new usual number of people
+	- out: true, <span style="color:red">new usual number of people</span>
+	- out: false
+- set password
+	- in: <span style="color:red">session token</span>, old password, new passowrd
+	- out: true
+	- out: false
+- <span style="color:red">get username</span>
+	- in: <span style="color:red">session token</span>
+	- out: true, <span style="color:red">username</span>
+	- out: false
+- <span style="color:red">get settings</span>
+	- in: <span style="color:red">session token</span>
+	- out: true, <span style="color:red">[all food preferences]</span>, <span style="color:red">[all food allergies]</span>, <span style="color:red">[all units]</span>, <span style="color:red">usual number of people</span>
+	- out: false
+#Discover
+- get discover recipes (might need to be broken up later on)
+	- in: <span style="color:red">session token</span>
+	- out: true, [featured recipe ids], [recipe ids history], [favourite recipe ids], [shared recipe ids], [recommended recipe ids]
+	- out: false
+- search for a recipe
+	- in: <span style="color:red">session token</span>, query, number
+	- out: true, [recipe summary + recipe id]
+	- out: false
+- <span style="color:blue">set featured recipe</span>
+	- in: session token, recipe id
+	- out: true
+	- out: false
+- <span style="color:red">set history recipe</span>
+	- in: <span style="color:red">session token</span>, <span style="color:red">recipe id</span>
+	- out: true
+	- out: false
+- <span style="color:red">set favourite recipe</span>
+	- in: <span style="color:red">session token</span>, <span style="color:red">recipe id</span>
+	- out: true
+	- out: false
+- <span style="color:red">set shared recipe</span>
+	- in: <span style="color:red">session token</span>, <span style="color:red">recipe id</span>
+	- out: true
+	- out: false
+- <span style="color:blue">set recommended recipe</span>
+	- in: session token, recipe id
+	- out: true
+	- out: false
+#My Kitchen
+- <span style="color:red">get my ingredients</span>
+	- in: <span style="color:red">session token</span>
+	- out: <span style="color:red">[ingredient id, ingredient name, current stock level]</span>
+	- out: false
+- <span style="color:red">set my ingredient</span>
+	- in: <span style="color:red">session token</span>, <span style="color:red">ingredient id</span>, new stock level
+	- out: true, <span style="color:red">ingredient id</span>, <span style="color:red">new stock level</span>
+	- out: false
+- <span style="color:red">get general ingredients</span>
+	- in: <span style="color:red">session token</span>
+	- out: [ingredient id, ingredient name, current stock level]
+	- out: false
+- search for ingredients
+	- in: <span style="color:red">session token</span>, query, number
+	- out: [ingredient id, ingredient name] x number
+	- out: false
+- <span style="color:blue">set general ingredient</span>
+	- in: session token, ingredient name, [common measurements]
+	- out: true
+	- out: false
+#Market
+- get ingredients
+	- in: <span style="color:red">session token</span>
+	- out: true, <span style="color:red">[ingredient id, ingredient name, needed amount]</span>
+	- out: false
+- <span style="color:red">set ingredient</span>
+	- in: <span style="color:red">session token</span>, <span style="color:red">ingredient id</span>, amount to add
+	- out: true, <span style="color:red">ingredient id, new total amount</span>
+	- out: false
+#Recipe
+- <span style="color:blue">set recipe</span>
+	- in: session token, title, image, description, feeds, prep time, [allergens], calories, [equipment], ingredients, [instruction steps], [other info]
+	- out: true
+	- out: false
+- <span style="color:red">get recipe summary</span>
+	- in: <span style="color:red">session token</span>, recipe id
+	- out: true, title, image, description, feeds, prep time, [allergens], calories, [equipment]
+	- out: false
+- <span style="color:red">get recipe ingredients</span>
+	- in: <span style="color:red">session token</span>, recipe id
+	- out: true, [ingredient name, ingredient id, amount]
+	- out: false
+- get recipe instructions
+	- in: <span style="color:red">session token</span>, recipe id
+	- out: true, [instruction steps]
+	- out: false
+- get other recipe info
+	- in: <span style="color:red">session token</span>, recipe id
+	- out: true, [other info]
+	- out: false
