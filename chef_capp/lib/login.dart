@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:chef_capp/blocs/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -9,6 +9,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _bloc = LoginBLoC();
+
+  _LoginPageState() {
+    var stream = _bloc.authEvent;
+    stream.listen((success) {
+      if (success) {
+        Navigator.pushNamedAndRemoveUntil(context,
+            '/home', (Route<dynamic> route) => false);
+      } else {
+        print("login failed");
+      }
+    }, onError: (error) {
+      print("bad bad not good");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,40 +34,40 @@ class _LoginPageState extends State<LoginPage> {
             BackButton(),
             Container(
               child: Column(
-                  children: <Widget>[
-                    Container(
-                      //padding: EdgeInsets.symmetric(vertical: 40.0),
-                      child: Text('Welcome back, Chef!'),
-                    ),
-                    SizedBox(height: 12.0),
-                    Image(
-                      image: AssetImage('assets/food.jpg'),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                ),
+                children: <Widget>[
+                  Container(
+                    //padding: EdgeInsets.symmetric(vertical: 40.0),
+                    child: Text('Welcome back, Chef!'),
+                  ),
+                  SizedBox(height: 12.0),
+                  Image(
+                    image: AssetImage('assets/food.jpg'),
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+              ),
               padding: EdgeInsets.symmetric(horizontal: 20.0),
             ),
             Container(
               child: Column(
                 children: <Widget>[
                   TextField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              filled:true,
-                              labelText: 'Username',
-                            ),
-                          ),
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Username',
+                    ),
+                  ),
                   SizedBox(height: 12.0),
                   TextField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              labelText: 'Password',
-                            ),
-                            obscureText: true,
-                          ),
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Password',
+                    ),
+                    obscureText: true,
+                  ),
                   SizedBox(height: 12.0),
                   Row(
                     children: <Widget>[
@@ -70,11 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text('Log In'),
                           padding: EdgeInsets.symmetric(vertical: 16.0),
                           onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              '/home',
-                              (Route<dynamic> route) => false
-                            );
+                            _bloc.sink.add(AuthEvent(_usernameController.text,
+                                _passwordController.text));
                           },
                         ),
                       ),
@@ -83,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                ),
+              ),
               padding: EdgeInsets.symmetric(horizontal: 20.0),
             ),
           ],
@@ -94,67 +106,10 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
 
-/*
-Row(
-        children: <Widget>[
-          ListView(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
-              children: <Widget>[
-                SizedBox(height:80.0),
-                Column(
-                  children: <Widget>[
-                    Icon(Icons.fastfood),
-                    SizedBox(height: 16.0),
-                    Text('Chef Capp'),
-                  ]
-                ),
-                SizedBox(height: 120.0),
-                // [Name]
-                TextField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    filled:true,
-                    labelText: 'Username',
-                  ),
-                ),
-                // spacer
-                SizedBox(height: 12.0),
-                // [Password]
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    labelText: 'Password',
-                  ),
-                  obscureText: true,
-                ),
-                ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text('Cancel'),
-                      onPressed: () {
-                        _usernameController.clear();
-                        _passwordController.clear();
-                        Navigator.pop(context);
-                      },
-                    ),
-                    RaisedButton(
-                      child: Text('Log in'),
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return App();
-                            }
-                          ),
-                        );
-                      },
-                    ),
-                  ]
-                ),
-              ]
-            ),
-        ],
-      ),
-*/
+  @override
+  dispose() {
+    super.dispose();
+    _bloc.dispose();
+  }
+}

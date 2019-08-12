@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:chef_capp/login.dart';
 import 'package:chef_capp/app.dart';
-
 import 'package:chef_capp/recipe_overview.dart';
+import 'package:chef_capp/globals.dart';
 
 void main() => runApp(MyApp());
 
