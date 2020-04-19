@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:chef_capp/login.dart';
-import 'package:chef_capp/app.dart';
-import 'package:chef_capp/recipe_overview.dart';
-import 'package:chef_capp/globals.dart';
+import 'package:chef_capp/screen/login.dart';
+import 'package:chef_capp/screen/app.dart';
+import 'package:chef_capp/screen/recipe_overview.dart';
+
+
+// model, screen, services, shared
 
 void main() => runApp(MyApp());
 

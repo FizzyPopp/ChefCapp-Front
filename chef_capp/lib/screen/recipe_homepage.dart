@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chef_capp/recipe_overview.dart';
-import 'package:chef_capp/globals.dart';
+import 'package:chef_capp/screen/recipe_overview.dart';
+//import 'package:chef_capp/globals.dart';
 
 const double heroCardMargins = 6;
 const double horizontalCardPadding = 2 * heroCardMargins;
@@ -58,8 +58,8 @@ double screenWidth(BuildContext context, {double dividedBy = 1}) {
 class RecipeHomePage extends StatelessWidget {
 
   RecipeHomePage() {
-    var state = new Globals();
-    print(state.username);
+    //var state = new Globals();
+    //print(state.username);
   }
 
   @override
