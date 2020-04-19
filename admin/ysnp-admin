@@ -1,0 +1,130 @@
+#!/usr/bin/env node
+
+var admin = require('firebase-admin')
+var fs = require('fs')
+var path = require('path')
+var functions = require('firebase-functions')
+
+var app = admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: "https://youshallnotpass-6eb8c.firebaseio.com"
+})
+
+
+
+let db = admin.firestore();
+
+console.log(process.argv);
+
+let input = process.argv.slice(2);
+
+switch (input[0]) {
+case 'upload':
+  input = input.slice(1);
+  upload (input);
+  break
+case 'upload-wordlist':
+  input = input.slice(1);
+  uploadWordList(input);
+  break
+case 'upload-sentencelist':
+  uploadSentenceList(input[1]);
+default:
+  break
+}
+
+
+function upload (dbString) {
+  console.log(dbString);
+  let collectionName = dbString[0];
+  let documentName = dbString[1];
+  let rawData = dbString[2];
+
+  let data = {};
+
+  try {
+      data = JSON.parse(rawData);
+  }
+  catch(e) {
+    console.log(e); // error in the above string (in this case, yes)!
+    return;
+  }
+
+
+  console.log( "Uploading object data")
+  console.log( "Target collection: " + collectionName );
+  console.log( "Document: " + documentName );
+  console.log( "Object: " );
+  console.log( data );
+  db .collection(collectionName) .doc(documentName) .set(data);
+}
+
+function uploadSentenceList (fileName) {
+  let filePath = path.join (__dirname, fileName);
+  console.log (filePath);
+
+  fs.readFile
+  (
+    filePath,
+    {encoding: 'utf-8'},
+    function(err,data) {
+      if (!err)
+      {
+        console.log ('Successfully read ' + filePath);
+        const sentences = JSON.parse (data)
+
+        for (indexKey in sentences) {
+          console.log (indexKey);
+          sentences[indexKey].index = Number(indexKey)
+          console.log (sentences[indexKey]);
+          //db .collection(fileName.split(".")[0]) .doc(indexKey) .set(sentences[indexKey]);
+        }
+
+        let len = { "length" : Object.keys(sentences).length }
+        db .collection(fileName.split(".")[0]) .doc("metaData") .set(len);
+      } else
+      {
+        console.log(err);
+      }
+    });
+}
+
+
+function uploadWordList (filelist) {
+  for (const fileName of filelist) {
+    let filePath = path.join (__dirname, fileName);
+    console.log (filePath);
+
+    fs.readFile
+    (
+      filePath,
+      {encoding: 'utf-8'},
+      function(err,data) {
+        if (!err)
+        {
+          console.log ('Successfully read ' + filePath);
+          const words = JSON.parse (data);
+          // console.log (data)
+
+          for (indexKey in words) {
+            console.log (indexKey);
+            console.log (words[indexKey]);
+            let wordObj = {
+              word : words[indexKey],
+              index : Number(indexKey)
+            };
+
+            console.log (wordObj);
+
+            db .collection(fileName.split(".")[0]) .doc(indexKey) .set(wordObj);
+          }
+          let len = { "length" : Object.keys(words).length }
+          db .collection(fileName.split(".")[0]) .doc("metaData") .set(len);
+          // db.collection("WordList") .doc(fileName.split(".")[0]) .set(data)
+        } else
+        {
+          console.log(err);
+        }
+      });
+  }
+}
