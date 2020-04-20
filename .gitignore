@@ -19,3 +19,11 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+# jupyter
+
+.ipynb*
+
+# service key files
+init.sh
+chef-capp-firebase-adminsdk-qm4l4-bfe5568ddc.json
