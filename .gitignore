@@ -20,9 +20,10 @@ doc/api/
 *.js.deps
 *.js.map
 
-# jupyter
+# jupyter and other editors
 
 .ipynb*
+.idea*
 
 # service key files
 init.sh
