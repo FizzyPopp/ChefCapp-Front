@@ -18,6 +18,10 @@ exports.db = db;
 exports.app = app;
 exports.rtRef = rtRef;
 
+exports.getCollection = function (colName) {
+    return exports.db.collection(colName)
+}
+
 exports.test = function (collectionRef) {
     let allDocs = collectionRef.get()
     .then(snapshot => {
