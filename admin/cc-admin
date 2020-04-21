@@ -11,3 +11,15 @@ var app = admin.initializeApp({
 })
 
 let db = admin.firestore();
+
+const rtRef= db.collection('recipe-test');
+
+let allDocs = rtRef.get()
+  .then(snapshot => {
+    snapshot.forEach(doc => {
+        console.log(doc.id, ':', doc.data());
+    });
+  })
+  .catch(err => {
+    console.log('Error getting documents', err);
+  });
