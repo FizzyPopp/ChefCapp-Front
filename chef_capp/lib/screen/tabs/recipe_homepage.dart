@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chef_capp/screen/recipe_overview.dart';
+import 'package:chef_capp/screen/tabs/recipe/recipe_overview.dart';
 //import 'package:chef_capp/globals.dart';
 
 const double heroCardMargins = 6;
