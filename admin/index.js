@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
+// firebase includes
 var admin = require('firebase-admin')
+var functions = require('firebase-functions')
+
+// node libraries
 var fs = require('fs')
 var path = require('path')
-var functions = require('firebase-functions')
 
 const app = admin.initializeApp({
     credential: admin.credential.applicationDefault(),
