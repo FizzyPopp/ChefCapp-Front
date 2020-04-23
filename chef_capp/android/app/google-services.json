@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "658539204048",
+    "firebase_url": "https://chef-capp.firebaseio.com",
+    "project_id": "chef-capp",
+    "storage_bucket": "chef-capp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658539204048:android:cce26fd357792d4005bdd5",
+        "android_client_info": {
+          "package_name": "chef.chef_capp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658539204048-c9mcb48tl400ko56530tk46tkv5lo717.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk1s_aLp3_JqNaZWpri5m2SY3ZRuYLuWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658539204048-c9mcb48tl400ko56530tk46tkv5lo717.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658539204048:android:6575bdcd0a0f14cc05bdd5",
+        "android_client_info": {
+          "package_name": "com.chefcapp.ccadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658539204048-c9mcb48tl400ko56530tk46tkv5lo717.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk1s_aLp3_JqNaZWpri5m2SY3ZRuYLuWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658539204048-c9mcb48tl400ko56530tk46tkv5lo717.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
