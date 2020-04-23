@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chef_capp/tabs.dart';
+import 'package:chef_capp/screen/tabs/tabs.dart';
 
 class ShoppingHomePage extends StatelessWidget {
 

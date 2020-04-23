@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chef_capp/blocs/login_bloc.dart';
+//import 'package:chef_capp/blocs/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,9 +9,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _bloc = LoginBLoC();
+  //final _bloc = LoginBLoC();
 
   _LoginPageState() {
+    /*
     var stream = _bloc.authEvent;
     stream.listen((success) {
       if (success) {
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     }, onError: (error) {
       print("bad bad not good");
     });
+     */
   }
 
   @override
@@ -85,8 +87,12 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text('Log In'),
                           padding: EdgeInsets.symmetric(vertical: 16.0),
                           onPressed: () {
+                            /*
                             _bloc.sink.add(AuthEvent(_usernameController.text,
                                 _passwordController.text));
+                             */
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                '/home', (Route<dynamic> route) => false);
                           },
                         ),
                       ),
@@ -110,6 +116,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   dispose() {
     super.dispose();
-    _bloc.dispose();
+    //_bloc.dispose();
   }
 }
