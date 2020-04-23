@@ -14,12 +14,9 @@ const app = admin.initializeApp({
 })
 
 const db = admin.firestore();
-const rtRef = db.collection('recipe-test');
-
 
 exports.db = db;
 exports.app = app;
-exports.rtRef = rtRef;
 
 exports.getCollection = function (colName) {
     return exports.db.collection(colName)
