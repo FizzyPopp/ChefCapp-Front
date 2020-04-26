@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:chef_capp/screen/tabs/recipe/recipe_overview.dart';
-//import 'package:chef_capp/globals.dart';
+import 'package:chef_capp/index.dart';
 
 const double heroCardMargins = 6;
 const double horizontalCardPadding = 2 * heroCardMargins;

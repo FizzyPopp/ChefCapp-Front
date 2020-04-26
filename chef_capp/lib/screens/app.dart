@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:chef_capp/screen/drawer.dart';
-import 'package:chef_capp/screen/appbar.dart';
-import 'package:chef_capp/screen/tabs/recipe_homepage.dart';
-import 'package:chef_capp/screen/tabs/inventory_homepage.dart';
-import 'package:chef_capp/screen/tabs/shopping_homepage.dart';
+import 'package:chef_capp/index.dart';
 
 class App extends StatelessWidget {
 
