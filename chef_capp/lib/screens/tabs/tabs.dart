@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:chef_capp/index.dart';
 
 class MainTabs extends StatelessWidget with PreferredSizeWidget {
 
