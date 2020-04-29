@@ -1,6 +1,6 @@
 //import 'package:brew_crew/models/user.dart';
 //import 'package:brew_crew/services/database.dart';
-import 'package:chef_capp/model/user.dart';
+import 'package:chef_capp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
