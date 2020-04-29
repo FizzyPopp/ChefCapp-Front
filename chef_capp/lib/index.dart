@@ -17,3 +17,6 @@ export 'package:chef_capp/screens/tabs/recipe_homepage.dart';
 export 'package:chef_capp/screens/tabs/shopping_homepage.dart';
 export 'package:chef_capp/screens/tabs/tabs.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_overview.dart';
+
+export 'package:chef_capp/services/discover.dart';
+export 'package:chef_capp/services/inventory.dart';
