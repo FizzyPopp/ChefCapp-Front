@@ -18,7 +18,7 @@
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
-#.vscode/
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -58,6 +58,7 @@ pubspec.lock
 **/ios/**/xcuserdata
 **/ios/.generated/
 **/ios/Flutter/App.framework
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/Flutter/Flutter.framework
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/Flutter/Generated.xcconfig
@@ -73,3 +74,7 @@ pubspec.lock
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# keep our changes to build.gradle intact
+!**/android/build.gradle
+!**/android/app/build.gradle
