@@ -8,6 +8,7 @@ class AuthController with ChangeNotifier {
 
   /*
   - responsible for all the unauthenticated screens
+  ( what is currently here is ripped from a tutorial, and not actually to be used; it's just for learning )
    */
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
