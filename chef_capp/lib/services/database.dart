@@ -1,6 +1,7 @@
 //import 'package:brew_crew/models/brew.dart';
 //import 'package:brew_crew/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chef_capp/index.dart';
 
 // https://github.com/iamshaunjp/flutter-firebase
 // https://www.youtube.com/watch?v=_SHssHJJhAI&list=PL4cUxeGkcC9j--TKIdkb3ISfRbJeJYQwC&index=10
@@ -14,35 +15,37 @@ class DatabaseService {
   DatabaseService({ this.uid });
 
   // collection reference
-  final CollectionReference brewCollection = Firestore.instance.collection('brews');
+  final CollectionReference recipeCollection = Firestore.instance.collection('recipes');
 
-  Future<void> updateUserData(String sugars, String name, int strength) async {
-    return await brewCollection.document(uid).setData({
-      'sugars': sugars,
-      'name': name,
-      'strength': strength,
-    });
+  Future<void> updateUserData(User user) async {
+    return await recipeCollection.document(uid).setData(
+      
+    );
   }
 
-  /*
-  // get brews stream
-  Stream<List<Brew>> get brews {
-    return brewCollection.snapshots()
-        .map(_brewListFromSnapshot);
+
+
+
+
+  Stream<List<Recipe>> get recipeList {
+    return recipeCollection.snapshots()
+        .map(_recipeListFromSnapshot);
   }
 
   // brew list from snapshot
-  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
-      //print(doc.data);
-      return Brew(
-          name: doc.data['name'] ?? '',
-          strength: doc.data['strength'] ?? 0,
-          sugars: doc.data['sugars'] ?? '0'
+      print(doc.data);
+      return Recipe(
+          doc.data['id'] ?? '',
+          doc.data['title'] ?? '',
+          doc.data['prepTime'] ?? 0,
+          doc.data['blurb'] ?? '',
+          doc.data['tags'] ?? [],
+          doc.data['ingredients'] ?? []
       );
     }).toList();
   }
-   */
 
   /*
   // user data from snapshots
@@ -61,4 +64,9 @@ class DatabaseService {
         .map(_userDataFromSnapshot);
   }
    */
+}
+
+class QuerySnapshotTransformer<QuerySnapshots, Recipe> {
+  var snaps = recipeCollection.snapshots();
+
 }
