@@ -10,6 +10,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
 
+  /*
+  - holds all db access functions, regardless of screen or controller
+  - ensures consistent and ordered access
+   */
+
   final String uid;
   DatabaseService({ this.uid });
 

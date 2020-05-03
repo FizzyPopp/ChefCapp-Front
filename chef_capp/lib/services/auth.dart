@@ -2,8 +2,13 @@
 //import 'package:brew_crew/services/database.dart';
 import 'package:chef_capp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chef_capp/index.dart';
 
-class AuthService {
+class AuthController with ChangeNotifier {
+
+  /*
+  - responsible for all the unauthenticated screens
+   */
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
