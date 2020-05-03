@@ -1,14 +1,12 @@
+import 'package:chef_capp/index.dart';
 import 'dart:math';
 
+
+
 class Ingredient {
-  int id;
-  String name;
-  double amount;
-  Ingredient.dummy(int seed) {
-    Random rnd = Random(seed);
-    List<String> names = ["chicken", "potatoe", "garlic", "chocolate", "carrot", "apple", "orange", "rice", "venison"];
-    this.id = rnd.nextInt(100);
-    this.name = names[rnd.nextInt(names.length)];
-    this.amount = 100 * rnd.nextDouble();
-  }
+  // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient
+  final ID _id;
+  final String _name;
+  final double _amount;
+  Ingredient(this._id, this._name, this._amount);
 }

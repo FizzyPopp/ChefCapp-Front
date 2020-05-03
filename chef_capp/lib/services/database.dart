@@ -11,6 +11,12 @@ import 'package:chef_capp/index.dart';
 
 class DatabaseService {
 
+  /*
+  - holds all db access functions, regardless of screen or controller
+  - ensures consistent and ordered access
+  ( what is currently here is ripped from a tutorial, and not actually to be used; it's just for learning )
+   */
+
   final String uid;
   DatabaseService({ this.uid });
 
