@@ -7,6 +7,7 @@ export 'package:chef_capp/models/ingredient.dart';
 export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/user.dart';
 export 'package:chef_capp/models/id.dart';
+export 'package:chef_capp/models/dummy.dart';
 
 export 'package:chef_capp/screens/app.dart';
 export 'package:chef_capp/screens/appbar.dart';

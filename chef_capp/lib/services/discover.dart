@@ -22,14 +22,14 @@ class DiscoverController with ChangeNotifier {
 
   void _getFavourites() {
     // needs to load async / on demand
-    favorite.add(Recipe.dummy(_rand.nextInt(100)));
+    favorite.add(Dummy.recipe(_rand.nextInt(100)));
   }
 
   void _getRecents() {
-    recent.add(Recipe.dummy(_rand.nextInt(100)));
+    recent.add(Dummy.recipe(_rand.nextInt(100)));
   }
 
   void _getCustom() {
-    custom.add(Recipe.dummy(_rand.nextInt(100)));
+    custom.add(Dummy.recipe(_rand.nextInt(100)));
   }
 }

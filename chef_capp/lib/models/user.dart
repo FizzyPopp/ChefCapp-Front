@@ -4,14 +4,8 @@ import 'dart:math';
 class User {
   // unit preferences
   // dietary restrictions
+  // look at db for more
   final ID _id;
   final String _email;
   User(this._id, this._email);
-  static User dummy(int seed) {
-    Random rnd = Random(seed);
-    return User(
-        ID.dummy(rnd.nextInt(100)),
-        "loblaw@lawblog.com"
-    );
-  }
 }

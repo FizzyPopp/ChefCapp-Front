@@ -22,18 +22,4 @@ class Recipe {
   Recipe withSteps(List<RecipeStep> _newSteps) {
     return Recipe(_id, _title, _prepTime, _tags, _blurb, _ingredients, _cookware, _newSteps);
   }
-
-  static Recipe dummy(int seed) {
-    Random rnd = Random(seed);
-    return Recipe(
-        ID.dummy(rnd.nextInt(100)),
-        "A Recipe Title",
-        (1 + rnd.nextInt(179)),
-        [Tag.dummy(rnd.nextInt(100)), Tag.dummy(rnd.nextInt(100))],
-        "This recipe brought my grandmother back to life",
-        [Ingredient.dummy(rnd.nextInt(100)), Ingredient.dummy(rnd.nextInt(100)), Ingredient.dummy(rnd.nextInt(100))],
-        [Equipment.dummy(rnd.nextInt(100)), Equipment.dummy(rnd.nextInt(100))],
-        [RecipeStep.dummy(rnd.nextInt(100)), RecipeStep.dummy(rnd.nextInt(100))]
-    );
-  }
 }
