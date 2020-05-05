@@ -20,13 +20,9 @@ class DatabaseService {
   /*Future<void> updateUserData(User user) async {
 
     return await recipeCollection.document(uid).setData(
-      
+
     );
   }*/
-
-
-
-
 
   Stream<List<Recipe>> get recipeList {
     return recipeCollection.snapshots()
