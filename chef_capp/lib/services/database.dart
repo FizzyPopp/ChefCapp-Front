@@ -23,11 +23,12 @@ class DatabaseService {
   // collection reference
   final CollectionReference recipeCollection = Firestore.instance.collection('recipes');
 
-  Future<void> updateUserData(User user) async {
+  /*Future<void> updateUserData(User user) async {
+
     return await recipeCollection.document(uid).setData(
 
     );
-  }
+  }*/
 
   Stream<List<Recipe>> get recipeList {
     return recipeCollection.snapshots()
@@ -67,3 +68,8 @@ class DatabaseService {
   }
    */
 }
+/*
+class QuerySnapshotTransformer<QuerySnapshots, Recipe> {
+  var snaps = recipeCollection.snapshots();
+
+}*/
