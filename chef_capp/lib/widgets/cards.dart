@@ -105,9 +105,10 @@ class FullRecipeCard extends StatelessWidget {
               SizedBox(
                 width: cardTextAreaWidth(context),
                 child: Padding(
-                  padding: EdgeInsets.all(gutters),
+                  padding: EdgeInsets.symmetric(horizontal: gutters),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       AutoSizeText(
                         'Full Recipe Place Holder Text',
@@ -116,63 +117,66 @@ class FullRecipeCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
-                        height: gutters,
-                      ),
-                      Wrap(
-                        direction: Axis.horizontal,
-                        alignment: WrapAlignment.spaceBetween,
-                        runSpacing: gutters / 2,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
+                          Wrap(
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.spaceBetween,
+                            runSpacing: gutters / 2,
                             children: <Widget>[
-                              Icon(
-                                Icons.timelapse,
-                                color: _cardCaptionColor(context),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.timelapse,
+                                    color: _cardCaptionColor(context),
+                                  ),
+                                  SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'XX min',
+                                    style: _cardCaptionStyle(context),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'XX min',
-                                style: _cardCaptionStyle(context),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.whatshot,
+                                    color: _cardCaptionColor(context),
+                                  ),
+                                  SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'XXX cal',
+                                    style: _cardCaptionStyle(context),
+                                  ),
+                                ],
                               ),
                             ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Icon(
-                                Icons.whatshot,
-                                color: _cardCaptionColor(context),
-                              ),
-                              SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'XXX cal',
-                                style: _cardCaptionStyle(context),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: gutters / 2,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
                           ),
                           SizedBox(
-                            width: 8.0,
+                            height: gutters / 2,
                           ),
-                          Text(
-                            'X/Y ingredients',
-                            style: _cardCaptionStyle(context),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                              ),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                'X/Y ingredients',
+                                style: _cardCaptionStyle(context),
+                              ),
+                            ],
                           ),
                         ],
                       ),
