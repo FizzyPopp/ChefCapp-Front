@@ -24,26 +24,94 @@ class RecipeOverview extends StatelessWidget {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
+                  backgroundColor: Theme.of(context).cardColor,
+                  expandedHeight: 400.0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    background: Container(
+                      padding: EdgeInsets.only(bottom: 156.0),
+                      child: Hero(
+                        tag: '0069',
+                        child: ShaderMask(
+                          shaderCallback: (rect) {
+                            return LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Colors.black45, Colors.transparent],
+                            ).createShader(
+                                Rect.fromLTRB(0, 0, rect.width, rect.height));
+                          },
+                          blendMode: BlendMode.srcATop,
+                          child: Image.asset(
+                            'assets/images/recipe00001.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  bottom: RecipeTitle(),
+                ),
+              ];
+            },
+            body: TabBarView(children: <Widget>[
+              IngredientsOverview(),
+              DirectionsOverview(),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OldRecipeOverview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.orange[800],
+          onPressed: () {
+            print('Get Cooking!');
+          },
+          icon: Icon(Icons.hot_tub),
+          label: Text('Get Cooking!'),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        body: SafeArea(
+          top: false,
+          child: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
                   backgroundColor: Colors.white,
                   expandedHeight: 400.0,
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
                     //titlePadding: EdgeInsets.only(left: 18, bottom: 16),
                     background: Container(
-                      padding: EdgeInsets.only(bottom: 150.0),
-                      child: ShaderMask(
-                        shaderCallback: (rect) {
-                          return LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Colors.black45, Colors.transparent],
-                          ).createShader(
-                              Rect.fromLTRB(0, 0, rect.width, rect.height));
-                        },
-                        blendMode: BlendMode.srcATop,
-                        child: Image.asset(
-                          'assets/recipe00001.jpg',
-                          fit: BoxFit.cover,
+                      padding: EdgeInsets.only(bottom: 156.0),
+                      child: Hero(
+                        tag: '0069',
+                        child: ShaderMask(
+                          shaderCallback: (rect) {
+                            return LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Colors.black45, Colors.transparent],
+                            ).createShader(
+                                Rect.fromLTRB(0, 0, rect.width, rect.height));
+                          },
+                          blendMode: BlendMode.srcATop,
+                          child: Image.asset(
+                            'assets/images/recipe00001.jpg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -84,29 +152,10 @@ class RecipeTitle extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            SizedBox(width: 16,),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Text(
-                'SERVES 2',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(width: 16,),
-          ],
-        ),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(20)
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

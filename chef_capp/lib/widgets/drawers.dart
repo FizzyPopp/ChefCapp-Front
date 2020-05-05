@@ -1,5 +1,19 @@
 import 'package:chef_capp/index.dart';
 
+class MainDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: <Widget>[
+
+        ],
+      ),
+    );
+  }
+}
+
+
 class ChefDrawer extends StatelessWidget {
 
   @override
