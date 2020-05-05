@@ -11,8 +11,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appTitle,
-      color: Colors.orange[800],
-      initialRoute: '/',
+      theme: ThemeData(
+        primaryColor: Colors.deepOrange,
+        accentColor: Colors.tealAccent,
+        textTheme: TextTheme(
+          button: TextStyle(
+            color: Colors.deepOrange,
+          )
+        )
+      ),
+      initialRoute: '/home',
       routes: {
         '/': (context) => Onboarding(),
         '/home': (context) => App(),
@@ -21,20 +29,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class TestApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      color: Colors.orange[800],
-      initialRoute: '/',
-      routes: {
-        '/': (context) => RecipeOverview(),
-      },
-    );
-  }
-}
-
 
 class Onboarding extends StatelessWidget {
   @override
@@ -70,7 +64,9 @@ class Onboarding extends StatelessWidget {
                             child: Text('Get Started'),
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             onPressed: () {
-
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (BuildContext context) => SignUp()
+                              ));
                             },
                           ),
                           SizedBox(height: 12.0),
