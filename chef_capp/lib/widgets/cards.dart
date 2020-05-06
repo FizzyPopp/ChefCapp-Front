@@ -39,10 +39,7 @@ class MiniRecipeCard extends StatelessWidget {
                           Rect.fromLTRB(0, 0, rect.width, rect.height));
                     },
                     blendMode: BlendMode.srcATop,
-                    child: Image.asset(
-                      'assets/images/recipe00001.jpg',
-                      fit: BoxFit.cover,
-                    ),
+                    child: cardImage,
                   ),
                 ),
               ),
@@ -88,7 +85,7 @@ class FullRecipeCard extends StatelessWidget {
       child: InkWell(
         onTap: (){
           Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => RecipeOverview()
+              builder: (BuildContext context) => OldRecipeOverview()
           ));
         },
         child: SizedBox(
