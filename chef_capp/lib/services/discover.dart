@@ -7,29 +7,53 @@ class DiscoverController with ChangeNotifier {
   - Makes sure another db call is not made if recipe already stored locally, kind of like a cache
    */
 
-  // get favorite, recent, and recommended recipes from the db, pass to screen
+  List<RecipeCollection> hero;
+  List<Recipe> recent; // aka history
   List<Recipe> favorite;
-  List<Recipe> recent;
   List<Recipe> custom;
-  Random _rand;
 
   DiscoverController() {
-    _rand = Random(ParentController.SEED);
-    favorite = List<Recipe>();
+    hero = List<RecipeCollection>();
     recent = List<Recipe>();
+    favorite = List<Recipe>();
     custom = List<Recipe>();
   }
 
-  void _getFavourites() {
-    // needs to load async / on demand
-    favorite.add(Dummy.recipe(_rand.nextInt(100)));
+  Widget _heroCard(BuildContext context, RecipeCollection recipeCollection, String heroID) {
+    return
+      HeroCard(
+        cardHeading: recipeCollection.heading,
+        cardText: recipeCollection.title,
+        cardImage: recipeCollection.thumb,
+        heroID: heroID,
+        onTap: (){onTapHeroCard(context, recipeCollection, heroID);},
+    );
   }
 
-  void _getRecents() {
-    recent.add(Dummy.recipe(_rand.nextInt(100)));
+  void onTapHeroCard(BuildContext context, RecipeCollection recipeCollection, String heroID) {
+    // do something
   }
 
-  void _getCustom() {
-    custom.add(Dummy.recipe(_rand.nextInt(100)));
+  Widget _miniRecipeCard(BuildContext context, Recipe recipe, String heroID) {
+    return
+      MiniRecipeCard(
+        cardText: recipe.title,
+        cardImage: recipe.thumb,
+        heroID: heroID,
+        onTap: (){onTapMiniRecipeCard(context, recipe, heroID);},
+      )
+    ;
+  }
+
+  void onTapMiniRecipeCard(BuildContext context, Recipe recipe, String heroID) {
+    Navigator.push(context, MaterialPageRoute(
+        builder: (BuildContext context) => RecipeOverview(
+          recipeTitle: recipe.title,
+          heroID: heroID,
+          recipeImage: recipe.thumb,
+          prepTime: recipe.prepTime,
+          cookTime: recipe.cookTime,
+          calories: recipe.calories,)
+    ));
   }
 }

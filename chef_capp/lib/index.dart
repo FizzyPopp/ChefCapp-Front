@@ -8,6 +8,7 @@ export 'package:chef_capp/screens/authentication/signup.dart';
 
 export 'package:chef_capp/models/equipment.dart';
 export 'package:chef_capp/models/recipe.dart';
+export 'package:chef_capp/models/recipe_collection.dart';
 export 'package:chef_capp/models/recipe_step.dart';
 export 'package:chef_capp/models/ingredient.dart';
 export 'package:chef_capp/models/tag.dart';

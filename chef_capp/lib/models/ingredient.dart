@@ -1,7 +1,4 @@
 import 'package:chef_capp/index.dart';
-import 'dart:math';
-
-
 
 class Ingredient {
   // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient

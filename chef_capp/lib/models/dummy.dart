@@ -15,11 +15,25 @@ class Dummy {
         id(rnd.nextInt(100)),
         "A Recipe Title",
         (1 + rnd.nextInt(179)),
+        (1 + rnd.nextInt(179)),
+        (1 + rnd.nextInt(599)),
         [tag(rnd.nextInt(100)), tag(rnd.nextInt(100))],
         "This recipe brought my grandmother back to life",
         [ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100))],
         [equipment(rnd.nextInt(100)), equipment(rnd.nextInt(100))],
-        [recipeStep(rnd.nextInt(100)), recipeStep(rnd.nextInt(100))]
+        [recipeStep(rnd.nextInt(100)), recipeStep(rnd.nextInt(100))],
+        Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover)
+    );
+  }
+
+  static RecipeCollection recipeCollection(int seed) {
+    Random rnd = Random(seed);
+    return RecipeCollection(
+      id(rnd.nextInt(100)),
+      "A Collection Heading",
+      "A Collection Title",
+      [recipe(rnd.nextInt(100)), recipe(rnd.nextInt(100))],
+        Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover)
     );
   }
 
