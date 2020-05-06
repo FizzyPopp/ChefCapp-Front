@@ -3,8 +3,9 @@ import 'dart:math';
 
 class Dummy {
   static ID id(int seed) {
+    Random rnd = Random(seed);
     return ID(
-        "A"
+        rnd.nextInt(4096).toString()
     );
   }
 
