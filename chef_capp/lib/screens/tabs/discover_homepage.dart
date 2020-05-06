@@ -1,10 +1,5 @@
 import 'package:chef_capp/index.dart';
 
-const double heroCardMargins = 6;
-const double horizontalCardPadding = 2 * heroCardMargins;
-const double horizontalPadding = 3 * heroCardMargins;
-const double verticalTitlePadding = 10;
-
 List<Widget> buildWidgetList(
     int count,
     Widget widget,
@@ -43,17 +38,14 @@ List<Widget> buildWidgetList(
   return cards;
 }
 
-Size screenSize(BuildContext context) {
-  return MediaQuery.of(context).size;
-}
-double screenHeight(BuildContext context, {double dividedBy = 1}) {
-  return screenSize(context).height / dividedBy;
-}
-double screenWidth(BuildContext context, {double dividedBy = 1}) {
-  return screenSize(context).width / dividedBy;
+class RecipeHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return VerticalCardListBuilder(dummyDiscoverHomepageList(context));
+  }
 }
 
-class RecipeHomePage extends StatelessWidget {
+class OldRecipeHomePage extends StatelessWidget {
 
   RecipeHomePage() {
     //var state = new Globals();
@@ -65,11 +57,11 @@ class RecipeHomePage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Container(
-          height: screenWidth(context, dividedBy: 1.4),
+          height: oldScreenWidth(context, dividedBy: 1.4),
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: horizontalCardPadding),
             scrollDirection: Axis.horizontal,
-            children: buildWidgetList(5, HeroCard()),
+            children: buildWidgetList(5, OldHeroCard()),
           ),
         ),
         Container(
@@ -117,7 +109,7 @@ class RecipeHomePage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: horizontalCardPadding),
             scrollDirection: Axis.horizontal,
-            children: buildWidgetList(5, MiniRecipeCard()),
+            children: buildWidgetList(5, OldMiniRecipeCard()),
           ),
         ),
         Container(
@@ -165,7 +157,7 @@ class RecipeHomePage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: horizontalCardPadding),
             scrollDirection: Axis.horizontal,
-            children: buildWidgetList(5, MiniRecipeCard()),
+            children: buildWidgetList(5, OldMiniRecipeCard()),
           ),
         ),
         Container(
@@ -196,7 +188,7 @@ class RecipeHomePage extends StatelessWidget {
   }
 }
 
-class HeroCard extends StatelessWidget {
+class OldHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +199,7 @@ class HeroCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: heroCardMargins),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: (screenWidth(context) - heroCardMargins * 6)
+            maxWidth: (oldScreenWidth(context) - heroCardMargins * 6)
           ),
           child: AspectRatio(
             aspectRatio: 16 / 9,
@@ -215,7 +207,7 @@ class HeroCard extends StatelessWidget {
                 children: <Widget>[
                   Positioned.fill(
                     child: Image.asset(
-                      'assets/food.jpg',
+                      'assets/images/food.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -310,7 +302,7 @@ class HeroCard extends StatelessWidget {
   }
 }
 
-class FullRecipeCard extends StatelessWidget {
+class OldFullRecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -391,8 +383,7 @@ class FullRecipeCard extends StatelessWidget {
   }
 }
 
-class MiniRecipeCard extends StatelessWidget {
-
+class OldMiniRecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -412,7 +403,7 @@ class MiniRecipeCard extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 7 / 6,
                 child: Image.asset(
-                  'assets/recipe00001.jpg',
+                  'assets/images/recipe00001.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
