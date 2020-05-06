@@ -36,6 +36,59 @@ class MainSliverAppBar extends StatelessWidget{
   }
 }
 
+class RecipeSliverAppBar extends StatelessWidget {
+  final Image appBarImage;
+  final String appBarTitle;
+  final String heroID;
+  final int prepTime;
+  final int cookTime;
+  final int calories;
+  
+  RecipeSliverAppBar({
+    @required this.appBarImage,
+    @required this.appBarTitle,
+    @required this.heroID,
+    @required this.prepTime,
+    @required this.cookTime,
+    @required this.calories,
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      backgroundColor: Theme.of(context).cardColor,
+      expandedHeight: 400.0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Container(
+          padding: EdgeInsets.only(bottom: 156.0),
+          child: Hero(
+            tag: heroID,
+            child: ShaderMask(
+              shaderCallback: (rect) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.black45, Colors.transparent],
+                ).createShader(
+                    Rect.fromLTRB(0, 0, rect.width, rect.height));
+              },
+              blendMode: BlendMode.srcATop,
+              child: appBarImage,
+            ),
+          ),
+        ),
+      ),
+      bottom: RecipeHeader(
+        recipeTitle: appBarTitle,
+        prepTime: prepTime,
+        cookTime: cookTime,
+        calories: calories,
+      ),
+    );
+  }
+}
+
 
 class MainAppBar extends StatelessWidget with PreferredSizeWidget{
   @override

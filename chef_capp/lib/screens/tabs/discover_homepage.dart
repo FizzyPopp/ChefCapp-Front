@@ -309,7 +309,7 @@ class OldFullRecipeCard extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
+            builder: (BuildContext context) => OldRecipeOverview()
         ));
       },
       child: Container(
@@ -389,7 +389,7 @@ class OldMiniRecipeCard extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
+            builder: (BuildContext context) => OldRecipeOverview()
         ));
       },
       child: Container(

@@ -1,6 +1,22 @@
 import 'package:chef_capp/index.dart';
 
 class RecipeOverview extends StatelessWidget {
+  final String recipeTitle;
+  final String heroID;
+  final Image recipeImage;
+  final int prepTime;
+  final int cookTime;
+  final int calories;
+  
+  RecipeOverview({
+    @required this.recipeTitle,
+    @required this.heroID,
+    @required this.recipeImage,
+    @required this.prepTime,
+    @required this.cookTime,
+    @required this.calories,
+  });
+  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -23,34 +39,13 @@ class RecipeOverview extends StatelessWidget {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                SliverAppBar(
-                  backgroundColor: Theme.of(context).cardColor,
-                  expandedHeight: 400.0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    background: Container(
-                      padding: EdgeInsets.only(bottom: 156.0),
-                      child: Hero(
-                        tag: '0069',
-                        child: ShaderMask(
-                          shaderCallback: (rect) {
-                            return LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.black45, Colors.transparent],
-                            ).createShader(
-                                Rect.fromLTRB(0, 0, rect.width, rect.height));
-                          },
-                          blendMode: BlendMode.srcATop,
-                          child: Image.asset(
-                            'assets/images/recipe00001.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  bottom: RecipeTitle(),
+                RecipeSliverAppBar(
+                  appBarImage: recipeImage,
+                  appBarTitle: recipeTitle,
+                  heroID: heroID,
+                  prepTime: prepTime,
+                  cookTime: cookTime,
+                  calories: calories,
                 ),
               ];
             },
@@ -132,7 +127,7 @@ class OldRecipeOverview extends StatelessWidget {
                       ),
                     ),
                   ],
-                  bottom: RecipeTitle(),
+                  //bottom: RecipeHeader(),
                 ),
               ];
             },
@@ -147,7 +142,19 @@ class OldRecipeOverview extends StatelessWidget {
   }
 }
 
-class RecipeTitle extends StatelessWidget with PreferredSizeWidget {
+class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
+  final String recipeTitle;
+  final int prepTime;
+  final int cookTime;
+  final int calories;
+
+  RecipeHeader({
+    @required this.recipeTitle,
+    @required this.prepTime,
+    @required this.cookTime,
+    @required this.calories,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -163,7 +170,7 @@ class RecipeTitle extends StatelessWidget with PreferredSizeWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
                 child: Text(
-                  'Rich In Protein Cobbe Salad',
+                  recipeTitle,
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -183,8 +190,8 @@ class RecipeTitle extends StatelessWidget with PreferredSizeWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('20 min prep'),
-                          Text('+ 10 min cook')
+                          Text(prepTime.toString() + ' min prep'),
+                          Text('+ ' + cookTime.toString() + ' min cook')
                         ],
                       )
                     ],
@@ -196,7 +203,7 @@ class RecipeTitle extends StatelessWidget with PreferredSizeWidget {
                         size: 16.0,
                       ),
                       SizedBox(width: 8.0),
-                      Text('140 cal / serving'),
+                      Text(calories.toString() + ' cal / serving'),
                     ],
                   ),
                 ],
