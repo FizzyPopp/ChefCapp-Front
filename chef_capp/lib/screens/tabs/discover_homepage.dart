@@ -41,7 +41,7 @@ List<Widget> buildWidgetList(
 class RecipeHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return VerticalCardListBuilder(dummyDiscoverHomepageList(context));
+    return VerticalCardListBuilder(ParentController.discoverController.dummyDiscoverHomepageList(context));
   }
 }
 
