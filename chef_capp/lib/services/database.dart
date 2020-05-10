@@ -1,13 +1,5 @@
-//import 'package:brew_crew/models/brew.dart';
-//import 'package:brew_crew/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chef_capp/index.dart';
-
-// https://github.com/iamshaunjp/flutter-firebase
-// https://www.youtube.com/watch?v=_SHssHJJhAI&list=PL4cUxeGkcC9j--TKIdkb3ISfRbJeJYQwC&index=10
-
-// THIS AND auth.dart ARE FROM THE TUTORIAL ABOVE
-// NEED TO CONVERT PROVIDER TYPE THINGS, CAN GET RID OF MOST STREAMS
 
 class DatabaseService {
 
@@ -22,6 +14,7 @@ class DatabaseService {
 
   // collection reference
   final CollectionReference recipeCollection = Firestore.instance.collection('recipes');
+  final CollectionReference stepsCollection = Firestore.instance.collection('recipes');
 
   /*Future<void> updateUserData(User user) async {
 
@@ -43,11 +36,16 @@ class DatabaseService {
           doc.data['id'] ?? '',
           doc.data['title'] ?? '',
           doc.data['prepTime'] ?? 0,
-          doc.data['blurb'] ?? '',
+          //doc.data['blurb'] ?? '',
           doc.data['tags'] ?? [],
           doc.data['ingredients'] ?? []
       );
     }).toList();
+  }
+
+  RecipeStep getSteps(Recipe r) {
+
+    return
   }
 
   /*
@@ -68,6 +66,7 @@ class DatabaseService {
   }
    */
 }
+
 /*
 class QuerySnapshotTransformer<QuerySnapshots, Recipe> {
   var snaps = recipeCollection.snapshots();
