@@ -18,7 +18,6 @@ class Dummy {
         (1 + rnd.nextInt(179)),
         (1 + rnd.nextInt(599)),
         [tag(rnd.nextInt(100)), tag(rnd.nextInt(100))],
-        "This recipe brought my grandmother back to life",
         [ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100))],
         [equipment(rnd.nextInt(100)), equipment(rnd.nextInt(100))],
         [recipeStep(rnd.nextInt(100)), recipeStep(rnd.nextInt(100))],
