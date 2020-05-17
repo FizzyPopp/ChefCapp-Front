@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:provider/provider.dart';
 
 List<Widget> buildWidgetList(
     int count,
@@ -9,39 +10,100 @@ List<Widget> buildWidgetList(
       double gap = 4.0,
     }
     ) {
-    List<Widget> cards = List.generate(
+  List<Widget> cards = List.generate(
       count,
-      (int index) => widget
-    );
-    double horizontalGap = 0;
-    double verticalGap = 0;
-    if (vertical)
-      {
-        verticalGap = gap;
-      }
-    if (horizontal)
-      {
-        horizontalGap = gap;
-      }
-    if (vertical || horizontal)
-      {
-        var n = 1;
-        do {
-          cards.insert(n, SizedBox(
-            height: verticalGap,
-            width: horizontalGap,
-          ));
-          n += 2;
-        }
-        while (n <= count * 2 - 1);
-      }
+          (int index) => widget
+  );
+  double horizontalGap = 0;
+  double verticalGap = 0;
+  if (vertical)
+  {
+    verticalGap = gap;
+  }
+  if (horizontal)
+  {
+    horizontalGap = gap;
+  }
+  if (vertical || horizontal)
+  {
+    var n = 1;
+    do {
+      cards.insert(n, SizedBox(
+        height: verticalGap,
+        width: horizontalGap,
+      ));
+      n += 2;
+    }
+    while (n <= count * 2 - 1);
+  }
   return cards;
 }
 
 class RecipeHomePage extends StatelessWidget {
+  RecipeHomePage() {
+    ParentController.discoverController.genDummyLists();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return VerticalCardListBuilder(ParentController.discoverController.dummyDiscoverHomepageList(context));
+    return
+      ChangeNotifierProvider.value(
+        value: ParentController.discoverController,
+        child:
+        Selector<DiscoverController, List<RecipeData>>(
+            selector: (_, model) => model.custom,
+            builder: (context, data, _) {
+              return VerticalCardListBuilder(<Widget>[
+                Selector<DiscoverController, List<RecipeCollectionData>>(
+                    selector: (_, model) => model.hero,
+                    builder: (context, data, _) {
+                      return HorizontalCardListBuilder(
+                        height: cardRowHeight(context, heroCardHeight(context)),
+                        cardList: data.map((rcd) => rcd.toHeroCard(context)).toList(),
+                      );
+                    }
+                ),
+                ButtonRow(
+                  headingText: 'My History',
+                  interactionText: 'SEE ALL',
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) => DiscoverFavorites()
+                    ));
+                  },
+                ),
+                Selector<DiscoverController, List<RecipeData>>(
+                    selector: (_, model) => model.recent,
+                    builder: (context, data, _) {
+                      return HorizontalCardListBuilder(
+                        height: cardRowHeight(context, miniCardHeight(context)),
+                        cardList: data.map((rd) => rd.toMiniCard(context)).toList(),
+                      );
+                    }
+                ),
+                ButtonRow(
+                  headingText: 'My Favorites',
+                  interactionText: 'SEE ALL',
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) => DiscoverFavorites()
+                    ));
+                  },
+                ),
+                Selector<DiscoverController, List<RecipeData>>(
+                    selector: (_, model) => model.favorite,
+                    builder: (context, data, _) {
+                      return HorizontalCardListBuilder(
+                        height: cardRowHeight(context, miniCardHeight(context)),
+                        cardList: data.map((rd) => rd.toMiniCard(context)).toList(),
+                      );
+                    }
+                ),
+                ...(data.map((rd) => rd.toMiniCard(context)).toList())
+              ]);
+            }
+        ),
+      );
   }
 }
 
@@ -199,44 +261,44 @@ class OldHeroCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: heroCardMargins),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: (oldScreenWidth(context) - heroCardMargins * 6)
+              maxWidth: (oldScreenWidth(context) - heroCardMargins * 6)
           ),
           child: AspectRatio(
             aspectRatio: 16 / 9,
             child: Stack(
-                children: <Widget>[
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/images/food.jpg',
-                      fit: BoxFit.cover,
+              children: <Widget>[
+                Positioned.fill(
+                  child: Image.asset(
+                    'assets/images/food.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: <Color> [
+                        Colors.transparent,
+                        Colors.black54,
+                      ],
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        colors: <Color> [
-                          Colors.transparent,
-                          Colors.black54,
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    bottom: 20,
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Wrap(
+                ),
+                Positioned(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                  bottom: 20,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Wrap(
                                 spacing: 6,
                                 runSpacing: 6,
                                 children: <Widget> [
@@ -262,11 +324,11 @@ class OldHeroCard extends StatelessWidget {
                                     ],
                                   ),
                                 ]
-                              ),
-                              SizedBox(
-                                height: 6.0,
-                              ),
-                              Wrap(
+                            ),
+                            SizedBox(
+                              height: 6.0,
+                            ),
+                            Wrap(
                                 spacing: 6,
                                 runSpacing: 6,
                                 children: <Widget> [
@@ -278,23 +340,23 @@ class OldHeroCard extends StatelessWidget {
                                     ],
                                   ),
                                 ]
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '18 Easy Weeknight Dinner Recipes',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
                             ),
+                          ],
+                        ),
+                        Text(
+                          '18 Easy Weeknight Dinner Recipes',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -334,11 +396,11 @@ class OldFullRecipeCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                      'Cold Noodles With Peanut Butter Sauce',
-                      style: TextStyle(
-                        fontSize: 16,
+                        'Cold Noodles With Peanut Butter Sauce',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
                       Row(
                         children: <Widget>[
                           Row(
@@ -365,12 +427,12 @@ class OldFullRecipeCard extends StatelessWidget {
                         ],
                       ),
                       RecipeTag(
-                                      text: 'all ingredients on hand',
-                                      colors: <Color> [
-                                        Colors.lightBlue[400],
-                                        Colors.green,
-                                      ],
-                                    ),
+                        text: 'all ingredients on hand',
+                        colors: <Color> [
+                          Colors.lightBlue[400],
+                          Colors.green,
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:chef_capp/index.dart';
 class HorizontalCardListBuilder extends StatelessWidget {
   final List<Widget> cardList;
   final double height;
+
   HorizontalCardListBuilder({
     @required this.cardList,
     this.height,
@@ -45,6 +46,6 @@ class VerticalCardListBuilder extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return cardList[index];
       },
-    );;
+    );
   }
 }

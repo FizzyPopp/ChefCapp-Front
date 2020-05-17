@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:provider/provider.dart';
 import 'dart:math';
 
 class DiscoverController with ChangeNotifier {
@@ -25,7 +26,7 @@ class DiscoverController with ChangeNotifier {
     return (_heroStart++).toString();
   }
 
-  List<Widget> dummyDiscoverHomepageList(BuildContext context) {
+  void genDummyLists() {
     Random rnd = Random(ParentController.SEED);
 
     if (hero.length == 0) {
@@ -55,45 +56,6 @@ class DiscoverController with ChangeNotifier {
         custom.add(RecipeData(Dummy.recipe(rnd.nextInt(1000)), _genHeroID()));
       }
     }
-
-    List<Widget> dummyHeroCardList = hero.map((rcd) => rcd.toHeroCard(context)).toList();
-    List<Widget> dummyMiniCardList = recent.map((rd) => rd.toMiniCard(context)).toList();
-    List<Widget> dummyMiniCardListTwo = favorite.map((rd) => rd.toMiniCard(context)).toList();
-    List<Widget> dummyFullCardList = custom.map((rd) => rd.toFullCard(context)).toList();
-
-    return <Widget>[
-      HorizontalCardListBuilder(
-        height: cardRowHeight(context, heroCardHeight(context)),
-        cardList: dummyHeroCardList,
-      ),
-      ButtonRow(
-        headingText: 'My History',
-        interactionText: 'SEE ALL',
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => DiscoverFavorites()
-          ));
-        },
-      ),
-      HorizontalCardListBuilder(
-        height: cardRowHeight(context, miniCardHeight(context)),
-        cardList: dummyMiniCardList, // replace
-      ),
-      ButtonRow(
-        headingText: 'My Favorites',
-        interactionText: 'SEE ALL',
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => DiscoverFavorites()
-          ));
-        },
-      ),
-      HorizontalCardListBuilder(
-        height: cardRowHeight(context, miniCardHeight(context)),
-        cardList: dummyMiniCardListTwo, // replace
-      ),
-      ...dummyFullCardList,
-    ];
   }
 }
 
@@ -163,3 +125,26 @@ class RecipeData {
     // do something
   }
 }
+
+// list of ingredients = a list of vectors
+// "mediterranean", "korean", "spicy", etc. is difficult to do
+// for each recipe, get jaccard index
+// ultimately for mvp, only consider what the user has on hand, their history, and their favorites?
+// also need some underlying ranking?
+// what else could be a factor:
+// independent ranking
+// dependant (personalized) ranking
+// prep time
+// cook time
+// number of ingredients
+// least amount of ingredients by volume or scarcity (will not deplete anything on hand)
+// meal size
+// how many times they have had the option to cook it before and chose to cook something else
+// calories
+
+// ranking could be based on:
+// rating
+// most cooked
+// most favorited
+// geographic cuisine
+// some ML clustering thing
