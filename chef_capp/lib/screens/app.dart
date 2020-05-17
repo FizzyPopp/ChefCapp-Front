@@ -21,41 +21,12 @@ class App extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               children: <Widget>[
                 RecipeHomePage(),
-                RecipeHomePage(),
+                SizedBox(height: 40.0,),
               ],
             ),
           ),
           top: false,
         ),
-      ),
-    );
-  }
-}
-
-
-class OldApp extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        //appBar: MainTopBar(),
-        body: SafeArea(
-          child: NestedScrollView(
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverMainTopBar(),
-              ];
-            },
-            body: TabBarView(children: <Widget>[
-              RecipeHomePage(),
-              InventoryHomePage(),
-            ]),
-          ),
-          top: false,
-        ),
-        drawer: ChefDrawer(),
       ),
     );
   }

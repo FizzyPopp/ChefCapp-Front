@@ -1,11 +1,10 @@
 import 'package:chef_capp/index.dart';
 
-class HorizontalCardListBuilder extends StatelessWidget {
-  final List<Widget> cardList;
+class HorizontalListBuilder extends StatelessWidget {
+  final List<Widget> widgetList;
   final double height;
-
-  HorizontalCardListBuilder({
-    @required this.cardList,
+  HorizontalListBuilder({
+    @required this.widgetList,
     this.height,
   });
 
@@ -19,32 +18,31 @@ class HorizontalCardListBuilder extends StatelessWidget {
           horizontal: xMargins / 2,
         ),
         scrollDirection: Axis.horizontal,
-        itemCount: cardList.length,
+        itemCount: widgetList.length,
         itemBuilder: (BuildContext context, int index) {
-          return cardList[index];
+          return widgetList[index];
         },
       ),
     );
   }
 }
 
-class VerticalCardListBuilder extends StatelessWidget {
-  final List<Widget> cardList;
-  VerticalCardListBuilder(this.cardList);
+class VerticalListBuilder extends StatelessWidget {
+  final List<Widget> widgetList;
+  VerticalListBuilder(this.widgetList);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
-      physics: BouncingScrollPhysics(),
+      //shrinkWrap: true,
+      //physics: BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(
-        //horizontal: xMargins / 2,
         vertical: gutters / 2,
       ),
       scrollDirection: Axis.vertical,
-      itemCount: cardList.length,
+      itemCount: widgetList.length,
       itemBuilder: (BuildContext context, int index) {
-        return cardList[index];
+        return widgetList[index];
       },
     );
   }

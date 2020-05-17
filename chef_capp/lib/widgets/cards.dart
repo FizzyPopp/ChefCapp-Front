@@ -102,14 +102,7 @@ class FullRecipeCard extends StatelessWidget {
         horizontal: cardMargins * 2,
       ),
       child: InkWell(
-        onTap: (){
-          onTap;
-          /*
-          Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => OldRecipeOverview()
-          ));
-           */
-        },
+        onTap: (){ },
         child: SizedBox(
           height: cardTextAreaHeight(context),
           child: Row(
