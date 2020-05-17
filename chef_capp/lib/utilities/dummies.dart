@@ -42,6 +42,17 @@ List<Widget> dummyMiniCardListTwo(BuildContext context) {
   ];
 }
 
+List<Widget> dummyFullCardList(BuildContext context) {
+  return <Widget>[
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+  ];
+}
+
 List<Widget> dummyHeroCardList(BuildContext context) {
   return <Widget>[
     HeroCard(
@@ -58,22 +69,22 @@ List<Widget> dummyHeroCardList(BuildContext context) {
 
 List<Widget> dummyDiscoverHomepageList(BuildContext context) {
   return <Widget>[
-    HorizontalCardListBuilder(
+    HorizontalListBuilder(
       height: cardRowHeight(context, heroCardHeight(context)),
-      cardList: dummyHeroCardList(context),
+      widgetList: dummyHeroCardList(context),
     ),
     ButtonRow(
       headingText: 'My History',
       interactionText: 'SEE ALL',
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => DiscoverFavorites()
+            builder: (BuildContext context) => DiscoverHistory()
         ));
       },
     ),
-    HorizontalCardListBuilder(
+    HorizontalListBuilder(
       height: cardRowHeight(context, miniCardHeight(context)),
-      cardList: dummyMiniCardList(context),
+      widgetList: dummyMiniCardList(context),
     ),
     ButtonRow(
       headingText: 'My Favorites',
@@ -84,9 +95,9 @@ List<Widget> dummyDiscoverHomepageList(BuildContext context) {
         ));
       },
     ),
-    HorizontalCardListBuilder(
+    HorizontalListBuilder(
       height: cardRowHeight(context, miniCardHeight(context)),
-      cardList: dummyMiniCardListTwo(context),
+      widgetList: dummyMiniCardListTwo(context),
     ),
     FullRecipeCard(),
     FullRecipeCard(),
@@ -94,3 +105,78 @@ List<Widget> dummyDiscoverHomepageList(BuildContext context) {
     FullRecipeCard(),
   ];
 }
+
+final List<Widget> dummyIngredientList = [
+  IngredientRow(
+    quantity: '100 gr',
+    ingredient: 'One tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '500 ml',
+    ingredient: 'Another tasty ingredient',
+    available: false,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  SizedBox(height: 60.0),
+];
+
+final List<Widget> dummyStepList = [
+  StepRow(
+    step: 1,
+    directions: "Yeet the ingridients and dab on the bowl until achieved consistency of lit.",
+  ),
+  StepRow(
+    step: 2,
+    directions: "Throw shade on the oven",
+  ),
+  StepRow(
+    step: 3,
+    directions: "Roast those badboys until golden brown and crispy",
+  ),
+  SizedBox(height: 60.0),
+];
