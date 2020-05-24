@@ -30,11 +30,12 @@ class Dummy {
   static RecipeCollection recipeCollection(int seed) {
     Random rnd = Random(seed);
     ID rcID = id();
+    int numRecipes = 2 + rnd.nextInt(7);
     return RecipeCollection(
         rcID,
       "Collection Heading " + rcID.hash,
       "Collection Title " + rcID.hash,
-      [recipe(rnd.nextInt(100)), recipe(rnd.nextInt(100))],
+        [for (int i=0; i<numRecipes; i++) recipe(rnd.nextInt(100))],
         Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover)
     );
   }

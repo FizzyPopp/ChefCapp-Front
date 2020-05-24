@@ -13,5 +13,7 @@ class RecipeCollection {
 
   String get title => _title;
 
+  List<Recipe> get recipes => [..._recipes];
+
   Image get thumb => _thumb;
 }

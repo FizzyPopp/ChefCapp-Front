@@ -29,9 +29,7 @@ class RecipeHomePage extends StatelessWidget {
                   headingText: 'My History',
                   interactionText: 'SEE ALL',
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (BuildContext context) => DiscoverFavorites()
-                    ));
+                    ParentController.discoverController.discoverHistory(context);
                   },
                 ),
                 Selector<DiscoverController, List<RecipeData>>(
@@ -47,9 +45,7 @@ class RecipeHomePage extends StatelessWidget {
                   headingText: 'My Favorites',
                   interactionText: 'SEE ALL',
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (BuildContext context) => DiscoverFavorites()
-                    ));
+                    ParentController.discoverController.discoverFavorites(context);
                   },
                 ),
                 Selector<DiscoverController, List<RecipeData>>(

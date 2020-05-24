@@ -1,7 +1,7 @@
 import 'package:chef_capp/index.dart';
-import 'package:provider/provider.dart';
 import 'dart:math';
 
+/// this is a doc comment on discover controller
 class DiscoverController with ChangeNotifier {
   /*
   - responsible for the discover page (exploring recipes aka landing page): discover screen will always call this controller. This controller can then call other controllers, but the UI has no knowledge of that.
@@ -32,7 +32,7 @@ class DiscoverController with ChangeNotifier {
     if (hero.length == 0) {
       int lim = rnd.nextInt(5) + 1;
       for (int i = 0; i < lim; i++) {
-        hero.add(RecipeCollectionData(Dummy.recipeCollection(rnd.nextInt(1000)), _genHeroID()));
+        hero.add(RecipeCollectionData(Dummy.recipeCollection(rnd.nextInt(1000)), _genHeroID(), _genHeroID));
       }
     }
 
@@ -57,13 +57,34 @@ class DiscoverController with ChangeNotifier {
       }
     }
   }
+
+  void discoverHistory(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) =>
+          DiscoverGenericList(
+              title: "My History",
+              metaSelector: (DiscoverController model) => model.recent
+          ),
+    ));
+  }
+
+  void discoverFavorites(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(
+        builder: (BuildContext context) =>
+            DiscoverGenericList(
+                title: "My Favorites",
+                metaSelector: (DiscoverController model) => model.favorite
+            ),
+    ));
+  }
 }
 
 class RecipeCollectionData {
   final RecipeCollection _rc;
   final String _heroID;
+  final Function _genHeroID;
 
-  RecipeCollectionData(this._rc, this._heroID);
+  RecipeCollectionData(this._rc, this._heroID, this._genHeroID);
 
   Widget toHeroCard(BuildContext context) {
     return
@@ -77,7 +98,17 @@ class RecipeCollectionData {
   }
 
   void onTapHeroCard(BuildContext context) {
-    // do something
+    final List<RecipeData> noUpdate = _rc.recipes.map((r) => RecipeData(r, _genHeroID())).toList();
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) =>
+          DiscoverGenericList(
+              title: _rc.title,
+              // noUpdate does not come from model, so I don't think this page will ever re-render
+              // that means that all data needed for the page has to be available when this page is set up
+              // but I'm not exactly sure what data is needed
+              metaSelector: (DiscoverController model) => noUpdate
+          ),
+    ));
   }
 }
 
@@ -122,7 +153,15 @@ class RecipeData {
   }
 
   void onTapFullRecipeCard(BuildContext context) {
-    // do something
+    Navigator.push(context, MaterialPageRoute(
+        builder: (BuildContext context) => RecipeOverview(
+            recipeTitle: _r.title,
+            heroID: _heroID,
+            recipeImage: _r.thumb,
+            prepTime: _r.prepTime,
+            cookTime: _r.cookTime,
+            calories: _r.calories)
+    ));
   }
 }
 

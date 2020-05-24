@@ -21,6 +21,7 @@ export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_favorites.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_history.dart';
+export 'package:chef_capp/screens/tabs/discover/discover_generic_list.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_cooking.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_overview.dart';
 
