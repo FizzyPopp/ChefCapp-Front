@@ -3,42 +3,18 @@ import 'package:chef_capp/index.dart';
 List<Widget> dummyMiniCardList(BuildContext context) {
   return <Widget>[
     MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
+      cardText: 'Recipe Numba Wan',
       cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
       heroID: '0069',
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '0002',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '0003',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '0004',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
+            builder: (BuildContext context) => RecipeOverview(
+              recipeTitle: 'Recipe Numba Wan',
+              heroID: '0069',
+              recipeImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
+              prepTime: 69,
+              cookTime: 69,
+              calories: 69,)
         ));
       },
     ),
@@ -48,45 +24,32 @@ List<Widget> dummyMiniCardList(BuildContext context) {
 List<Widget> dummyMiniCardListTwo(BuildContext context) {
   return <Widget>[
     MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '000a',
+      cardText: 'Recipe Numba Tuu',
+      cardImage: Image.asset('assets/images/recipe00002.jpg',fit: BoxFit.cover,),
+      heroID: '0420',
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
+            builder: (BuildContext context) => RecipeOverview(
+              recipeTitle: 'Recipe Numba Tuu',
+              heroID: '0420',
+              recipeImage: Image.asset('assets/images/recipe00002.jpg',fit: BoxFit.cover,),
+              prepTime: 420,
+              cookTime: 420,
+              calories: 420,)
         ));
       },
     ),
-    MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '000b',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '000c',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    MiniRecipeCard(
-      cardText: 'Mini Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover,),
-      heroID: '000d',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
+  ];
+}
+
+List<Widget> dummyFullCardList(BuildContext context) {
+  return <Widget>[
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
+    FullRecipeCard(),
   ];
 }
 
@@ -98,31 +61,7 @@ List<Widget> dummyHeroCardList(BuildContext context) {
       cardImage: Image.asset('assets/images/recipe00001.jpg', fit: BoxFit.cover,),
       heroID: '0005',
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    HeroCard(
-      cardHeading: 'COLLECTION',
-      cardText: 'Hero Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg', fit: BoxFit.cover,),
-      heroID: '0006',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
-      },
-    ),
-    HeroCard(
-      cardHeading: 'COLLECTION',
-      cardText: 'Hero Card Placeholder Text',
-      cardImage: Image.asset('assets/images/recipe00001.jpg', fit: BoxFit.cover,),
-      heroID: '0007',
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview()
-        ));
+
       },
     ),
   ];
@@ -130,22 +69,22 @@ List<Widget> dummyHeroCardList(BuildContext context) {
 
 List<Widget> dummyDiscoverHomepageList(BuildContext context) {
   return <Widget>[
-    HorizontalCardListBuilder(
+    HorizontalListBuilder(
       height: cardRowHeight(context, heroCardHeight(context)),
-      cardList: dummyHeroCardList(context),
+      widgetList: dummyHeroCardList(context),
     ),
     ButtonRow(
       headingText: 'My History',
       interactionText: 'SEE ALL',
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => DiscoverFavorites()
+            builder: (BuildContext context) => DiscoverHistory()
         ));
       },
     ),
-    HorizontalCardListBuilder(
+    HorizontalListBuilder(
       height: cardRowHeight(context, miniCardHeight(context)),
-      cardList: dummyMiniCardList(context),
+      widgetList: dummyMiniCardList(context),
     ),
     ButtonRow(
       headingText: 'My Favorites',
@@ -156,9 +95,9 @@ List<Widget> dummyDiscoverHomepageList(BuildContext context) {
         ));
       },
     ),
-    HorizontalCardListBuilder(
+    HorizontalListBuilder(
       height: cardRowHeight(context, miniCardHeight(context)),
-      cardList: dummyMiniCardListTwo(context),
+      widgetList: dummyMiniCardListTwo(context),
     ),
     FullRecipeCard(),
     FullRecipeCard(),
@@ -166,3 +105,78 @@ List<Widget> dummyDiscoverHomepageList(BuildContext context) {
     FullRecipeCard(),
   ];
 }
+
+final List<Widget> dummyIngredientList = [
+  IngredientRow(
+    quantity: '100 gr',
+    ingredient: 'One tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '500 ml',
+    ingredient: 'Another tasty ingredient',
+    available: false,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  IngredientRow(
+    quantity: '420',
+    ingredient: 'Some tasty ingredient',
+    available: true,
+  ),
+  SizedBox(height: 60.0),
+];
+
+final List<Widget> dummyStepList = [
+  StepRow(
+    step: 1,
+    directions: "Yeet the ingridients and dab on the bowl until achieved consistency of lit.",
+  ),
+  StepRow(
+    step: 2,
+    directions: "Throw shade on the oven",
+  ),
+  StepRow(
+    step: 3,
+    directions: "Roast those badboys until golden brown and crispy",
+  ),
+  SizedBox(height: 60.0),
+];

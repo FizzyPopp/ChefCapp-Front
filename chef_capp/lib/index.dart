@@ -2,6 +2,7 @@ export 'package:flutter/material.dart';
 
 export 'package:auto_size_text/auto_size_text.dart';
 export 'package:concentric_transition/concentric_transition.dart';
+export 'package:flutter_swiper/flutter_swiper.dart';
 
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
@@ -20,6 +21,7 @@ export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_favorites.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_history.dart';
+export 'package:chef_capp/screens/tabs/recipe/recipe_cooking.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_overview.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';
