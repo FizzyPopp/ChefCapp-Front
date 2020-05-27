@@ -55,11 +55,4 @@ class ParentController with ChangeNotifier {
     }
     return _inventoryController;
   }
-
-  static RecipeController get recipeController {
-    if (_recipeController == null) {
-      _recipeController = RecipeController();
-    }
-    return _recipeController;
-  }
 }

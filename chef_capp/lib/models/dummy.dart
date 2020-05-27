@@ -13,16 +13,20 @@ class Dummy {
   static Recipe recipe(int seed) {
     Random rnd = Random(seed);
     ID rID = id();
+    int numTags = rnd.nextInt(10);
+    int numIngredients = 3 + rnd.nextInt(8);
+    int numEquipments = rnd.nextInt(4);
+    int numSteps = 4 + rnd.nextInt(3);
     return Recipe(
         rID,
         "Recipe Title " + rID.hash,
         (1 + rnd.nextInt(179)),
         (1 + rnd.nextInt(179)),
         (1 + rnd.nextInt(599)),
-        [tag(rnd.nextInt(100)), tag(rnd.nextInt(100))],
-        [ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100))],
-        [equipment(), equipment()],
-        [recipeStep(rnd.nextInt(100)), recipeStep(rnd.nextInt(100))],
+        [for (int i=0; i<numTags; i++) tag(rnd.nextInt(100))],
+        [for (int i=0; i<numIngredients; i++) ingredient(rnd.nextInt(100))],
+        [for (int i=0; i<numEquipments; i++) equipment()],
+        [for (int i=0; i<numSteps; i++) recipeStep(rnd.nextInt(100))],
         Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover) // fit does not belong in the model! what do?
     );
   }
@@ -58,22 +62,48 @@ class Dummy {
     );
   }
 
+  static var _ingredients = [
+    [id(), "chicken"],
+    [id(), "potato"],
+    [id(), "garlic"],
+    [id(), "cheese"],
+    [id(), "rice"],
+    [id(), "beans"],
+    [id(), "apples"],
+    [id(), "orange"],
+    [id(), "venison"],
+    [id(), "carrot"],
+    [id(), "chocolate"]
+  ];
   static Ingredient ingredient(int seed) {
     Random rnd = Random(seed);
-    List<String> names = ["chicken", "potatoe", "garlic", "chocolate", "carrot", "apple", "orange", "rice", "venison"];
+    int i = rnd.nextInt(_ingredients.length);
     return Ingredient(
-        id(),
-        names[rnd.nextInt(names.length)],
+        _ingredients[i][0],
+        "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
         (100 * rnd.nextDouble())
     );
   }
 
+  static var _tags = [
+    [id(), "spicy"],
+    [id(), "hot"],
+    [id(), "salty"],
+    [id(), "sweet"],
+    [id(), "gluten-free"],
+    [id(), "keto"],
+    [id(), "vegetarian"],
+    [id(), "vegan"],
+    [id(), "lunch"],
+    [id(), "dinner"],
+    [id(), "breakfast"],
+    [id(), "dessert"]
+  ];
   static Tag tag(int seed) {
-    Random rnd = Random(seed);
-    List<String> names = ["spicy", "hot", "salty", "sweet", "gluten-free", "keto", "vegetarian", "lunch", "dinner", "breakfast", "dessert"];
+    int i = Random(seed).nextInt(_ingredients.length);
     return Tag(
-        id(),
-        names[rnd.nextInt(names.length)]
+        _tags[i][0],
+        _tags[i][1]
     );
   }
 

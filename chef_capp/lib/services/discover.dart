@@ -86,6 +86,9 @@ class RecipeCollectionData {
 
   RecipeCollectionData(this._rc, this._heroID, this._genHeroID);
 
+  RecipeCollection get rc => _rc;
+  String get heroID => _heroID;
+
   Widget toHeroCard(BuildContext context) {
     return
       HeroCard(
@@ -118,6 +121,9 @@ class RecipeData {
 
   RecipeData(this._r, this._heroID);
 
+  Recipe get r => _r;
+  String get heroID => _heroID;
+
   Widget toMiniCard(BuildContext context) {
     return
       MiniRecipeCard(
@@ -130,13 +136,7 @@ class RecipeData {
 
   void _onTapMiniRecipeCard(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => RecipeOverview(
-            recipeTitle: _r.title,
-            heroID: _heroID,
-            recipeImage: _r.thumb,
-            prepTime: _r.prepTime,
-            cookTime: _r.cookTime,
-            calories: _r.calories)
+        builder: (BuildContext context) => RecipeOverview(rD: this)
     ));
   }
 
@@ -154,13 +154,7 @@ class RecipeData {
 
   void onTapFullRecipeCard(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => RecipeOverview(
-            recipeTitle: _r.title,
-            heroID: _heroID,
-            recipeImage: _r.thumb,
-            prepTime: _r.prepTime,
-            cookTime: _r.cookTime,
-            calories: _r.calories)
+        builder: (BuildContext context) => RecipeOverview(rD: this)
     ));
   }
 }

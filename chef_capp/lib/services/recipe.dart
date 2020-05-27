@@ -6,4 +6,8 @@ class RecipeController with ChangeNotifier {
    */
   // get ingredients from db, pass to screen
   // modify an amount of an ingredient
+
+  final RecipeData rD;
+
+  RecipeController(this.rD);
 }

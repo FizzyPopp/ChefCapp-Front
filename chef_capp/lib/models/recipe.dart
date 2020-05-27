@@ -31,5 +31,7 @@ class Recipe {
 
   int get calories => _calories;
 
+  List<Ingredient> get ingredients => [..._ingredients];
+
   Image get thumb => _thumb;
 }
