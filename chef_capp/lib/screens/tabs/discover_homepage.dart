@@ -57,7 +57,7 @@ class RecipeHomePage extends StatelessWidget {
                       );
                     }
                 ),
-                ...(data.map((rd) => rd.toMiniCard(context)).toList())
+                ...(data.map((rd) => rd.toFullCard(context)).toList())
               ]);
             }
         ),

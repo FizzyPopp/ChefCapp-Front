@@ -10,7 +10,7 @@ class MiniRecipeCard extends StatelessWidget {
     @required this.cardText,
     @required this.heroID,
     @required this.cardImage,
-    this.onTap,
+    @required this.onTap,
   });
 
   @override
@@ -76,7 +76,7 @@ class FullRecipeCard extends StatelessWidget {
     @required this.calories,
     @required this.haveIngredients,
     @required this.totalIngredients,
-    this.onTap,
+    @required this.onTap
   });
 
   Color _cardCaptionColor(BuildContext context) {
@@ -102,7 +102,7 @@ class FullRecipeCard extends StatelessWidget {
         horizontal: cardMargins * 2,
       ),
       child: InkWell(
-        onTap: (){ },
+        onTap: onTap,
         child: SizedBox(
           height: cardTextAreaHeight(context),
           child: Row(
@@ -213,7 +213,7 @@ class HeroCard extends StatelessWidget {
     @required this.cardText,
     @required this.heroID,
     @required this.cardImage,
-    this.onTap,
+    @required this.onTap,
   });
 
   @override
