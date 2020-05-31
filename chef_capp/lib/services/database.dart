@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // THIS AND auth.dart ARE FROM THE TUTORIAL ABOVE
 // NEED TO CONVERT PROVIDER TYPE THINGS, CAN GET RID OF MOST STREAMS
 
+/// Controllers have no concept of the database, instead they use this class for all remote calls
 class DatabaseService {
 
   /*

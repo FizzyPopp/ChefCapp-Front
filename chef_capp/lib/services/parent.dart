@@ -1,5 +1,12 @@
 import 'package:chef_capp/index.dart';
 
+/// Static object holds most other Controllers:
+/// - ensures only one instance exists at a time
+/// - ensures objects don't get deleted accidentally
+/// - enables easy access to whatever controller
+/// - universal source of truth
+///
+/// Also holds the User object, but no other models
 class ParentController with ChangeNotifier {
   static const int SEED = 2;
   static User _user;

@@ -1,7 +1,7 @@
 import 'package:chef_capp/index.dart';
 import 'dart:math';
 
-/// this is a doc comment on discover controller
+/// Responsible for the Discover homepage, as well as recipe previews and collections
 class DiscoverController with ChangeNotifier {
   /*
   - responsible for the discover page (exploring recipes aka landing page): discover screen will always call this controller. This controller can then call other controllers, but the UI has no knowledge of that.

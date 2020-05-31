@@ -4,6 +4,8 @@ import 'package:chef_capp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
+/// Used to deal with all aspects of authentication: register, sign in, sign out, recover password
+/// Not tied to a specific screen, does not hold the user object (ParentController does that) but can operate on it
 class AuthController with ChangeNotifier {
 
   /*

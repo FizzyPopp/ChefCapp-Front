@@ -1,3 +1,5 @@
+// use dart uuid package?
+
 class ID {
   final String _hash;
   ID(this._hash);
