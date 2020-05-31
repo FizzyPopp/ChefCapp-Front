@@ -26,6 +26,128 @@ List<Color> colors(BuildContext context) {
   ];
 }
 
+class RecipeCooking extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              right: 0,
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+
+                },
+              ),
+            ),
+            Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 4.0,
+                      runSpacing: 4.0,
+                      children: <Widget>[
+                        IngredientChip(label: '100gr (4 tbsp) salt',),
+                        IngredientChip(label: '400gr (2 cups) fresh basil',),
+                        IngredientChip(label: '50gr (3 tsp) minced garlic',),
+                        IngredientChip(label: '100gr (4 tbsp) salt',),
+                        IngredientChip(label: '400gr (2 cups) fresh basil',),
+                        IngredientChip(label: '50gr (3 tsp) minced garlic',),
+                      ],
+                    ),
+                    SizedBox(height: gutters,),
+                    Expanded(
+                      child: CustomScrollView(
+                        physics: BouncingScrollPhysics(),
+                        slivers: <Widget>[
+                          SliverList(
+                            delegate: SliverChildListDelegate(
+                              [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: xMargins,
+                                    vertical: 0,
+                                  ),
+                                  child: Text(
+                                    'Lorem ipsum dolor sit amet, consectetur '
+                                      'adipiscing elit. Integer elementum mi eu bibendum dapibus. '
+                                      'Morbi semper nibh sit amet tincidunt auctor. Ut molestie '
+                                      'tortor maximus enim feugiat vehicula. In et metus eget ante '
+                                      'vulputate ultrices sit amet imperdiet ligula. Morbi hendrerit '
+                                      'luctus enim. Mauris nulla arcu, tincidunt quis ullamcorper ac, '
+                                      'tincidunt vel nulla. Curabitur in felis ac quam feugiat lacinia '
+                                      'ornare porttitor nisi. Donec sed tortor neque. Proin ornare '
+                                      'elit nec malesuada auctor. Nulla hendrerit, neque a sollicitudin '
+                                      'molestie, odio nunc consectetur felis, sed feugiat eros odio '
+                                      'eget enim. Vivamus dignissim ex lorem.'
+                                        'Lorem ipsum dolor sit amet, consectetur '
+                                        'adipiscing elit. Integer elementum mi eu bibendum dapibus. '
+                                        'Morbi semper nibh sit amet tincidunt auctor. Ut molestie '
+                                        'tortor maximus enim feugiat vehicula. In et metus eget ante '
+                                        'vulputate ultrices sit amet imperdiet ligula. Morbi hendrerit '
+                                        'luctus enim. Mauris nulla arcu, tincidunt quis ullamcorper ac, '
+                                        'tincidunt vel nulla. Curabitur in felis ac quam feugiat lacinia '
+                                        'ornare porttitor nisi. Donec sed tortor neque. Proin ornare '
+                                        'elit nec malesuada auctor. Nulla hendrerit, neque a sollicitudin '
+                                        'molestie, odio nunc consectetur felis, sed feugiat eros odio '
+                                        'eget enim. Vivamus dignissim ex lorem.',
+                                    style: Theme.of(context).textTheme.headline6,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+              scrollDirection: Axis.horizontal,
+              pagination: SwiperPagination(
+                //alignment: Alignment.centerRight,
+                builder: SwiperPagination.fraction,
+              ),
+              control: SwiperControl(
+                padding: EdgeInsets.symmetric(
+                  //horizontal: screenWidth(context) / 2 - 60,
+                  //vertical: screenHeight(context) / 40,
+                ),
+              ),
+              loop: false,
+              itemCount: 10,
+              viewportFraction: 0.8,
+              scale: 0.8,
+              fade: 0.1,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class IngredientChip extends StatelessWidget {
+  final String label;
+
+  IngredientChip({this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      label: Text(label),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    );
+  }
+}
+
+
+/*
 class OverlayData {
   final String heading;
   final Widget content;
@@ -313,3 +435,4 @@ class _RecipeCookingStepsState extends State<RecipeCookingSteps> {
     widget.notifier?.value = _pageController.page - _prevPage;
   }
 }
+*/
