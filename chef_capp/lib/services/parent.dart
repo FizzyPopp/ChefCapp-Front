@@ -1,9 +1,10 @@
 import 'package:chef_capp/index.dart';
 
-/// Static object holds most other Controllers:
-/// - ensures only one instance exists at a time
-/// - ensures objects don't get deleted accidentally
-/// - enables easy access to whatever controller
+/// Static object holds most other Controllers
+/// - created on startup
+/// - static ensures only one instance exists at a time
+/// - static ensures objects don't get deleted accidentally
+/// - static ensures everything has access, and thus easy access to almost any other controller
 /// - universal source of truth
 ///
 /// Also holds the User object, but no other models
@@ -15,14 +16,6 @@ class ParentController with ChangeNotifier {
   static DiscoverController _discoverController;
   static InventoryController _inventoryController;
   static RecipeController _recipeController;
-
-  /*
-  - created on start up
-  - all other controllers have access to it
-  - dispatches all other controllers (ensures there's only ever one instance of the Discover controller, etc.)
-  - most screens will need access to this controller, as they will ask it for other controllers
-  - single universal source of truth
-   */
 
   static void set user(User user) {
     if (_user != null) {

@@ -9,15 +9,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // NEED TO CONVERT PROVIDER TYPE THINGS, CAN GET RID OF MOST STREAMS
 
 /// Controllers have no concept of the database, instead they use this class for all remote calls
+/// This class holds all db CRUD actions, regardless of screen or controller
+/// ensures consistent and orderly access
 class DatabaseService {
-
-  /*
-  - holds all db access functions, regardless of screen or controller
-  - ensures consistent and ordered access
-  ( what is currently here is ripped from a tutorial, and not actually to be used; it's just for learning )
-   */
-
+  // ( most of below is ripped from a tutorial, and not actually to be used; it's just for learning )
   final String uid;
+
   DatabaseService({ this.uid });
 
   // collection reference

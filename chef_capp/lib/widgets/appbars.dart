@@ -37,10 +37,10 @@ class MainSliverAppBar extends StatelessWidget{
 }
 
 class RecipeSliverAppBar extends StatelessWidget {
-  final RecipeData rD;
+  final RecipeController rc;
   
   RecipeSliverAppBar({
-    @required this.rD,
+    @required this.rc,
   });
   
   @override
@@ -53,7 +53,7 @@ class RecipeSliverAppBar extends StatelessWidget {
         background: Container(
           padding: EdgeInsets.only(bottom: 156.0),
           child: Hero(
-            tag: rD.heroID,
+            tag: rc.rd.heroID,
             child: ShaderMask(
               shaderCallback: (rect) {
                 return LinearGradient(
@@ -64,16 +64,13 @@ class RecipeSliverAppBar extends StatelessWidget {
                     Rect.fromLTRB(0, 0, rect.width, rect.height));
               },
               blendMode: BlendMode.srcATop,
-              child: rD.r.thumb,
+              child: rc.rd.r.thumb,
             ),
           ),
         ),
       ),
       bottom: RecipeHeader(
-        recipeTitle: rD.r.title,
-        prepTime: rD.r.prepTime,
-        cookTime: rD.r.cookTime,
-        calories: rD.r.calories,
+        rc: rc
       ),
     );
   }

@@ -1,13 +1,8 @@
 import 'package:chef_capp/index.dart';
 import 'dart:math';
 
-/// Responsible for the Discover homepage, as well as recipe previews and collections
+/// Responsible for the Discover homepage, as well as generic lists of recipes (collections, history, favorites)
 class DiscoverController with ChangeNotifier {
-  /*
-  - responsible for the discover page (exploring recipes aka landing page): discover screen will always call this controller. This controller can then call other controllers, but the UI has no knowledge of that.
-  - Makes sure another db call is not made if recipe already stored locally, kind of like a cache
-   */
-
   List<RecipeCollectionData> hero;
   List<RecipeData> recent; // aka history
   List<RecipeData> favorite;
@@ -20,6 +15,38 @@ class DiscoverController with ChangeNotifier {
     favorite = List<RecipeData>();
     custom = List<RecipeData>();
     _heroStart = 0;
+  }
+
+  // on app start:
+  // - query db for list of all recipe uuids
+  // - query db for list of recipe collection uuids and the recipe uuids within them
+  // on successful login:
+  // - query db for favorite and historical recipe uuids
+  // - based off of all above uuids, query for slightly more information on the recipes (recipe overview, pictures async)
+  // on opening a recipe overview:
+  // - download recipe steps in the background
+
+  // will this work to load images async from text?
+  Image getImageFromURL(String url) {
+    /*
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('path')
+        .child('to')
+        .child('the')
+        .child('image_filejpg');
+
+    var url = await ref.getDownloadURL() as String;
+     */
+
+    Image out = Image.network(url);
+    out.image.resolve(ImageConfiguration()).addListener(
+      ImageStreamListener((info, call) {
+        // image is loaded, this class (DiscoverController) might want to notify listeners
+        },
+      ),
+    );
+    return out;
   }
 
   String _genHeroID() {
@@ -114,70 +141,3 @@ class RecipeCollectionData {
     ));
   }
 }
-
-class RecipeData {
-  final Recipe _r;
-  final String _heroID;
-
-  RecipeData(this._r, this._heroID);
-
-  Recipe get r => _r;
-  String get heroID => _heroID;
-
-  Widget toMiniCard(BuildContext context) {
-    return
-      MiniRecipeCard(
-        cardText: _r.title,
-        cardImage: _r.thumb,
-        heroID: _heroID,
-        onTap: (){_onTapMiniRecipeCard(context);},
-      );
-  }
-
-  void _onTapMiniRecipeCard(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => RecipeOverview(rD: this)
-    ));
-  }
-
-  Widget toFullCard(BuildContext context) {
-    return FullRecipeCard(
-        cardText: _r.title,
-        cardImage: _r.thumb,
-        time: _r.cookTime + _r.prepTime,
-        calories: _r.calories,
-        haveIngredients: 0,
-        totalIngredients: 5,
-        onTap: (){onTapFullRecipeCard(context);}
-    );
-  }
-
-  void onTapFullRecipeCard(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => RecipeOverview(rD: this)
-    ));
-  }
-}
-
-// list of ingredients = a list of vectors
-// "mediterranean", "korean", "spicy", etc. is difficult to do
-// for each recipe, get jaccard index
-// ultimately for mvp, only consider what the user has on hand, their history, and their favorites?
-// also need some underlying ranking?
-// what else could be a factor:
-// independent ranking
-// dependant (personalized) ranking
-// prep time
-// cook time
-// number of ingredients
-// least amount of ingredients by volume or scarcity (will not deplete anything on hand)
-// meal size
-// how many times they have had the option to cook it before and chose to cook something else
-// calories
-
-// ranking could be based on:
-// rating
-// most cooked
-// most favorited
-// geographic cuisine
-// some ML clustering thing

@@ -2,29 +2,23 @@ import 'package:chef_capp/index.dart';
 import 'package:provider/provider.dart';
 
 class RecipeOverview extends StatelessWidget {
-  final RecipeData rD;
+  final RecipeController rc;
 
   RecipeOverview({
-    @required this.rD
+    @required this.rc
   });
 
-  // never pass rD, just use consumers to access it?
-  
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => RecipeController(rD),
+    return ChangeNotifierProvider.value(
+      value: rc,
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
           floatingActionButton: FloatingActionButton.extended(
             backgroundColor: Theme.of(context).primaryColor,
             foregroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) => RecipeCooking()
-              ));
-            },
+            onPressed: (){ rc.getCooking(context); },
             icon: Icon(Icons.hot_tub),
             label: Text('GET COOKING!'),
           ),
@@ -36,12 +30,12 @@ class RecipeOverview extends StatelessWidget {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   RecipeSliverAppBar(
-                    rD: rD,
+                    rc: rc,
                   ),
                 ];
               },
               body: TabBarView(children: <Widget>[
-                IngredientsOverview(rD.r.ingredients),
+                IngredientsOverview(rc.rd.r.ingredients),
                 DirectionsOverview(),
               ]),
             ),
@@ -53,16 +47,10 @@ class RecipeOverview extends StatelessWidget {
 }
 
 class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
-  final String recipeTitle;
-  final int prepTime;
-  final int cookTime;
-  final int calories;
+  final RecipeController rc;
 
   RecipeHeader({
-    @required this.recipeTitle,
-    @required this.prepTime,
-    @required this.cookTime,
-    @required this.calories,
+    @required this.rc
   });
 
   @override
@@ -80,7 +68,7 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
                 child: Text(
-                  recipeTitle,
+                  rc.rd.r.title,
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -100,8 +88,8 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(prepTime.toString() + ' min prep'),
-                          Text('+ ' + cookTime.toString() + ' min cook')
+                          Text(rc.rd.r.prepTime.toString() + ' min prep'),
+                          Text('+ ' + rc.rd.r.cookTime.toString() + ' min cook')
                         ],
                       )
                     ],
@@ -113,7 +101,7 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
                         size: 16.0,
                       ),
                       SizedBox(width: 8.0),
-                      Text(calories.toString() + ' cal / serving'),
+                      Text(rc.rd.r.calories.toString() + ' cal / serving'),
                     ],
                   ),
                 ],

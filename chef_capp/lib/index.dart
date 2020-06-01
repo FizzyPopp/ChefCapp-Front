@@ -9,6 +9,7 @@ export 'package:chef_capp/screens/authentication/signup.dart';
 
 export 'package:chef_capp/models/equipment.dart';
 export 'package:chef_capp/models/recipe.dart';
+export 'package:chef_capp/models/recipe_preview.dart';
 export 'package:chef_capp/models/recipe_collection.dart';
 export 'package:chef_capp/models/recipe_step.dart';
 export 'package:chef_capp/models/ingredient.dart';
@@ -16,6 +17,7 @@ export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/user.dart';
 export 'package:chef_capp/models/id.dart';
 export 'package:chef_capp/models/dummy.dart';
+export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
