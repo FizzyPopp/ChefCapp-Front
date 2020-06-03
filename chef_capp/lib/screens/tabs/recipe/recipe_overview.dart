@@ -36,7 +36,7 @@ class RecipeOverview extends StatelessWidget {
               },
               body: TabBarView(children: <Widget>[
                 IngredientsOverview(rc.rd.r.ingredients),
-                DirectionsOverview(),
+                DirectionsOverview(rc.rd.r.steps),
               ]),
             ),
           ),
@@ -151,9 +151,20 @@ class IngredientsOverview extends StatelessWidget {
 }
 
 class DirectionsOverview extends StatelessWidget {
+  final List<RecipeStep> steps;
+
+  DirectionsOverview(this.steps);
+
   @override
   Widget build(BuildContext context) {
-    return VerticalListBuilder(dummyStepList);
+    var r = steps.asMap().map((i, s) => MapEntry(i, StepRow(
+        step: i,
+        directions: s.description
+    ))).values.toList();
+    return VerticalListBuilder([
+      ...r,
+      SizedBox(height: 60.0)
+    ]);
   }
 }
 

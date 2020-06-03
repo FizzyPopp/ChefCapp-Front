@@ -14,16 +14,16 @@ class Recipe implements RecipeInterface {
 
   Recipe(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._steps, this._thumb);
 
-  Recipe.fromOverview(RecipePreview rp, this._steps) :
-        this._id = rp.id,
-        this._title = rp.title,
-        this._prepTime = rp.prepTime,
-        this._cookTime = rp.cookTime,
-        this._calories = rp.calories,
-        this._tags = rp.tags,
-        this._ingredients = rp.ingredients,
-        this._cookware = rp.cookware,
-        this._thumb = rp.thumb;
+  Recipe.fromOverview(RecipeInterface ri, this._steps) :
+        this._id = ri.id,
+        this._title = ri.title,
+        this._prepTime = ri.prepTime,
+        this._cookTime = ri.cookTime,
+        this._calories = ri.calories,
+        this._tags = ri.tags,
+        this._ingredients = ri.ingredients,
+        this._cookware = ri.cookware,
+        this._thumb = ri.thumb;
 
   ID get id => _id;
 

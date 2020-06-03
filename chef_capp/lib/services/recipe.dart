@@ -5,7 +5,11 @@ import 'package:chef_capp/index.dart';
 class RecipeController with ChangeNotifier {
   final RecipeData rd;
 
-  RecipeController(this.rd);
+  RecipeController(this.rd) {
+    // get the recipe steps async from db, then:
+    // rd.r = Recipe.fromOverview(rd.r, steps);
+    rd.r = Recipe.fromOverview(rd.r, (rd.r as Recipe).steps);
+  }
 
   void getCooking(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
@@ -15,12 +19,13 @@ class RecipeController with ChangeNotifier {
 }
 
 class RecipeData {
-  final RecipeInterface _r;
+  RecipeInterface _r;
   final String _heroID;
 
   RecipeData(this._r, this._heroID);
 
-  Recipe get r => _r;
+  RecipeInterface get r => _r;
+  set r (RecipeInterface ri) => _r = ri.id.equals(_r.id) ? ri : _r;
   String get heroID => _heroID;
 
   Widget toMiniCard(BuildContext context) {
