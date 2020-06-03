@@ -9,20 +9,31 @@ export 'package:chef_capp/screens/authentication/signup.dart';
 
 export 'package:chef_capp/models/equipment.dart';
 export 'package:chef_capp/models/recipe.dart';
+export 'package:chef_capp/models/recipe_preview.dart';
+export 'package:chef_capp/models/recipe_collection.dart';
 export 'package:chef_capp/models/recipe_step.dart';
 export 'package:chef_capp/models/ingredient.dart';
 export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/user.dart';
 export 'package:chef_capp/models/id.dart';
 export 'package:chef_capp/models/dummy.dart';
+export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_favorites.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_history.dart';
+export 'package:chef_capp/screens/tabs/discover/discover_generic_list.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_cooking.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_overview.dart';
+
+export 'package:chef_capp/services/parent.dart';
+export 'package:chef_capp/services/discover.dart';
+export 'package:chef_capp/services/inventory.dart';
+export 'package:chef_capp/services/database.dart';
+export 'package:chef_capp/services/auth.dart';
+export 'package:chef_capp/services/recipe.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';
 export 'package:chef_capp/utilities/media_queries.dart';

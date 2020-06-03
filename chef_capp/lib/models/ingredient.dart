@@ -1,12 +1,17 @@
 import 'package:chef_capp/index.dart';
-import 'dart:math';
-
-
 
 class Ingredient {
   // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient
   final ID _id;
   final String _name;
-  final double _amount;
-  Ingredient(this._id, this._name, this._amount);
+  final double _measurement;
+  final String _unit = "g";
+
+  Ingredient(this._id, this._name, this._measurement);
+
+  ID get id => _id;
+
+  String get name => _name;
+
+  String get amount => "${_measurement.toInt()} $_unit";
 }

@@ -1,37 +1,56 @@
 import 'package:chef_capp/index.dart';
-import 'dart:math';
 
-class Recipe {
+class Recipe implements RecipeInterface {
   final ID _id;
   final String _title;
   final int _prepTime; // minutes, should probably spin into dedicated PrepTime class
+  final int _cookTime;
+  final int _calories;
   final List<Tag> _tags;
-//  final String _blurb;
   final List<Ingredient> _ingredients;
   final List<Equipment> _cookware;
-  List<RecipeStep> _steps;
-  // images
+  final List<RecipeStep> _steps;
+  final Image _thumb;
 
-  Recipe(
-    this._id,
+  Recipe(this._id,
     this._title,
     this._prepTime,
+    this._cookTime,
+    this._calories,
     this._tags,
-    //this._blurb,
     this._ingredients,
     this._cookware,
-    this._steps
-  );
+    this._steps,
+    this._thumb);
 
-  bool get isPartial {
-    return _id != null && _title != null && _prepTime != null && _tags != null && _blurb != null && _ingredients != null && _cookware != null && _steps != null;
-  }
+  Recipe.fromOverview(RecipePreview rp, this._steps) :
+        this._id = rp.id,
+        this._title = rp.title,
+        this._prepTime = rp.prepTime,
+        this._cookTime = rp.cookTime,
+        this._calories = rp.calories,
+        this._tags = rp.tags,
+        this._ingredients = rp.ingredients,
+        this._cookware = rp.cookware,
+        this._thumb = rp.thumb;
 
+  ID get id => _id;
 
+  String get title => _title;
 
-  // meant to convert a partial recipe to a full recipe, but probably need other fields to be updated too
-  Recipe withSteps(List<RecipeStep> _newSteps) {
-    return Recipe(_id, _title, _prepTime, _tags, _blurb, _ingredients, _cookware, _newSteps);
+  int get prepTime => _prepTime;
 
-  }
+  int get cookTime => _cookTime;
+
+  int get calories => _calories;
+
+  List<Tag> get tags => [..._tags];
+
+  List<Ingredient> get ingredients => [..._ingredients];
+
+  List<Equipment> get cookware => [..._cookware];
+
+  List<RecipeStep> get steps => [..._steps];
+
+  Image get thumb => _thumb;
 }

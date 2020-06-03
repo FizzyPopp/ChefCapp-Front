@@ -4,12 +4,10 @@ import 'package:chef_capp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
+/// Used to deal with all aspects of authentication: register, sign in, sign out, recover password
+/// Responsible for all unauthenticated screens
 class AuthController with ChangeNotifier {
-
-  /*
-  - responsible for all the unauthenticated screens
-  ( what is currently here is ripped from a tutorial, and not actually to be used; it's just for learning )
-   */
+  // ( most of below is ripped from a tutorial, and not actually to be used; it's just for learning )
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 

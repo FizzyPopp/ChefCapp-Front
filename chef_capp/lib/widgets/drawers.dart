@@ -26,7 +26,7 @@ class ChefDrawer extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: AssetImage('assets/food.jpg'),
+                  backgroundImage: AssetImage('assets/images/food.jpg'),
                   radius: 50.0,
                 ),
                 Text('Johnny Chocolat')

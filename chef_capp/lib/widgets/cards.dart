@@ -10,7 +10,7 @@ class MiniRecipeCard extends StatelessWidget {
     @required this.cardText,
     @required this.heroID,
     @required this.cardImage,
-    this.onTap,
+    @required this.onTap,
   });
 
   @override
@@ -61,9 +61,28 @@ class MiniRecipeCard extends StatelessWidget {
 }
 
 class FullRecipeCard extends StatelessWidget {
+  final String cardText;
+  final Image cardImage;
+  final int time;
+  final int calories;
+  final int haveIngredients;
+  final int totalIngredients;
+  final Function onTap;
+
+  FullRecipeCard({
+    @required this.cardText,
+    @required this.cardImage,
+    @required this.time,
+    @required this.calories,
+    @required this.haveIngredients,
+    @required this.totalIngredients,
+    @required this.onTap
+  });
+
   Color _cardCaptionColor(BuildContext context) {
     return Theme.of(context).textTheme.caption.color;
   }
+
   TextStyle _cardCaptionStyle(BuildContext context) {
     return TextStyle(
       color: _cardCaptionColor(context),
@@ -83,19 +102,14 @@ class FullRecipeCard extends StatelessWidget {
         horizontal: cardMargins * 2,
       ),
       child: InkWell(
-        onTap: (){
-
-        },
+        onTap: onTap,
         child: SizedBox(
           height: cardTextAreaHeight(context),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
-                child: Image.asset(
-                  'assets/images/recipe00001.jpg',
-                  fit: BoxFit.cover,
-                ),
+                child: cardImage,
               ),
               SizedBox(
                 width: cardTextAreaWidth(context),
@@ -106,7 +120,7 @@ class FullRecipeCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       AutoSizeText(
-                        'Full Recipe Place Holder Text',
+                        cardText,
                         style: Theme.of(context).textTheme.title,
                         minFontSize: Theme.of(context).textTheme.title.fontSize,
                         maxLines: 2,
@@ -132,7 +146,7 @@ class FullRecipeCard extends StatelessWidget {
                                     width: 8.0,
                                   ),
                                   Text(
-                                    'XX min',
+                                    time.toString() + " mins",
                                     style: _cardCaptionStyle(context),
                                   ),
                                 ],
@@ -148,7 +162,7 @@ class FullRecipeCard extends StatelessWidget {
                                     width: 8.0,
                                   ),
                                   Text(
-                                    'XXX cal',
+                                    calories.toString() + " cal",
                                     style: _cardCaptionStyle(context),
                                   ),
                                 ],
@@ -168,7 +182,7 @@ class FullRecipeCard extends StatelessWidget {
                                 width: 8.0,
                               ),
                               Text(
-                                'X/Y ingredients',
+                                haveIngredients.toString() + "/" + totalIngredients.toString() + " ingredients",
                                 style: _cardCaptionStyle(context),
                               ),
                             ],
@@ -199,7 +213,7 @@ class HeroCard extends StatelessWidget {
     @required this.cardText,
     @required this.heroID,
     @required this.cardImage,
-    this.onTap,
+    @required this.onTap,
   });
 
   @override

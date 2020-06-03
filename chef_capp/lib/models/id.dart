@@ -1,7 +1,11 @@
-import 'package:chef_capp/index.dart';
-import 'dart:math';
+// use dart uuid package?
 
 class ID {
-  final String hash;
-  ID(this.hash);
+  final String _hash;
+  ID(this._hash);
+  String get hash => _hash;
+  @override
+  String toString() {
+    return _hash;
+  }
 }

@@ -27,6 +27,7 @@ List<Color> colors(BuildContext context) {
 }
 
 class RecipeCooking extends StatelessWidget {
+  // use Consumer to access RecipeController
   @override
   Widget build(BuildContext context) {
     return Scaffold(

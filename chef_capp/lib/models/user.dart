@@ -1,5 +1,4 @@
 import 'package:chef_capp/index.dart';
-import 'dart:math';
 
 class User {
   // unit preferences
