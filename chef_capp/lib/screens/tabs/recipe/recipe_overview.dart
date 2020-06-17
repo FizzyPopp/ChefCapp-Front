@@ -27,7 +27,9 @@ class RecipeOverview extends StatelessWidget {
           foregroundColor: Theme.of(context).primaryIconTheme.color,
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) => RecipeCooking()
+                builder: (BuildContext context) => RecipeCooking(
+                  cookingSteps: dummyRecipeStepList(context),
+                )
             ));
           },
           icon: Icon(Icons.hot_tub),
