@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 
 class RecipeHomePage extends StatelessWidget {
   RecipeHomePage() {
-    ParentController.discoverController.genDummyLists();
+    ParentController.discover.genDummyLists();
   }
 
   @override
   Widget build(BuildContext context) {
     return
       ChangeNotifierProvider.value(
-        value: ParentController.discoverController,
+        value: ParentController.discover,
         child:
         Selector<DiscoverController, List<RecipeData>>(
             selector: (_, model) => model.custom,
@@ -29,7 +29,7 @@ class RecipeHomePage extends StatelessWidget {
                   headingText: 'My History',
                   interactionText: 'SEE ALL',
                   onTap: (){
-                    ParentController.discoverController.discoverHistory(context);
+                    ParentController.discover.discoverHistory(context);
                   },
                 ),
                 Selector<DiscoverController, List<RecipeData>>(
@@ -45,7 +45,7 @@ class RecipeHomePage extends StatelessWidget {
                   headingText: 'My Favorites',
                   interactionText: 'SEE ALL',
                   onTap: (){
-                    ParentController.discoverController.discoverFavorites(context);
+                    ParentController.discover.discoverFavorites(context);
                   },
                 ),
                 Selector<DiscoverController, List<RecipeData>>(

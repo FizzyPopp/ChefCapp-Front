@@ -15,7 +15,6 @@ class ParentController with ChangeNotifier {
   static DatabaseService _databaseService;
   static DiscoverController _discoverController;
   static InventoryController _inventoryController;
-  static RecipeController _recipeController;
 
   static void set user(User user) {
     if (_user != null) {
@@ -28,28 +27,28 @@ class ParentController with ChangeNotifier {
     return _user;
   }
 
-  static AuthController get authController {
+  static AuthController get auth {
     if (_authController == null) {
       _authController = AuthController();
     }
     return _authController;
   }
 
-  static DatabaseService get databaseService {
+  static DatabaseService get database {
     if (_databaseService == null) {
       _databaseService = DatabaseService();
     }
     return _databaseService;
   }
 
-  static DiscoverController get discoverController {
+  static DiscoverController get discover {
     if (_discoverController == null) {
       _discoverController = DiscoverController();
     }
     return _discoverController;
   }
 
-  static InventoryController get inventoryController {
+  static InventoryController get inventory {
     if (_inventoryController == null) {
       _inventoryController = InventoryController();
     }

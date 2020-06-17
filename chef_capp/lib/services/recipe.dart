@@ -9,6 +9,7 @@ class RecipeController with ChangeNotifier {
     // get the recipe steps async from db, then:
     // rd.r = Recipe.fromOverview(rd.r, steps);
     rd.r = Recipe.fromOverview(rd.r, (rd.r as Recipe).steps);
+    //ParentController.databaseService.testGetData();
   }
 
   void getCooking(BuildContext context) {

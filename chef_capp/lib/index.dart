@@ -6,6 +6,7 @@ export 'package:flutter_swiper/flutter_swiper.dart';
 
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
+export 'package:chef_capp/screens/authentication/easy_login.dart';
 
 export 'package:chef_capp/models/equipment.dart';
 export 'package:chef_capp/models/recipe.dart';

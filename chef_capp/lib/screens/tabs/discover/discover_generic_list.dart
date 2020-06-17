@@ -13,7 +13,7 @@ class DiscoverGenericList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: ParentController.discoverController,
+      value: ParentController.discover,
       child: Scaffold(
           appBar: GenericAppBar(
             appBarTitle: title,

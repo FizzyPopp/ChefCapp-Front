@@ -20,11 +20,12 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      initialRoute: '/home',
+      initialRoute: '/easylogin',
       routes: {
         '/': (context) => Onboarding(),
         '/home': (context) => App(),
         '/login': (context) => LoginPage(),
+        '/easylogin': (context) => EasyLogin(),
       },
     );
   }
