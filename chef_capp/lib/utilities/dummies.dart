@@ -99,3 +99,88 @@ final List<Widget> dummyStepList = [
   ),
   SizedBox(height: 60.0),
 ];
+
+final List<Widget> dummyIngredientChipList1 = [
+  IngredientChip(label: '100gr (4 tbsp) salt',),
+  IngredientChip(label: '400gr (2 cups) fresh basil',),
+  IngredientChip(label: '50gr (3 tsp) minced garlic',),
+];
+
+final List<Widget> dummyIngredientChipList2 = [
+  IngredientChip(label: '2 unit socks',),
+  IngredientChip(label: '400ml (2 cups) tomato',),
+];
+
+List<TextSpan> dummyStepText1(BuildContext context) {
+  return <TextSpan>[
+    TextSpan(text:'In a dank mixing bowl stir '),
+    TextSpan(
+      text:'salt',
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    TextSpan(text:' and '),
+    TextSpan(
+      text:'fresh basil',
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    TextSpan(text:' together. Yeet the '),
+    TextSpan(
+      text:'minced garlic',
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    TextSpan(text:' over your shoulder in style.'),
+  ];
+}
+
+List<TextSpan> dummyStepText2(BuildContext context) {
+  return <TextSpan>[
+    TextSpan(text:'Hang your '),
+    TextSpan(
+      text:'socks',
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    TextSpan(text:' and '),
+    TextSpan(
+      text:'tomatoes',
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    TextSpan(text:' on the drying rack.'),
+  ];
+}
+
+List<Widget> dummyRecipeStepList(BuildContext context) {
+  return <Widget>[
+    CookingStep(
+      ingredientChipList: dummyIngredientChipList1,
+      stepText: dummyStepText1(context),
+    ),
+    CookingStep(
+      ingredientChipList: dummyIngredientChipList2,
+      stepText: dummyStepText2(context),
+    ),
+    CookingStep(
+      ingredientChipList: dummyIngredientChipList1,
+      stepText: dummyStepText1(context),
+    ),
+    CookingStep(
+      ingredientChipList: dummyIngredientChipList2,
+      stepText: dummyStepText2(context),
+    ),
+    FinalStep(),
+  ];
+}
