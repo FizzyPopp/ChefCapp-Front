@@ -57,11 +57,28 @@ class Dummy {
   static RecipeStep recipeStep(int seed) {
     Random rnd = Random(seed);
     ID rsID = id();
+    int numDescriptions = 1 + rnd.nextInt(12);
+    int numChips = (numDescriptions / 2).floor();
     return RecipeStep(
         rsID,
-        "description of step with id " + rsID.hash,
-        [ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100))] // this may break other code, as no guarantee that these ingredients are in the recipe
+        // this may break other code, as no guarantee that these ingredients are in the recipe
+        [for (int i=0; i<numChips; i++) chip()],
+        [for (int i=0; i<numDescriptions; i++) descPart(i)]
     );
+  }
+
+  static String chip() {
+    return "a chip";
+  }
+
+  static DescPart descPart(int i) {
+    if (i == 0) {
+      return DescPart("Some text ", TextMod.none);
+    } else if (i%2 == 1) {
+      return DescPart("ingredient", TextMod.ingredient);
+    } else {
+      return DescPart(" some more text ", TextMod.none);
+    }
   }
 
   static var _ingredients = [

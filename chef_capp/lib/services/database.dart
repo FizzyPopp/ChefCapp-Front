@@ -24,6 +24,11 @@ class DatabaseService {
     return (_user != null);
   }
 
+  Recipe getTestRecipe() {
+    return Dummy.recipe(0);
+    //return null;
+  }
+
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
     //return user != null ? User(uid: user.uid) : null;
@@ -35,8 +40,6 @@ class DatabaseService {
     return _auth.onAuthStateChanged
         .map(_userFromFirebaseUser);
   }
-
-
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {

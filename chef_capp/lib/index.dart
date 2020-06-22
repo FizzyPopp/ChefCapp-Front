@@ -14,6 +14,7 @@ export 'package:chef_capp/models/recipe.dart';
 export 'package:chef_capp/models/recipe_preview.dart';
 export 'package:chef_capp/models/recipe_collection.dart';
 export 'package:chef_capp/models/recipe_step.dart';
+export 'package:chef_capp/models/desc_part.dart';
 export 'package:chef_capp/models/ingredient.dart';
 export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/user.dart';

@@ -4,15 +4,6 @@ import 'package:provider/provider.dart';
 class EasyLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Consumer<AuthController>(
-      builder: (context, data, _) {
-        return RaisedButton(
-          child: Text(data.loginButtonText),
-          padding: EdgeInsets.symmetric(vertical: 16.0),
-          onPressed: data.loginFunction,
-        );
-      }
-    );
     return ChangeNotifierProvider.value(
       value: ParentController.auth,
       child: Scaffold(
@@ -44,13 +35,22 @@ class EasyLogin extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(width: 20.0),
                         Expanded(
-                          child: RaisedButton(
-                            child: Text('Log In'),
-                            padding: EdgeInsets.symmetric(vertical: 16.0),
-                            onPressed: () {
-                              ParentController.auth.signInAnon(context);
-                            },
+                          child: Consumer<AuthController>(
+                              builder: (context, data, _) {
+                                return
+                                  RaisedButton(
+                                  child: Text(data.loginButtonText),
+                                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                                  onPressed: () { data.loginFunction(context); },
+                                );
+                              }
                           ),
+                          /*
+                          RaisedButton(
+                            child: Text("Go"),
+                            padding: EdgeInsets.symmetric(vertical: 16.0),
+                            onPressed: () { ParentController.auth.loginFunction(context); },
+                          ), */
                         ),
                       ],
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

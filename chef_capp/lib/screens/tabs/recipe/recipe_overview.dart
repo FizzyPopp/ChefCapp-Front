@@ -17,11 +17,7 @@ class RecipeOverview extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Theme.of(context).primaryIconTheme.color,
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) => RecipeCooking(
-                  cookingSteps: dummyRecipeStepList(context),
-                )
-            ));
+            rc.getCooking(context);
           },
           icon: Icon(Icons.hot_tub),
           label: Text('GET COOKING!'),
@@ -162,12 +158,16 @@ class DirectionsOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     var r = steps.asMap().map((i, s) => MapEntry(i, StepRow(
         step: i,
-        directions: s.description
+        directions: buildStepDescription(s),
     ))).values.toList();
     return VerticalListBuilder([
       ...r,
       SizedBox(height: 60.0)
     ]);
+  }
+
+  String buildStepDescription(RecipeStep step) {
+    return step.description.map((d) => d.text).join();
   }
 }
 
