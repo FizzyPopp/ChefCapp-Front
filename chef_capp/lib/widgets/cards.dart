@@ -47,7 +47,7 @@ class MiniRecipeCard extends StatelessWidget {
                 padding: EdgeInsets.all(gutters),
                 child: AutoSizeText(
                   cardText,
-                  style: Theme.of(context).textTheme.subhead,
+                  style: Theme.of(context).textTheme.subtitle1,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -67,10 +67,10 @@ class FullRecipeCard extends StatelessWidget {
   TextStyle _cardCaptionStyle(BuildContext context) {
     return TextStyle(
       color: _cardCaptionColor(context),
-      fontWeight: Theme.of(context).textTheme.body1.fontWeight,
-      fontFamily: Theme.of(context).textTheme.body1.fontFamily,
-      fontSize: Theme.of(context).textTheme.body1.fontSize,
-      height: Theme.of(context).textTheme.body1.height,
+      fontWeight: Theme.of(context).textTheme.bodyText2.fontWeight,
+      fontFamily: Theme.of(context).textTheme.bodyText2.fontFamily,
+      fontSize: Theme.of(context).textTheme.bodyText2.fontSize,
+      height: Theme.of(context).textTheme.bodyText2.height,
     );
   }
 
@@ -107,8 +107,8 @@ class FullRecipeCard extends StatelessWidget {
                     children: <Widget>[
                       AutoSizeText(
                         'Full Recipe Place Holder Text',
-                        style: Theme.of(context).textTheme.title,
-                        minFontSize: Theme.of(context).textTheme.title.fontSize,
+                        style: Theme.of(context).textTheme.headline6,
+                        minFontSize: Theme.of(context).textTheme.headline6.fontSize,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -235,9 +235,9 @@ class HeroCard extends StatelessWidget {
                     ),
                     AutoSizeText(
                       cardText,
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme.of(context).textTheme.headline6,
                       maxLines: 2,
-                      minFontSize: Theme.of(context).textTheme.title.fontSize,
+                      minFontSize: Theme.of(context).textTheme.headline6.fontSize,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],

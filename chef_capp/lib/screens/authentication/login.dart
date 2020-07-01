@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 12.0),
                   Image(
-                    image: AssetImage('assets/food.jpg'),
+                    image: AssetImage('assets/images/food.jpg'),
                   ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,

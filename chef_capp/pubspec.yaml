@@ -31,6 +31,7 @@ dependencies:
   google_fonts: ^1.1.0
   flutter_swiper:
     path: /Users/arda/AndroidStudioProjects/flutter_swiper
+  flutter_launcher_icons: ^0.7.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -42,6 +43,11 @@ dev_dependencies:
   pedantic: ^1.8.0
   mockito: ^4.1.1
 
+flutter_icons:
+  android: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#FF5722"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

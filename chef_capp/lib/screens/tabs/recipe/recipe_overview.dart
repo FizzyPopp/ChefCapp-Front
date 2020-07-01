@@ -131,7 +131,7 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
               ),
               SizedBox(height: 10.0,),
               TabBar(
-                labelColor: Theme.of(context).textTheme.body1.color,
+                labelColor: Theme.of(context).textTheme.bodyText2.color,
                 indicatorColor: Theme.of(context).primaryColor,
                 //indicatorWeight: 4,
                 tabs: <Widget>[

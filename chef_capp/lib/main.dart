@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => Onboarding(),
         '/home': (context) => App(),
@@ -43,7 +43,7 @@ class Onboarding extends StatelessWidget {
                 child: Column(
                     children: <Widget>[
                       Image(
-                        image: AssetImage('assets/food.jpg'),
+                        image: AssetImage('assets/images/food.jpg'),
                       ),
                       SizedBox(height: 12.0),
                       Container(
