@@ -73,11 +73,11 @@ class Dummy {
 
   static DescPart descPart(int i) {
     if (i == 0) {
-      return DescPart("Some text ", TextMod.none);
+      return DescPart("Some text ", TextMod.copy);
     } else if (i%2 == 1) {
-      return DescPart("ingredient", TextMod.ingredient);
+      return DescPart("ingredient", TextMod.name);
     } else {
-      return DescPart(" some more text ", TextMod.none);
+      return DescPart(" some more text ", TextMod.copy);
     }
   }
 
@@ -100,7 +100,8 @@ class Dummy {
     return Ingredient(
         _ingredients[i][0],
         "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
-        (100 * rnd.nextDouble())
+        (100 * rnd.nextDouble()),
+        "g"
     );
   }
 

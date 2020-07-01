@@ -33,16 +33,16 @@ class AuthController with ChangeNotifier {
   String get loginButtonText => _loginButtonText;
   Function get loginFunction => _loginFunction;
 
-  void loadTestRecipe(BuildContext context) async {
+  Future<void> loadTestRecipe(BuildContext context) async {
     _loginButtonText = "loading...";
     _loginFunction = null;
     notifyListeners();
-    ParentController.database.signInAnon().then((success) {
+    ParentController.database.signInAnon().then((success) async {
       if (success) {
         // get recipe from db
-        Recipe r = ParentController.database.getTestRecipe();
+        RecipePreview rp = await ParentController.database.getTestRecipePreview();
         // convert into RecipeData
-        RecipeData rd = RecipeData(r, "0");
+        RecipeData rd = RecipeData(rp, "0");
         // push RecipeOverview
         Navigator.push(context, MaterialPageRoute(
             builder: (BuildContext context) => RecipeOverview(rc: RecipeController(rd))

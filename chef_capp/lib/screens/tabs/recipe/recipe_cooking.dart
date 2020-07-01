@@ -71,9 +71,9 @@ class RecipeCooking extends StatelessWidget {
     }
     return step.description.map((d) {
       switch(d.style) {
-        case TextMod.none:
+        case TextMod.copy:
           return TextSpan(text: d.text);
-        case TextMod.ingredient:
+        case TextMod.name:
           return TextSpan(
             text: d.text,
             style: TextStyle(

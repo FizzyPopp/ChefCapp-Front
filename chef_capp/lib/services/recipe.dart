@@ -3,13 +3,19 @@ import 'package:chef_capp/index.dart';
 /// Spun up on demand when the user wants to see a recipe in detail
 /// will have to modify ingredients on hand if recipe is completed
 class RecipeController with ChangeNotifier {
-  final RecipeData rd;
+  RecipeData _rd;
 
-  RecipeController(this.rd) {
+  RecipeData get rd => _rd;
+
+  RecipeController(this._rd) {
     // get the recipe steps async from db, then:
     // rd.r = Recipe.fromOverview(rd.r, steps);
-    rd.r = Recipe.fromOverview(rd.r, (rd.r as Recipe).steps);
+    // rd.r = Recipe.fromOverview(rd.r, (rd.r as Recipe).steps);
     //ParentController.databaseService.testGetData();
+    ParentController.database.getRecipeFromPreview(this._rd.r).then((r) {
+      this._rd.r = r;
+      notifyListeners();
+    });
   }
 
   void getCooking(BuildContext context) {

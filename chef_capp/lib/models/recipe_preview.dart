@@ -2,6 +2,7 @@ import 'package:chef_capp/index.dart';
 
 /// This is just Recipe without steps
 class RecipePreview implements RecipeInterface {
+  // serving size??
   final ID _id;
   final String _title;
   final int _prepTime; // minutes, should probably spin into dedicated PrepTime class
@@ -10,9 +11,10 @@ class RecipePreview implements RecipeInterface {
   final List<Tag> _tags;
   final List<Ingredient> _ingredients;
   final List<Equipment> _cookware;
+  final List<String> _componentIDs;
   final Image _thumb;
 
-  RecipePreview(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._thumb);
+  RecipePreview(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._componentIDs, this._thumb);
 
   ID get id => _id;
 
@@ -32,5 +34,66 @@ class RecipePreview implements RecipeInterface {
 
   List<RecipeStep> get steps => [];
 
+  List<String> get componentIDs => _componentIDs;
+
   Image get thumb => _thumb;
+
+  static RecipePreview fromDB(data) {
+    // sanitize
+    if (data["id"] == null ||
+        data["id"] == "") {
+      throw ("bad id");
+    }
+    if (data["name"] == null ||
+        data["name"]["singular"] == null ||
+        data["name"]["singular"] == "") {
+      throw ("bad name");
+    }
+    if (data["time"] == null ||
+        data["time"] <= 0) {
+      throw ("bad time");
+    }
+    if (data["tags"] == null ||
+        data["tags"] is! List) {
+      throw ("bad tags");
+    }
+    if (data["ingredients"] == null ||
+        data["ingredients"] is! Map) {
+      throw ("bad ingredients");
+    }
+    if (data["components"] == null ||
+        data["components"] is! List){
+      throw ("bad components");
+    }
+
+    // parse
+    String title = data["name"]["singular"];
+    int prepTime = data["time"];
+    int cookTime = 0;
+    int calories = 0;
+    List<Tag> tags = [];
+    data["tags"].forEach((t) {
+      tags.add(Tag(Dummy.id(), t));
+    });
+    // ingredients with 0 quantity should go at the end
+    List<Ingredient> ingredients = [];
+    List<Ingredient> toTaste = [];
+    Ingredient ingr;
+    data["ingredients"].forEach((k, v) {
+      if (k != "keys") {
+        ingr = Ingredient.fromDB(v);
+        if (ingr.quantity == 0) {
+          toTaste.add(ingr);
+        } else {
+          ingredients.add(ingr);
+        }
+      }
+    });
+    ingredients = ingredients + toTaste;
+    List<Equipment> cookware = [];
+    Image thumb = Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover);
+
+    // return
+    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["components"]), thumb);
+  }
 }

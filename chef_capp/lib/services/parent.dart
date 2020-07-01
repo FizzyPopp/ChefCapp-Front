@@ -1,5 +1,7 @@
 import 'package:chef_capp/index.dart';
 
+// https://firebase.google.com/docs/reference/js/firebase.analytics.Analytics
+
 /// Static object holds most other Controllers
 /// - created on startup
 /// - static ensures only one instance exists at a time

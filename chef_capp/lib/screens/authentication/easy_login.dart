@@ -10,7 +10,6 @@ class EasyLogin extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              BackButton(),
               Container(
                 child: Column(
                   children: <Widget>[
@@ -33,7 +32,6 @@ class EasyLogin extends StatelessWidget {
                     SizedBox(height: 12.0),
                     Row(
                       children: <Widget>[
-                        SizedBox(width: 20.0),
                         Expanded(
                           child: Consumer<AuthController>(
                               builder: (context, data, _) {

@@ -6,9 +6,26 @@ class DescPart {
   DescPart(this._text, this._style);
   String get text => _text;
   TextMod get style => _style;
+
+  static stringToTextMod(String s) {
+    switch (s) {
+      case "copy":
+        return TextMod.copy;
+      case "quantity":
+        return TextMod.quantity;
+      case "unit":
+        return TextMod.unit;
+      case "name":
+        return TextMod.name;
+      default:
+        return TextMod.copy;
+    }
+  }
 }
 
 enum TextMod {
-  none,
-  ingredient
+  copy, // aka none
+  quantity,
+  unit,
+  name // of an ingredient
 }

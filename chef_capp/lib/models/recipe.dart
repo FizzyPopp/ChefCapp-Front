@@ -14,7 +14,7 @@ class Recipe implements RecipeInterface {
 
   Recipe(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._steps, this._thumb);
 
-  Recipe.fromOverview(RecipeInterface ri, this._steps) :
+  Recipe.fromPreview(RecipeInterface ri, this._steps) :
         this._id = ri.id,
         this._title = ri.title,
         this._prepTime = ri.prepTime,

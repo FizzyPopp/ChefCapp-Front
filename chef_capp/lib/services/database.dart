@@ -24,9 +24,26 @@ class DatabaseService {
     return (_user != null);
   }
 
-  Recipe getTestRecipe() {
-    return Dummy.recipe(0);
-    //return null;
+  Future<RecipePreview> getTestRecipePreview() async {
+    DocumentSnapshot snapshot = await Firestore.instance.collection('recipes').document('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
+
+    if (!snapshot.exists) {
+      throw ("Document does not exist");
+    }
+
+    return RecipePreview.fromDB(snapshot.data);
+  }
+
+  Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
+    QuerySnapshot qs = await Firestore.instance.collection('components').where('id', whereIn: rp.componentIDs).getDocuments();
+
+    List<RecipeStep> steps = [];
+    for (var d in qs.documents) {
+      // later on some documents might not be a step, but don't worry about it for now
+      steps.add(RecipeStep.fromDB(d.data, rp));
+    }
+
+    return Recipe.fromPreview(rp, steps);
   }
 
   // create user obj based on firebase user
