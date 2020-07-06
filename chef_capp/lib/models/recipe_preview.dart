@@ -45,12 +45,15 @@ class RecipePreview implements RecipeInterface {
       throw ("bad id");
     }
     if (data["name"] == null ||
+        data["name"] is! Map ||
         data["name"]["singular"] == null ||
         data["name"]["singular"] == "") {
       throw ("bad name");
     }
     if (data["time"] == null ||
-        data["time"] <= 0) {
+        data["time"] is! Map ||
+        data["time"]["cook"] == null ||
+        data["time"]["prepare"] == null) {
       throw ("bad time");
     }
     if (data["tags"] == null ||
@@ -68,28 +71,14 @@ class RecipePreview implements RecipeInterface {
 
     // parse
     String title = data["name"]["singular"];
-    int prepTime = data["time"];
-    int cookTime = 0;
+    int prepTime = data["time"]["prepare"];
+    int cookTime = data["time"]["cook"];
     int calories = 0;
     List<Tag> tags = [];
     data["tags"].forEach((t) {
       tags.add(Tag(Dummy.id(), t));
     });
-    // ingredients with 0 quantity should go at the end
-    List<Ingredient> ingredients = [];
-    List<Ingredient> toTaste = [];
-    Ingredient ingr;
-    data["ingredients"].forEach((k, v) {
-      if (k != "keys") {
-        ingr = Ingredient.fromDB(v);
-        if (ingr.quantity == 0) {
-          toTaste.add(ingr);
-        } else {
-          ingredients.add(ingr);
-        }
-      }
-    });
-    ingredients = ingredients + toTaste;
+    List<Ingredient> ingredients = Ingredient.listFromDB(data["ingredients"]);
     List<Equipment> cookware = [];
     Image thumb = Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover);
 

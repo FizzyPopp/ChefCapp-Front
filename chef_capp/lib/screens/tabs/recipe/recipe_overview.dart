@@ -20,7 +20,11 @@ class RecipeOverview extends StatelessWidget {
               rc.getCooking(context);
             },
             icon: Icon(Icons.hot_tub),
-            label: Text('GET COOKING!'),
+            label: Consumer<RecipeController>(
+                  builder: (context, rc, _) {
+                    return Text(rc.getCookingButtonText());
+                  },
+                ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           body: SafeArea(
@@ -97,13 +101,14 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
                     ],
                   ),
                   Row(
+                    // STATIC PLACEHOLDER!!!
                     children: <Widget>[
                       Icon(
-                        Icons.whatshot,
+                        Icons.face, //Icons.whatshot,
                         size: 16.0,
                       ),
                       SizedBox(width: 8.0),
-                      Text(rc.rd.r.calories.toString() + ' cal / serving'),
+                      Text("Serves 4"), //Text(rc.rd.r.calories.toString() + ' cal / serving'),
                     ],
                   ),
                 ],

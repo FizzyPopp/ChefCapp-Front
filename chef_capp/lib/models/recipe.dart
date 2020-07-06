@@ -14,16 +14,9 @@ class Recipe implements RecipeInterface {
 
   Recipe(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._steps, this._thumb);
 
-  Recipe.fromPreview(RecipeInterface ri, this._steps) :
-        this._id = ri.id,
-        this._title = ri.title,
-        this._prepTime = ri.prepTime,
-        this._cookTime = ri.cookTime,
-        this._calories = ri.calories,
-        this._tags = ri.tags,
-        this._ingredients = ri.ingredients,
-        this._cookware = ri.cookware,
-        this._thumb = ri.thumb;
+  static Recipe fromPreview(RecipePreview rp, List<RecipeStep> steps) {
+    return Recipe(rp.id, rp.title, rp.prepTime, rp.cookTime, rp.calories, rp.tags, rp.ingredients, rp.cookware, RecipeStep.orderSteps(steps), rp.thumb);
+  }
 
   ID get id => _id;
 

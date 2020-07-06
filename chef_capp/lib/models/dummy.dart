@@ -61,6 +61,9 @@ class Dummy {
     int numChips = (numDescriptions / 2).floor();
     return RecipeStep(
         rsID,
+        // these are incorrect
+        rsID,
+        rsID,
         // this may break other code, as no guarantee that these ingredients are in the recipe
         [for (int i=0; i<numChips; i++) chip()],
         [for (int i=0; i<numDescriptions; i++) descPart(i)]
@@ -100,6 +103,7 @@ class Dummy {
     return Ingredient(
         _ingredients[i][0],
         "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
+        "${_ingredients[i][1]} plural [id: ${_ingredients[i][0]}]",
         (100 * rnd.nextDouble()),
         "g"
     );

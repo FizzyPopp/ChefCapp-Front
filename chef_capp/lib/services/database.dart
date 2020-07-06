@@ -35,11 +35,15 @@ class DatabaseService {
   }
 
   Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
+    // later on some documents might not be a step, but don't worry about it for now
     QuerySnapshot qs = await Firestore.instance.collection('components').where('id', whereIn: rp.componentIDs).getDocuments();
+
+    if (qs.documents.length != rp.componentIDs.length) {
+      throw ("Did not fetch correct number of components from the DB");
+    }
 
     List<RecipeStep> steps = [];
     for (var d in qs.documents) {
-      // later on some documents might not be a step, but don't worry about it for now
       steps.add(RecipeStep.fromDB(d.data, rp));
     }
 

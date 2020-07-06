@@ -40,13 +40,22 @@ class AuthController with ChangeNotifier {
     ParentController.database.signInAnon().then((success) async {
       if (success) {
         // get recipe from db
-        RecipePreview rp = await ParentController.database.getTestRecipePreview();
-        // convert into RecipeData
-        RecipeData rd = RecipeData(rp, "0");
+        RecipePreview rp;
+        try {
+          rp = await ParentController.database
+              .getTestRecipePreview();
+        } catch (e) {
+          print(e);
+          return;
+        }
+        // convert into RecipeData and pass to RecipeController
+        RecipeController rc = RecipeController(RecipeData(rp, "0"));
         // push RecipeOverview
         Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview(rc: RecipeController(rd))
+            builder: (BuildContext context) => RecipeOverview(rc: rc)
         ));
+        // load full Recipe
+        rc.getFullRecipe();
       }
       _loginButtonText = "Go";
       _loginFunction = loadTestRecipe;

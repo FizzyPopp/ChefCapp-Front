@@ -4,26 +4,47 @@ import 'package:chef_capp/index.dart';
 /// will have to modify ingredients on hand if recipe is completed
 class RecipeController with ChangeNotifier {
   RecipeData _rd;
+  bool _isFullRecipe;
 
   RecipeData get rd => _rd;
+  bool get isFullRecipe => _isFullRecipe;
 
   RecipeController(this._rd) {
-    // get the recipe steps async from db, then:
-    // rd.r = Recipe.fromOverview(rd.r, steps);
-    // rd.r = Recipe.fromOverview(rd.r, (rd.r as Recipe).steps);
-    //ParentController.databaseService.testGetData();
-    ParentController.database.getRecipeFromPreview(this._rd.r).then((r) {
-      this._rd.r = r;
-      notifyListeners();
-    });
+    if (this._rd.r is RecipePreview) {
+      _isFullRecipe = false;
+    } else {
+      _isFullRecipe = true;
+    }
+  }
+
+  Future<void> getFullRecipe() async {
+    if (this._rd.r is RecipePreview) {
+      ParentController.database.getRecipeFromPreview(this._rd.r).then((r) {
+        this._rd.r = r;
+        _isFullRecipe = true;
+        notifyListeners();
+      });
+    } else {
+      _isFullRecipe = true;
+    }
   }
 
   void getCooking(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => RecipeCooking(
-          rc: this,
-        )
-    ));
+    if (_isFullRecipe) {
+      Navigator.push(context, MaterialPageRoute(
+          builder: (BuildContext context) => RecipeCooking(
+            rc: this,
+          )
+      ));
+    }
+  }
+
+  String getCookingButtonText() {
+    if (_isFullRecipe) {
+      return "GET COOKING";
+    } else {
+      return "loading...";
+    }
   }
 }
 
