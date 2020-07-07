@@ -10,43 +10,35 @@ class RecipeOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Theme.of(context).primaryIconTheme.color,
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) => RecipeCooking(
-                  cookingSteps: dummyRecipeStepList(context),
-                )
-            ));
-          },
-          icon: Icon(Icons.hot_tub),
-          label: Text('GET COOKING!'),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        body: SafeArea(
-          top: false,
-          child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                RecipeSliverAppBar(
-                  appBarImage: recipeImage,
-                  appBarTitle: recipeTitle,
-                  heroID: heroID,
-                  prepTime: prepTime,
-                  cookTime: cookTime,
-                  calories: calories,
-                ),
-              ];
-            },
-            body: TabBarView(children: <Widget>[
-              IngredientsOverview(),
-              DirectionsOverview(),
-            ]),
+    return ChangeNotifierProvider.value(
+      value: rc,
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Theme.of(context).primaryIconTheme.color,
+            onPressed: (){ rc.getCooking(context); },
+            icon: Icon(Icons.hot_tub),
+            label: Text('GET COOKING!'),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          body: SafeArea(
+            top: false,
+            child: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  RecipeSliverAppBar(
+                    rc: rc,
+                  ),
+                ];
+              },
+              body: TabBarView(children: <Widget>[
+                IngredientsOverview(rc.rd.r.ingredients),
+                DirectionsOverview(rc.rd.r.steps),
+              ]),
+            ),
           ),
         ),
       ),
@@ -159,9 +151,20 @@ class IngredientsOverview extends StatelessWidget {
 }
 
 class DirectionsOverview extends StatelessWidget {
+  final List<RecipeStep> steps;
+
+  DirectionsOverview(this.steps);
+
   @override
   Widget build(BuildContext context) {
-    return VerticalListBuilder(dummyStepList);
+    var r = steps.asMap().map((i, s) => MapEntry(i, StepRow(
+        step: i,
+        directions: s.description
+    ))).values.toList();
+    return VerticalListBuilder([
+      ...r,
+      SizedBox(height: 60.0)
+    ]);
   }
 }
 

@@ -6,4 +6,5 @@ class RecipeStep {
   final String _description;
   final List<Ingredient> _ingredients;
   RecipeStep(this._id, this._description, this._ingredients);
+  String get description => _description;
 }
