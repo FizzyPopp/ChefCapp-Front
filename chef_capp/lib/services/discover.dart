@@ -26,29 +26,6 @@ class DiscoverController with ChangeNotifier {
   // on opening a recipe overview:
   // - download recipe steps in the background
 
-  // will this work to load images async from text?
-  Image getImageFromURL(String url) {
-    /*
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('path')
-        .child('to')
-        .child('the')
-        .child('image_filejpg');
-
-    var url = await ref.getDownloadURL() as String;
-     */
-
-    Image out = Image.network(url);
-    out.image.resolve(ImageConfiguration()).addListener(
-      ImageStreamListener((info, call) {
-        // image is loaded, this class (DiscoverController) might want to notify listeners
-        },
-      ),
-    );
-    return out;
-  }
-
   String _genHeroID() {
     return (_heroStart++).toString();
   }

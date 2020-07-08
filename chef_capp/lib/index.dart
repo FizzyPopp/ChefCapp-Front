@@ -7,12 +7,14 @@ export 'package:google_fonts/google_fonts.dart';
 
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
+export 'package:chef_capp/screens/authentication/easy_login.dart';
 
 export 'package:chef_capp/models/equipment.dart';
 export 'package:chef_capp/models/recipe.dart';
 export 'package:chef_capp/models/recipe_preview.dart';
 export 'package:chef_capp/models/recipe_collection.dart';
 export 'package:chef_capp/models/recipe_step.dart';
+export 'package:chef_capp/models/desc_part.dart';
 export 'package:chef_capp/models/ingredient.dart';
 export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/user.dart';

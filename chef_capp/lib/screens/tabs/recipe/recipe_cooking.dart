@@ -1,14 +1,15 @@
 import 'package:chef_capp/index.dart';
 
 class RecipeCooking extends StatelessWidget {
-  final List<Widget> cookingSteps;
+  final RecipeController rc;
 
   RecipeCooking({
-    @required this.cookingSteps,
+    @required this.rc,
   });
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> cookingSteps = getRecipeSteps(context, rc.rd.r);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -49,6 +50,41 @@ class RecipeCooking extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> getRecipeSteps(BuildContext context, Recipe r) {
+    List<Widget> out = [...(r.steps.map((step) => CookingStep(
+        ingredientChipList: getChips(step),
+        stepText: getStepText(context, step)
+    )).toList())];
+    out.add(FinalStep());
+    return out;
+  }
+
+  List<Widget> getChips (RecipeStep step) {
+    return step.chips.map((c) => IngredientChip(label: c)).toList();
+  }
+
+  List<TextSpan> getStepText(BuildContext context, RecipeStep step) {
+    if (step.description.length == 0) {
+      return [];
+    }
+    return step.description.map((d) {
+      switch(d.style) {
+        case TextMod.copy:
+          return TextSpan(text: d.text);
+        case TextMod.name:
+          return TextSpan(
+            text: d.text,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        default:
+          return TextSpan(text: d.text);
+      }
+    }).toList();
   }
 }
 

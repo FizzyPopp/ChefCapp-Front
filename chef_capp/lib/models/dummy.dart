@@ -57,11 +57,31 @@ class Dummy {
   static RecipeStep recipeStep(int seed) {
     Random rnd = Random(seed);
     ID rsID = id();
+    int numDescriptions = 1 + rnd.nextInt(12);
+    int numChips = (numDescriptions / 2).floor();
     return RecipeStep(
         rsID,
-        "description of step with id " + rsID.hash,
-        [ingredient(rnd.nextInt(100)), ingredient(rnd.nextInt(100))] // this may break other code, as no guarantee that these ingredients are in the recipe
+        // these are incorrect
+        rsID,
+        rsID,
+        // this may break other code, as no guarantee that these ingredients are in the recipe
+        [for (int i=0; i<numChips; i++) chip()],
+        [for (int i=0; i<numDescriptions; i++) descPart(i)]
     );
+  }
+
+  static String chip() {
+    return "a chip";
+  }
+
+  static DescPart descPart(int i) {
+    if (i == 0) {
+      return DescPart("Some text ", TextMod.copy);
+    } else if (i%2 == 1) {
+      return DescPart("ingredient", TextMod.name);
+    } else {
+      return DescPart(" some more text ", TextMod.copy);
+    }
   }
 
   static var _ingredients = [
@@ -83,7 +103,9 @@ class Dummy {
     return Ingredient(
         _ingredients[i][0],
         "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
-        (100 * rnd.nextDouble())
+        "${_ingredients[i][1]} plural [id: ${_ingredients[i][0]}]",
+        (100 * rnd.nextDouble()),
+        "g"
     );
   }
 
