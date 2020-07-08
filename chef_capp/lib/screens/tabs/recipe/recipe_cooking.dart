@@ -111,10 +111,12 @@ class IngredientChip extends StatelessWidget {
 class CookingStep extends StatelessWidget {
   final List<Widget> ingredientChipList;
   final List<TextSpan> stepText;
+  final bool isLastStep;
 
   CookingStep({
     @required this.ingredientChipList,
     @required this.stepText,
+    this.isLastStep,
   });
 
   @override
@@ -169,15 +171,30 @@ class CookingStep extends StatelessWidget {
                         ),
                       ),
                     ),
+                    //_finalStepButton(context),
                   ],
                 ),
               ),
             ],
           ),
         ),
+        _finalStepButton(context),
         SizedBox(height: 64.0),
       ],
     );
+  }
+
+  Widget _finalStepButton(BuildContext context) {
+    if (isLastStep) {
+      return Center(
+        child: RaisedButton(
+          child: Text('Am done le cooking!'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      );
+    }
   }
 }
 
