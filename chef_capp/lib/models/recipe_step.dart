@@ -52,6 +52,7 @@ class RecipeStep {
         }
       }
       if (!inRecipe) {
+        print(chipIngredient.name);
         throw ("chip ingredient is not in recipe ingredients");
       }
     }

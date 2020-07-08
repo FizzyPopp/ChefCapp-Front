@@ -53,11 +53,20 @@ class RecipeCooking extends StatelessWidget {
   }
 
   List<Widget> getRecipeSteps(BuildContext context, Recipe r) {
-    List<Widget> out = [...(r.steps.map((step) => CookingStep(
-        ingredientChipList: getChips(step),
-        stepText: getStepText(context, step)
-    )).toList())];
-    out.add(FinalStep());
+    List<Widget> out = [];
+    int lastStep = r.steps.length - 1;
+    for (int i = 0; i < lastStep; i++) {
+      out.add(CookingStep(
+        ingredientChipList: getChips(r.steps[i]),
+        stepText: getStepText(context, r.steps[i]),
+        isLastStep: false,
+      ));
+    }
+    out.add(CookingStep(
+      ingredientChipList: getChips(r.steps[lastStep]),
+      stepText: getStepText(context, r.steps[lastStep]),
+      isLastStep: true,
+    ));
     return out;
   }
 
@@ -171,7 +180,6 @@ class CookingStep extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //_finalStepButton(context),
                   ],
                 ),
               ),
@@ -194,10 +202,13 @@ class CookingStep extends StatelessWidget {
           },
         ),
       );
+    } else {
+      return SizedBox();
     }
   }
 }
 
+/*
 class FinalStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -211,3 +222,4 @@ class FinalStep extends StatelessWidget {
     );
   }
 }
+ */
