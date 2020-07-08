@@ -80,7 +80,6 @@ class RecipePreview implements RecipeInterface {
     });
     List<Ingredient> ingredients = Ingredient.listFromDB(data["ingredients"]);
     List<Equipment> cookware = [];
-    //Image thumb = Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover);
 
     // return
     return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["components"]), imgURL);

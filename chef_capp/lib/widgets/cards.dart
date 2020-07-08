@@ -40,7 +40,7 @@ class MiniRecipeCard extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/images/recipe00001.jpg',
+                      placeholder: 'assets/images/placeholder.jpg',
                       image: imgURL,
                       fit: BoxFit.cover,
                     ),
@@ -114,7 +114,7 @@ class FullRecipeCard extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/recipe00001.jpg',
+                  placeholder: 'assets/images/placeholder.jpg',
                   image: imgURL,
                   fit: BoxFit.cover,
                 ),

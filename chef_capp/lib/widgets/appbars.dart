@@ -65,7 +65,7 @@ class RecipeSliverAppBar extends StatelessWidget {
               },
               blendMode: BlendMode.srcATop,
               child: FadeInImage.assetNetwork(
-                placeholder: 'assets/images/recipe00001.jpg',
+                placeholder: 'assets/images/placeholder.jpg',
                 image: rc.rd.r.imgURL,
                 fit: BoxFit.cover,
               )
