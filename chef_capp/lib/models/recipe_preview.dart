@@ -12,9 +12,9 @@ class RecipePreview implements RecipeInterface {
   final List<Ingredient> _ingredients;
   final List<Equipment> _cookware;
   final List<String> _componentIDs;
-  final Image _thumb;
+  final String _imgURL;
 
-  RecipePreview(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._componentIDs, this._thumb);
+  RecipePreview(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._componentIDs, this._imgURL);
 
   ID get id => _id;
 
@@ -36,9 +36,9 @@ class RecipePreview implements RecipeInterface {
 
   List<String> get componentIDs => _componentIDs;
 
-  Image get thumb => _thumb;
+  String get imgURL => _imgURL;
 
-  static RecipePreview fromDB(data, Image img) {
+  static RecipePreview fromDB(data, String imgURL) {
     // sanitize
     if (data["id"] == null ||
         data["id"] == "") {
@@ -83,6 +83,6 @@ class RecipePreview implements RecipeInterface {
     //Image thumb = Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover);
 
     // return
-    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["components"]), img);
+    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["components"]), imgURL);
   }
 }

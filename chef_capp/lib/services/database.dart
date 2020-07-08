@@ -26,13 +26,13 @@ class DatabaseService {
 
   Future<RecipePreview> getTestRecipePreview() async {
     DocumentSnapshot snapshot = await Firestore.instance.collection('recipes').document('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
-    Image img = await getImageFromURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
+    String imgURL = await getActualImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
     if (!snapshot.exists) {
       throw ("Document does not exist");
     }
 
-    return RecipePreview.fromDB(snapshot.data, img);
+    return RecipePreview.fromDB(snapshot.data, imgURL);
   }
 
   Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
@@ -100,17 +100,10 @@ class DatabaseService {
   }
 
   // will this work to load images async from text?
-  Future<Image> getImageFromURL(String path) async {
+  Future<String> getActualImageURL(String path) async {
     final ref = FirebaseStorage.instance.ref().child(path);
     String url = await ref.getDownloadURL() as String;
-    return Image.network(url);
-    /*
-    return CachedNetworkImage(
-      placeholder: (context, url) => CircularProgressIndicator(),
-      imageUrl: url,
-      fit: BoxFit.cover, // styling does not belong here! what do?
-    );
-     */
+    return url;
   }
 
   /*

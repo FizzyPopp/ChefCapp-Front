@@ -181,6 +181,6 @@ List<Widget> dummyRecipeStepList(BuildContext context) {
       ingredientChipList: dummyIngredientChipList2,
       stepText: dummyStepText2(context),
     ),
-    FinalStep(),
+    //FinalStep(),
   ];
 }

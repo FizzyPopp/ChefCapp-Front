@@ -3,13 +3,13 @@ import 'package:chef_capp/index.dart';
 class MiniRecipeCard extends StatelessWidget {
   final String cardText;
   final String heroID;
-  final Image cardImage;
+  final String imgURL;
   final Function onTap;
 
   MiniRecipeCard({
     @required this.cardText,
     @required this.heroID,
-    @required this.cardImage,
+    @required this.imgURL,
     @required this.onTap,
   });
 
@@ -39,7 +39,11 @@ class MiniRecipeCard extends StatelessWidget {
                           Rect.fromLTRB(0, 0, rect.width, rect.height));
                     },
                     blendMode: BlendMode.srcATop,
-                    child: cardImage,
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/images/recipe00001.jpg',
+                      image: imgURL,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -62,7 +66,7 @@ class MiniRecipeCard extends StatelessWidget {
 
 class FullRecipeCard extends StatelessWidget {
   final String cardText;
-  final Image cardImage;
+  final String imgURL;
   final int time;
   final int calories;
   final int haveIngredients;
@@ -71,7 +75,7 @@ class FullRecipeCard extends StatelessWidget {
 
   FullRecipeCard({
     @required this.cardText,
-    @required this.cardImage,
+    @required this.imgURL,
     @required this.time,
     @required this.calories,
     @required this.haveIngredients,
@@ -109,7 +113,11 @@ class FullRecipeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
-                child: cardImage,
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/recipe00001.jpg',
+                  image: imgURL,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(
                 width: cardTextAreaWidth(context),
