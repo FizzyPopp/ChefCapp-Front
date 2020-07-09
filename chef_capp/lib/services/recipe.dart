@@ -62,7 +62,7 @@ class RecipeData {
     return
       MiniRecipeCard(
         cardText: _r.title,
-        cardImage: _r.thumb,
+        imgURL: _r.imgURL,
         heroID: _heroID,
         onTap: (){_onTapMiniRecipeCard(context);},
       );
@@ -77,7 +77,7 @@ class RecipeData {
   Widget toFullCard(BuildContext context) {
     return FullRecipeCard(
         cardText: _r.title,
-        cardImage: _r.thumb,
+        imgURL: _r.imgURL,
         time: _r.cookTime + _r.prepTime,
         calories: _r.calories,
         haveIngredients: 0,

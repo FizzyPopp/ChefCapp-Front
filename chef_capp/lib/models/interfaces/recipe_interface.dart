@@ -10,5 +10,5 @@ class RecipeInterface {
   List<Ingredient> get ingredients {}
   List<Equipment> get cookware {}
   List<RecipeStep> get steps {}
-  Image get thumb {}
+  String get imgURL {}
 }

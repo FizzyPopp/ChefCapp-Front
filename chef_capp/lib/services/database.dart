@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
@@ -9,7 +10,6 @@ import 'package:chef_capp/index.dart';
 // should have a dedicated class to translate db to model for each relevant call?
 // most of this class is from a tutorial and only for illustration
 class DatabaseService {
-  final Firestore dbRef = Firestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
 
@@ -26,12 +26,13 @@ class DatabaseService {
 
   Future<RecipePreview> getTestRecipePreview() async {
     DocumentSnapshot snapshot = await Firestore.instance.collection('recipes').document('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
+    String imgURL = await getActualImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
     if (!snapshot.exists) {
       throw ("Document does not exist");
     }
 
-    return RecipePreview.fromDB(snapshot.data);
+    return RecipePreview.fromDB(snapshot.data, imgURL);
   }
 
   Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
@@ -98,32 +99,11 @@ class DatabaseService {
     }
   }
 
-  void testGetData() async {
-    QuerySnapshot docs = await dbRef.collection('recipes').getDocuments();
-    print(docs);
-  }
-
   // will this work to load images async from text?
-  Image getImageFromURL(String url) {
-    /*
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('path')
-        .child('to')
-        .child('the')
-        .child('image_filejpg');
-
-    var url = await ref.getDownloadURL() as String;
-     */
-
-    Image out = Image.network(url);
-    out.image.resolve(ImageConfiguration()).addListener(
-      ImageStreamListener((info, call) {
-        // image is loaded, this class (DiscoverController) might want to notify listeners
-      },
-      ),
-    );
-    return out;
+  Future<String> getActualImageURL(String path) async {
+    final ref = FirebaseStorage.instance.ref().child(path);
+    String url = await ref.getDownloadURL() as String;
+    return url;
   }
 
   /*

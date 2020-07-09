@@ -29,7 +29,7 @@ class Dummy {
         [for (int i=0; i<numIngredients; i++) ingredient(rnd.nextInt(100))],
         [for (int i=0; i<numEquipments; i++) equipment()],
         [for (int i=0; i<numSteps; i++) recipeStep(rnd.nextInt(100))],
-        Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover) // fit does not belong in the model! what do?
+        null
     );
   }
 
@@ -42,7 +42,7 @@ class Dummy {
       "Collection Heading " + rcID.hash,
       "Collection Title " + rcID.hash,
         [for (int i=0; i<numRecipes; i++) recipe(rnd.nextInt(100))],
-        Image.asset('assets/images/recipe00001.jpg',fit: BoxFit.cover)
+        Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover)
     );
   }
 
