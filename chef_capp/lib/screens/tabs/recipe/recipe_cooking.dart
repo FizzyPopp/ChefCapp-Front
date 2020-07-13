@@ -135,6 +135,7 @@ class CookingStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Expanded(
+          flex: 3,
           child: CustomScrollView(
             reverse: true,
             physics: BouncingScrollPhysics(),
@@ -162,6 +163,7 @@ class CookingStep extends StatelessWidget {
           ),
         ),
         Expanded(
+          flex: 5,
           child: CustomScrollView(
             physics: BouncingScrollPhysics(),
             slivers: <Widget>[
@@ -180,7 +182,6 @@ class CookingStep extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //_finalStepButton(context),
                   ],
                 ),
               ),
@@ -197,12 +198,22 @@ class CookingStep extends StatelessWidget {
     if (isLastStep) {
       return Center(
         child: RaisedButton(
-          child: Text('Am done le cooking!'),
+          child: Text(
+            'I\'M DONE!',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          color: Theme.of(context).primaryColor,
+          padding: EdgeInsets.symmetric(horizontal: xMargins * 2),
           onPressed: () {
+            //Navigator.pushReplacementNamed(context, '/endTest');
             Navigator.pop(context);
           },
         ),
       );
+    } else {
+      return SizedBox();
     }
   }
 }

@@ -26,7 +26,7 @@ class AuthController with ChangeNotifier {
   Function _loginFunction;
 
   AuthController() {
-    _loginButtonText = "Go";
+    _loginButtonText = "START";
     _loginFunction = loadTestRecipe;
   }
 
