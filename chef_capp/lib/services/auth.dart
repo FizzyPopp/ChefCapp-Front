@@ -34,7 +34,7 @@ class AuthController with ChangeNotifier {
   Function get loginFunction => _loginFunction;
 
   Future<void> loadTestRecipe(BuildContext context) async {
-    _loginButtonText = "loading...";
+    _loginButtonText = "LOADING...";
     _loginFunction = null;
     notifyListeners();
     ParentController.database.signInAnon().then((success) async {
@@ -57,7 +57,7 @@ class AuthController with ChangeNotifier {
         // load full Recipe
         rc.getFullRecipe();
       }
-      _loginButtonText = "Go";
+      _loginButtonText = "START";
       _loginFunction = loadTestRecipe;
       notifyListeners();
     });

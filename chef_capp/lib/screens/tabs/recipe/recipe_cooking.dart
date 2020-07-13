@@ -180,6 +180,7 @@ class CookingStep extends StatelessWidget {
                         ),
                       ),
                     ),
+                    //_finalStepButton(context),
                   ],
                 ),
               ),
@@ -202,8 +203,6 @@ class CookingStep extends StatelessWidget {
           },
         ),
       );
-    } else {
-      return SizedBox();
     }
   }
 }

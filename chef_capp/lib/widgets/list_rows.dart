@@ -23,7 +23,7 @@ class ButtonRow extends StatelessWidget {
           children: <Widget>[
             Text(
               headingText,
-              style: Theme.of(context).textTheme.headline,
+              style: Theme.of(context).textTheme.headline5,
             ),
             Row(
               children: <Widget>[
@@ -116,7 +116,7 @@ class StepRow extends StatelessWidget {
             child: AutoSizeText(
               "Step " + step.toString(),
               maxLines: 2,
-              minFontSize: Theme.of(context).textTheme.body1.fontSize,
+              minFontSize: Theme.of(context).textTheme.bodyText2.fontSize,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -124,7 +124,7 @@ class StepRow extends StatelessWidget {
             child: AutoSizeText(
               directions,
               maxLines: 2,
-              minFontSize: Theme.of(context).textTheme.body1.fontSize,
+              minFontSize: Theme.of(context).textTheme.bodyText2.fontSize,
               overflow: TextOverflow.ellipsis,
             ),
           ),
