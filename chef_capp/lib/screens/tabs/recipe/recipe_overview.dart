@@ -167,7 +167,7 @@ class DirectionsOverview extends StatelessWidget {
         .map((i, s) => MapEntry(
             i,
             StepRow(
-              step: i,
+              step: i+1,
               directions: buildStepDescription(s),
             )))
         .values
