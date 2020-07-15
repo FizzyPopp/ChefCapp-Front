@@ -21,7 +21,7 @@ class App extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               children: <Widget>[
                 RecipeHomePage(),
-                SizedBox(height: 40.0,),
+                KitchenHomepage(),
               ],
             ),
           ),
