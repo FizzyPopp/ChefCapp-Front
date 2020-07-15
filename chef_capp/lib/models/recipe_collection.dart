@@ -5,9 +5,9 @@ class RecipeCollection {
   final String _heading;
   final String _title;
   final List<Recipe> _recipes;
-  final Image _thumb;
+  final String _imgURL;
 
-  RecipeCollection(this._id, this._heading, this._title, this._recipes, this._thumb);
+  RecipeCollection(this._id, this._heading, this._title, this._recipes, this._imgURL);
 
   String get heading => _heading;
 
@@ -15,5 +15,5 @@ class RecipeCollection {
 
   List<Recipe> get recipes => [..._recipes];
 
-  Image get thumb => _thumb;
+  String get imgURL => _imgURL;
 }

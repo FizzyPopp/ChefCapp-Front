@@ -98,7 +98,7 @@ class RecipeCollectionData {
       HeroCard(
         cardHeading: _rc.heading,
         cardText: _rc.title,
-        cardImage: _rc.thumb,
+        imgURL: _rc.imgURL,
         heroID: _heroID,
         onTap: (){onTapHeroCard(context);},
       );
