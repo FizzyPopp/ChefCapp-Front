@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:firebase_analytics/observer.dart';
 
 // model, screen, services, shared
 
@@ -10,6 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: ParentController.analytics),
+      ],
       title: appTitle,
       theme: ThemeData(
         primaryColor: Colors.deepOrange,

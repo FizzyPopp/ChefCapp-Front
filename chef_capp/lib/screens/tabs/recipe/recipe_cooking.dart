@@ -15,6 +15,14 @@ class RecipeCooking extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Swiper(
+              onIndexChanged: (int newIndex) {
+                ParentController.analytics.logEvent(
+                    name: "step_change",
+                    parameters: <String, dynamic>{
+                      'new_index': newIndex,
+                    },
+                );
+              },
               itemBuilder: (BuildContext context, int index) {
                 return cookingSteps[index];
               },
