@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => EasyLogin(),
         '/home': (context) => App(),
         '/login': (context) => LoginPage(),
+        '/endTest': (context) => ConfettiSample(),
       },
     );
   }
