@@ -31,7 +31,9 @@ dependencies:
   auto_size_text: ^2.1.0
   google_fonts: ^1.1.0
   flutter_swiper:
-    path: /Users/arda/AndroidStudioProjects/flutter_swiper
+    git:
+      url: git@github.com:thepiper/flutter_swiper.git
+      ref: master
   flutter_launcher_icons: ^0.7.5
   confetti: ^0.5.2
 

@@ -1,5 +1,3 @@
-import 'package:chef_capp/models/user.dart';
-
 import 'package:chef_capp/index.dart';
 
 /// Used to deal with all aspects of authentication: register, sign in, sign out, recover password
