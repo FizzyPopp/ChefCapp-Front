@@ -16,7 +16,7 @@ List<Widget> dummyHeroCardList(BuildContext context) {
     HeroCard(
       cardHeading: 'COLLECTION',
       cardText: 'Hero Card Placeholder Text',
-      cardImage: Image.asset('assets/images/placeholder.jpg', fit: BoxFit.cover,),
+      imgURL: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2016%2F0804%2Fr110027_1296x729_16%2D9.jpg&w=920&h=518&scale=crop&cquality=80&location=origin&format=jpg",
       heroID: '0005',
       onTap: (){
 

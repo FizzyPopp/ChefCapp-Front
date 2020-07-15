@@ -29,7 +29,7 @@ class Dummy {
         [for (int i=0; i<numIngredients; i++) ingredient(rnd.nextInt(100))],
         [for (int i=0; i<numEquipments; i++) equipment()],
         [for (int i=0; i<numSteps; i++) recipeStep(rnd.nextInt(100))],
-        null
+        "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2016%2F0804%2Fr110027_1296x729_16%2D9.jpg&w=920&h=518&scale=crop&cquality=80&location=origin&format=jpg"
     );
   }
 
@@ -42,7 +42,7 @@ class Dummy {
       "Collection Heading " + rcID.hash,
       "Collection Title " + rcID.hash,
         [for (int i=0; i<numRecipes; i++) recipe(rnd.nextInt(100))],
-        Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover)
+        "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2016%2F0804%2Fr110027_1296x729_16%2D9.jpg&w=920&h=518&scale=crop&cquality=80&location=origin&format=jpg"
     );
   }
 

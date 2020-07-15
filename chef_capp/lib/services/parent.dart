@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 // https://firebase.google.com/docs/reference/js/firebase.analytics.Analytics
 
@@ -11,6 +12,7 @@ import 'package:chef_capp/index.dart';
 ///
 /// Also holds the User object, but no other models
 class ParentController with ChangeNotifier {
+  static final FirebaseAnalytics analytics = FirebaseAnalytics();
   static const int SEED = 2;
   static User _user;
   static AuthController _authController;

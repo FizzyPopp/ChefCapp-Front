@@ -68,6 +68,7 @@ class DatabaseService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      ParentController.analytics.logLogin(loginMethod: "anonymous");
       return user;
     } catch (error) {
       print(error.toString());

@@ -213,14 +213,14 @@ class HeroCard extends StatelessWidget {
   final String cardHeading;
   final String cardText;
   final String heroID;
-  final Image cardImage;
+  final String imgURL;
   final Function onTap;
 
   HeroCard({
     @required this.cardHeading,
     @required this.cardText,
     @required this.heroID,
-    @required this.cardImage,
+    @required this.imgURL,
     @required this.onTap,
   });
 
@@ -240,7 +240,11 @@ class HeroCard extends StatelessWidget {
               Expanded(
                 child: Hero(
                   tag: heroID,
-                  child: cardImage,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder.jpg',
+                    image: imgURL,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Padding(
