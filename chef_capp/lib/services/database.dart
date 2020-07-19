@@ -3,9 +3,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
-/// Controllers have no concept of the database, instead they use this class for all data calls, including calls to local storage
+/// Controllers have no concept of the database, instead they use this class for all data calls, including calls to local storage (yet to be implemented)
+/// Flutter firebase handles local db caching automagically, so no need to worry about that
 /// This class holds all CRUD actions, regardless of screen or controller, ensuring consistent and orderly access
-/// secretly checks to see if a cached version of the item is available
+/// Methods from this class should always be called within a try / catch block
 
 // should have a dedicated class to translate db to model for each relevant call?
 // most of this class is from a tutorial and only for illustration

@@ -39,21 +39,24 @@ class AuthController with ChangeNotifier {
       if (success) {
         // get recipe from db
         RecipePreview rp;
+        bool error = false;
         try {
           rp = await ParentController.database
               .getTestRecipePreview();
         } catch (e) {
           print(e);
-          return;
+          error = true;
         }
-        // convert into RecipeData and pass to RecipeController
-        RecipeController rc = RecipeController(RecipeData(rp, "0"));
-        // push RecipeOverview
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview(rc: rc)
-        ));
-        // load full Recipe
-        rc.getFullRecipe();
+        if (!error) {
+          // convert into RecipeData and pass to RecipeController
+          RecipeController rc = RecipeController(RecipeData(rp, "0"));
+          // push RecipeOverview
+          Navigator.push(context, MaterialPageRoute(
+              builder: (BuildContext context) => RecipeOverview(rc: rc)
+          ));
+          // load full Recipe
+          rc.getFullRecipe();
+        }
       }
       _loginButtonText = "START";
       _loginFunction = loadTestRecipe;
