@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sqflite/sqflite.dart'; // use for local storage
 import 'package:chef_capp/index.dart';
 
 /// Controllers have no concept of the database, instead they use this class for all data calls, including calls to local storage (yet to be implemented)
@@ -8,7 +9,6 @@ import 'package:chef_capp/index.dart';
 /// This class holds all CRUD actions, regardless of screen or controller, ensuring consistent and orderly access
 /// Methods from this class should always be called within a try / catch block
 
-// should have a dedicated class to translate db to model for each relevant call?
 // most of this class is from a tutorial and only for illustration
 class DatabaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
