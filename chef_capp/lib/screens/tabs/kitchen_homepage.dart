@@ -1,5 +1,4 @@
 import 'package:chef_capp/index.dart';
-import 'package:flutter/cupertino.dart';
 
 class KitchenHomepage extends StatelessWidget {
   @override
@@ -7,194 +6,77 @@ class KitchenHomepage extends StatelessWidget {
     return VerticalListBuilder(
       [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.0),
-          child: ExpansionTile(
-            title: Text('Carbs'),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Potatoes'),
-                    Text('2')
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Ingredient'),
-                    Text('Quantity'),
-                  ],
-                ),
-              ),
-            ],
+          padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
+          child: TextField(
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              hintText: 'Search ingredients...',
+              border: OutlineInputBorder(),
+            ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.0),
-          child: ExpansionTile(
-            title: Text('Category'),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Potatoes'),
-                    Text('2')
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Ingredient'),
-                    Text('Quantity'),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        KitchenAccordion(
+          title: 'Category',
+          widgetList: <Widget>[
+            KitchenRow(
+              ingredientText: 'Ingredient',
+              ingredientUnit: 'gr',
+              ingredientLowQty: 300,
+              ingredientHighQty: 400,
+              onTap: () {
+              },
+            ),
+            KitchenRow(
+              ingredientText: 'Ingredient',
+              ingredientLowQty: 2,
+              ingredientHighQty: 4,
+              onTap: () {
+              },
+            ),
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.0),
-          child: ExpansionTile(
-            title: Text('Category'),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Potatoes'),
-                    Text('2')
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Ingredient'),
-                    Text('Quantity'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.0),
-          child: ExpansionTile(
-            title: Text('Category'),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Potatoes'),
-                    Text('2')
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Ingredient'),
-                    Text('Quantity'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.0),
-          child: ExpansionTile(
-            title: Text('Category'),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Potatoes'),
-                    Text('2')
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(xMargins),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Ingredient'),
-                    Text('Quantity'),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        KitchenAccordion(
+          title: 'Category',
+          widgetList: <Widget>[
+            KitchenRow(
+              ingredientText: 'Ingredient',
+              ingredientUnit: 'ml',
+              ingredientLowQty: 200,
+              ingredientHighQty: 250,
+              onTap: () {
+              },
+            ),
+            KitchenRow(
+              ingredientText: 'Ingredient',
+              ingredientLowQty: 25,
+              ingredientHighQty: 28,
+              onTap: () {
+              },
+            ),
+          ],
         ),
       ]
     );
   }
 }
 
+class KitchenAccordion extends StatelessWidget {
+  final List<Widget> widgetList;
+  final String title;
 
-class InventoryHomePage extends StatelessWidget {
+  KitchenAccordion({
+    @required this.widgetList,
+    @required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: InventoryTabs(),
-        body: TabBarView(
-          children: <Widget>[
-            Tab(
-              child: Text('Tab 1'),
-            ),
-            Tab(
-              child: Text('Tab 2'),
-            ),
-            Tab(
-              child: Text('Tab 3'),
-            ),
-          ]
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 1.0),
+      child: ExpansionTile(
+        title: Text(title),
+        children: widgetList,
       ),
     );
   }
 }
-
-/*
-class InventoryHomePage extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      child: new Center(
-        child: DefaultTabController(
-          length: 3,
-          child: InventoryTabs()
-        ),
-      ),
-    );
-  }
-}
-*/
-
-/*
-child: Icon(Icons.kitchen, size: 150, color: Colors.brown),
-*/
