@@ -22,12 +22,77 @@ class Ingredient {
     String out;
     if (_quantity == 0) {
       return "";
-    } else if (_quantity == _quantity.toInt()) {
-      out = "${_quantity.toInt()} $_unit";
     } else {
-      out = "$_quantity $_unit";
+      out = "${doubleToMixedFraction(_quantity)} $_unit";
     }
     return out;
+  }
+
+  String doubleToMixedFraction (double v) {
+    int whole = v.floor();
+    int numerator = ((v - whole) * 12).round();
+
+    String fraction = "";
+
+    switch (numerator) {
+      case 0:
+        // round down
+        return "$whole";
+      case 1:
+        // round down
+        return "$whole";
+        break;
+      case 2:
+        // round up
+        fraction = "\u00BC";
+        break;
+      case 3:
+        // 3/12 = one quarter
+        fraction = "\u00BC";
+        break;
+      case 4:
+        // 4/12 = one third
+        fraction = "\u2153";
+        break;
+      case 5:
+        // round up
+        fraction = "\u00BD";
+        break;
+      case 6:
+        // 6/12 = one half
+        fraction = "\u00BD";
+        break;
+      case 7:
+        // round down
+        fraction = "\u00BD";
+        break;
+      case 8:
+        // 8/12 = two thirds
+        fraction = "\u2145";
+        break;
+      case 9:
+        // 9/12 = three quarters
+        fraction = "\u00BE";
+        break;
+      case 10:
+        // round down
+        fraction = "\u00BE";
+        break;
+      case 11:
+        // round up
+        return "${whole + 1}";
+      case 12:
+        // round up
+        return "${whole + 1}";
+      default:
+        throw ("bad conversion to mixed fraction");
+    }
+
+    if (whole == 0) {
+      return fraction;
+    } else {
+      return "$whole" + fraction;
+    }
   }
 
   bool equals(Ingredient other) {
