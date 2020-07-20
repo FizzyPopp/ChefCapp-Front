@@ -136,16 +136,12 @@ class StepRow extends StatelessWidget {
 
 class KitchenRow extends StatelessWidget {
   final String ingredientText;
-  final String ingredientUnit;
-  final int ingredientLowQty;
-  final int ingredientHighQty;
+  final String amount;
   final Function onTap;
 
   KitchenRow({
     @required this.ingredientText,
-    this.ingredientUnit,
-    @required this.ingredientLowQty,
-    @required this.ingredientHighQty,
+    @required this.amount,
     @required this.onTap,
   });
 
@@ -159,18 +155,10 @@ class KitchenRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(ingredientText),
-            Text(quantityText()),
+            Text(amount),
           ],
         ),
       ),
     );
-  }
-
-  String quantityText() {
-    if (ingredientUnit == null) {
-      return ingredientLowQty.toString() + '–' + ingredientHighQty.toString();
-    } else {
-      return ingredientLowQty.toString() + '–' + ingredientHighQty.toString() + ingredientUnit.toString();
-    }
   }
 }

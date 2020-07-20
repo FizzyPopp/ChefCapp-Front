@@ -20,16 +20,13 @@ class KitchenHomepage extends StatelessWidget {
           widgetList: <Widget>[
             KitchenRow(
               ingredientText: 'Ingredient',
-              ingredientUnit: 'gr',
-              ingredientLowQty: 300,
-              ingredientHighQty: 400,
+              amount: "300-400gr",
               onTap: () {
               },
             ),
             KitchenRow(
               ingredientText: 'Ingredient',
-              ingredientLowQty: 2,
-              ingredientHighQty: 4,
+              amount: "2-4",
               onTap: () {
               },
             ),
@@ -40,16 +37,13 @@ class KitchenHomepage extends StatelessWidget {
           widgetList: <Widget>[
             KitchenRow(
               ingredientText: 'Ingredient',
-              ingredientUnit: 'ml',
-              ingredientLowQty: 200,
-              ingredientHighQty: 250,
+              amount: "200-250ml",
               onTap: () {
               },
             ),
             KitchenRow(
               ingredientText: 'Ingredient',
-              ingredientLowQty: 25,
-              ingredientHighQty: 28,
+              amount: "25-28",
               onTap: () {
               },
             ),
