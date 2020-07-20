@@ -18,6 +18,8 @@ class Ingredient {
 
   double get quantity => _quantity;
 
+  String get unit => _unit;
+
   String get amount {
     String out;
     if (_quantity == 0) {
@@ -28,7 +30,7 @@ class Ingredient {
     return out;
   }
 
-  String doubleToMixedFraction (double v) {
+  static String doubleToMixedFraction (double v) {
     int whole = v.floor();
     int numerator = ((v - whole) * 12).round();
 
