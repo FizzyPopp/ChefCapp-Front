@@ -17,14 +17,14 @@ class MyApp extends StatelessWidget {
       title: appTitle,
       theme: ThemeData(
         primaryColor: Colors.deepOrange,
-        accentColor: Colors.tealAccent,
+        //accentColor: Colors.tealAccent,
         textTheme: TextTheme(
           button: TextStyle(
             color: Colors.deepOrange,
           )
         )
       ),
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
         '/': (context) => EasyLogin(),
         '/home': (context) => App(),

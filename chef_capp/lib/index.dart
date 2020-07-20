@@ -5,6 +5,7 @@ export 'package:concentric_transition/concentric_transition.dart';
 export 'package:flutter_swiper/flutter_swiper.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:confetti/confetti.dart';
+export 'package:search_widget/search_widget.dart';
 
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
