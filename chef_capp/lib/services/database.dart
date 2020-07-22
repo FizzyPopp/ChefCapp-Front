@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sqflite/sqflite.dart'; // use for local storage
 import 'package:chef_capp/index.dart';
 
 /// Controllers have no concept of the database, instead they use this class for all data calls, including calls to local storage (yet to be implemented)
@@ -13,6 +13,13 @@ import 'package:chef_capp/index.dart';
 class DatabaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
+  SharedPreferences _localStore;
+
+  Future<void> _openLocalStore() async {
+    if (_localStore == null) {
+      _localStore = await SharedPreferences.getInstance();
+    }
+  }
 
   Future<bool> signInAnon() async {
     if (_user == null) {
@@ -108,7 +115,7 @@ class DatabaseService {
     return url;
   }
 
-  /*
+/*
   // collection reference
   final CollectionReference brewCollection = Firestore.instance.collection('brews');
 

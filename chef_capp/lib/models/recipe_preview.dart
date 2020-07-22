@@ -76,7 +76,7 @@ class RecipePreview implements RecipeInterface {
     int calories = 0;
     List<Tag> tags = [];
     data["tags"].forEach((t) {
-      tags.add(Tag(Dummy.id(), t));
+      tags.add(Tag(t));
     });
     List<Ingredient> ingredients = Ingredient.listFromDB(data["ingredients"]);
     List<Equipment> cookware = [];

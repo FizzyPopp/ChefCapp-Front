@@ -110,24 +110,23 @@ class Dummy {
   }
 
   static var _tags = [
-    [id(), "spicy"],
-    [id(), "hot"],
-    [id(), "salty"],
-    [id(), "sweet"],
-    [id(), "gluten-free"],
-    [id(), "keto"],
-    [id(), "vegetarian"],
-    [id(), "vegan"],
-    [id(), "lunch"],
-    [id(), "dinner"],
-    [id(), "breakfast"],
-    [id(), "dessert"]
+    "spicy",
+    "hot",
+    "salty",
+    "sweet",
+    "gluten-free",
+    "keto",
+    "vegetarian",
+    "vegan",
+    "lunch",
+    "dinner",
+    "breakfast",
+    "dessert"
   ];
   static Tag tag(int seed) {
     int i = Random(seed).nextInt(_ingredients.length);
     return Tag(
-        _tags[i][0],
-        _tags[i][1]
+        _tags[i]
     );
   }
 
@@ -135,7 +134,9 @@ class Dummy {
     Random rnd = Random(seed);
     return User(
         id(),
-        "loblaw@lawblog.com"
+        "loblaw@lawblog.com",
+        UnitPreference.metric,
+        []
     );
   }
 }

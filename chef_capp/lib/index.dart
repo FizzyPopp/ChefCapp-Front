@@ -1,4 +1,5 @@
 export 'package:flutter/material.dart';
+export 'dart:convert';
 
 export 'package:auto_size_text/auto_size_text.dart';
 export 'package:concentric_transition/concentric_transition.dart';
@@ -23,6 +24,7 @@ export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/user.dart';
 export 'package:chef_capp/models/id.dart';
 export 'package:chef_capp/models/dummy.dart';
+export 'package:chef_capp/models/dietary_restriction.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
