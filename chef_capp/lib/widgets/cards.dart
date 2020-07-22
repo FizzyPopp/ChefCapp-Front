@@ -72,6 +72,7 @@ class FullRecipeCard extends StatelessWidget {
   final int haveIngredients;
   final int totalIngredients;
   final Function onTap;
+  final String heroID;
 
   FullRecipeCard({
     @required this.cardText,
@@ -80,7 +81,8 @@ class FullRecipeCard extends StatelessWidget {
     @required this.calories,
     @required this.haveIngredients,
     @required this.totalIngredients,
-    @required this.onTap
+    @required this.onTap,
+    @required this.heroID
   });
 
   Color _cardCaptionColor(BuildContext context) {
@@ -113,10 +115,13 @@ class FullRecipeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/placeholder.jpg',
-                  image: imgURL,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: heroID,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder.jpg',
+                    image: imgURL,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               SizedBox(
