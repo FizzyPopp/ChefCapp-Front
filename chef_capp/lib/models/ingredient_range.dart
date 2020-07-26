@@ -1,18 +1,9 @@
 import 'package:chef_capp/index.dart';
 
-class IngredientRange {
-  final Ingredient _ingredient;
+class IngredientRange extends Ingredient {
   final List<double> _range;
 
-  IngredientRange(this._ingredient, this._range);
-
-  IngredientRange.fromIngredient(this._ingredient, double low, double high) : this._range = [low, high];
-
-  ID get id => _ingredient.id;
-
-  String get name => _ingredient.name;
-
-  Ingredient get ingredient => _ingredient;
+  IngredientRange(this._range, Ingredient i) : super(i.id, i.name, i.plural, i.quantity, i.unit);
 
   List<double> get range => _range;
 
@@ -24,7 +15,7 @@ class IngredientRange {
     }
 
     if (_range[0] == _range[1]) {
-      return Ingredient.doubleToMixedFraction(_range[0]) + _ingredient.unit;
+      return Ingredient.doubleToMixedFraction(_range[0]) + this.unit;
     }
 
     double low = _range[0];
@@ -34,6 +25,6 @@ class IngredientRange {
       high = _range[0];
     }
 
-    return Ingredient.doubleToMixedFraction(low) + "\u2013" + Ingredient.doubleToMixedFraction(high) + _ingredient.unit;
+    return Ingredient.doubleToMixedFraction(low) + "\u2013" + Ingredient.doubleToMixedFraction(high) + this.unit;
   }
 }

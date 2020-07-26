@@ -9,7 +9,6 @@ import 'package:chef_capp/index.dart';
 /// This class holds all CRUD actions, regardless of screen or controller, ensuring consistent and orderly access
 /// Methods from this class should always be called within a try / catch block
 
-// most of this class is from a tutorial and only for illustration
 class DatabaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
