@@ -15,10 +15,24 @@ class DatabaseService {
   FirebaseUser _user;
   SharedPreferences _localStore;
 
-  Future<void> _openLocalStore() async {
+  Future<SharedPreferences> _getLocalStore() async {
     if (_localStore == null) {
       _localStore = await SharedPreferences.getInstance();
     }
+    return _localStore;
+  }
+
+  // I'm not happy with this, it needs to be more robust ("user" should be a constant?)
+  Future<User> loadUser() async {
+    SharedPreferences store = await _getLocalStore();
+    String json = store.getString("user");
+    return User.fromJson(json);
+  }
+
+  // ditto
+  Future<void> storeUser(User u) async {
+    SharedPreferences store = await _getLocalStore();
+    store.setString("user", u.toJson());
   }
 
   Future<bool> signInAnon() async {
@@ -35,7 +49,7 @@ class DatabaseService {
 
   Future<RecipePreview> getTestRecipePreview() async {
     DocumentSnapshot snapshot = await Firestore.instance.collection('recipes').document('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
-    String imgURL = await getActualImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
+    String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
     if (!snapshot.exists) {
       throw ("Document does not exist");
@@ -60,81 +74,9 @@ class DatabaseService {
     return Recipe.fromPreview(rp, steps);
   }
 
-  // create user obj based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user) {
-    //return user != null ? User(uid: user.uid) : null;
-    return null;
-  }
-
-  // auth change user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged
-        .map(_userFromFirebaseUser);
-  }
-
-  // sign in with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
-      return user;
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
-      // create a new document for the user with the uid
-      //await DatabaseService(uid: user.uid).updateUserData('0','new crew member', 100);
-      return _userFromFirebaseUser(user);
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  // sign out
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  // will this work to load images async from text?
-  Future<String> getActualImageURL(String path) async {
+  Future<String> getImageURL(String path) async {
     final ref = FirebaseStorage.instance.ref().child(path);
     String url = await ref.getDownloadURL() as String;
     return url;
   }
-
-/*
-  // collection reference
-  final CollectionReference brewCollection = Firestore.instance.collection('brews');
-
-  // get brews stream
-  Stream<List<Brew>> get brews {
-    return brewCollection.snapshots()
-        .map(_brewListFromSnapshot);
-  }
-
-  // brew list from snapshot
-  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc){
-      //print(doc.data);
-      return Brew(
-          name: doc.data['name'] ?? '',
-          strength: doc.data['strength'] ?? 0,
-          sugars: doc.data['sugars'] ?? '0'
-      );
-    }).toList();
-  }
-   */
 }
