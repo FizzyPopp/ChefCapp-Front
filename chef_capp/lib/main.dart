@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: appTitle,
       theme: ThemeData(
         primaryColor: Colors.deepOrange,
-        //accentColor: Colors.tealAccent,
+        accentColor: Colors.teal,
         textTheme: TextTheme(
           button: TextStyle(
             color: Colors.deepOrange,

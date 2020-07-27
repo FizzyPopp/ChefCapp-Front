@@ -3,59 +3,82 @@ import 'package:chef_capp/index.dart';
 class KitchenHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return VerticalListBuilder(
-      [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Search ingredients...',
-              border: OutlineInputBorder(),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => IngredientAdder()
+          ));
+        },
+      ),
+      body: VerticalListBuilder(
+        [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search ingredients...',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-        ),
-        KitchenAccordion(
-          title: 'Category',
-          widgetList: <Widget>[
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              ingredientUnit: 'gr',
-              ingredientLowQty: 300,
-              ingredientHighQty: 400,
-              onTap: () {
-              },
-            ),
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              ingredientLowQty: 2,
-              ingredientHighQty: 4,
-              onTap: () {
-              },
-            ),
-          ],
-        ),
-        KitchenAccordion(
-          title: 'Category',
-          widgetList: <Widget>[
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              ingredientUnit: 'ml',
-              ingredientLowQty: 200,
-              ingredientHighQty: 250,
-              onTap: () {
-              },
-            ),
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              ingredientLowQty: 25,
-              ingredientHighQty: 28,
-              onTap: () {
-              },
-            ),
-          ],
-        ),
-      ]
+          KitchenAccordion(
+            title: 'Category',
+            widgetList: <Widget>[
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                ingredientUnit: 'gr',
+                ingredientLowQty: 300,
+                ingredientHighQty: 400,
+                onTap: () {
+
+                },
+              ),
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                ingredientLowQty: 2,
+                ingredientHighQty: 4,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => IngredientAdjust(
+                        label: 'Ingredient',
+                        isExisting: true,
+                        onConfirm: () {
+                          Navigator.pop(context);
+                        },
+                        onDelete: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                  ));
+                },
+              ),
+            ],
+          ),
+          KitchenAccordion(
+            title: 'Category',
+            widgetList: <Widget>[
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                ingredientUnit: 'ml',
+                ingredientLowQty: 200,
+                ingredientHighQty: 250,
+                onTap: () {
+                },
+              ),
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                ingredientLowQty: 25,
+                ingredientHighQty: 28,
+                onTap: () {
+                },
+              ),
+            ],
+          ),
+        ]
+      ),
     );
   }
 }
