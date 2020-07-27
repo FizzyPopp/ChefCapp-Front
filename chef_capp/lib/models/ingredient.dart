@@ -1,5 +1,6 @@
 import 'package:chef_capp/index.dart';
 
+// need to include a category?? (see kitchen_homepage.dart)
 class Ingredient {
   // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient
   final ID _id;
@@ -25,7 +26,7 @@ class Ingredient {
     if (_quantity == 0) {
       return "";
     } else {
-      out = "${doubleToMixedFraction(_quantity)} $_unit";
+      out = "${doubleToMixedFraction(_quantity)}$_unit";
     }
     return out;
   }
@@ -70,7 +71,7 @@ class Ingredient {
         break;
       case 8:
         // 8/12 = two thirds
-        fraction = "\u2145";
+        fraction = "\u2154";
         break;
       case 9:
         // 9/12 = three quarters

@@ -109,6 +109,11 @@ class Dummy {
     );
   }
 
+  static IngredientRange ingredientRange(int seed) {
+    Random rnd = Random(seed);
+    return IngredientRange([rnd.nextDouble(), 4 * rnd.nextDouble()], ingredient(seed));
+  }
+
   static var _tags = [
     "spicy",
     "hot",

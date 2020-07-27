@@ -1,56 +1,56 @@
 import 'package:chef_capp/index.dart';
+import 'package:provider/provider.dart';
 
 class KitchenHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return VerticalListBuilder(
-      [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Search ingredients...',
-              border: OutlineInputBorder(),
+
+    return ChangeNotifierProvider.value(
+        value: ParentController.inventory,
+        child: Consumer<InventoryController>(
+            // don't need to rebuild search TextField every time
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Search ingredients...',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (String s) {
+                  ParentController.inventory.search(s);
+                },
+              ),
             ),
-          ),
+            builder: (context, data, child) {
+              return VerticalListBuilder(
+                  [
+                    child,
+                    ...parseInventory(ParentController.inventory.forDisplay),
+                  ]
+              );
+            }
         ),
-        KitchenAccordion(
-          title: 'Category',
-          widgetList: <Widget>[
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              amount: "300-400gr",
-              onTap: () {
-              },
-            ),
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              amount: "2-4",
-              onTap: () {
-              },
-            ),
-          ],
-        ),
-        KitchenAccordion(
-          title: 'Category',
-          widgetList: <Widget>[
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              amount: "200-250ml",
-              onTap: () {
-              },
-            ),
-            KitchenRow(
-              ingredientText: 'Ingredient',
-              amount: "25-28",
-              onTap: () {
-              },
-            ),
-          ],
-        ),
-      ]
     );
+  }
+
+  List<Widget> parseInventory(Map<String, List<IngredientRange>> m) {
+    List<Widget> out = [];
+    m.forEach((String category, List<IngredientRange> rows) {
+      List<KitchenRow> tmp = [];
+      rows.forEach((IngredientRange ingredient) {
+        tmp.add(KitchenRow(
+          ingredientText: ingredient.name,
+          amount: ingredient.amount,
+          onTap: () { print("tapped"); } // call the parent controller with this ingredient
+        ));
+      });
+      out.add(KitchenAccordion(
+        title: category,
+        widgetList: tmp,
+      ));
+    });
+    return out;
   }
 }
 
