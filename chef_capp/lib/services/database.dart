@@ -9,6 +9,14 @@ import 'package:chef_capp/index.dart';
 /// This class holds all CRUD actions, regardless of screen or controller, ensuring consistent and orderly access
 /// Methods from this class should always be called within a try / catch block
 
+// what do we actually need to store on the device?
+// want: all recipe titles (and maybe tags, and maybe ingredients) and uuids
+// maybe even full recipes, depending on size of db
+// want: most recent favourites and history, store images to file
+// we definitely need a toJson() and fromJson() for each model
+// then these strings can be stored in: sql, nosql, individual files, or one giant file
+// need to store preferences locally in case they sign in anonymously
+
 class DatabaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
@@ -24,14 +32,13 @@ class DatabaseService {
   // I'm not happy with this, it needs to be more robust ("user" should be a constant?)
   Future<User> loadUser() async {
     SharedPreferences store = await _getLocalStore();
-    String json = store.getString("user");
-    return User.fromJson(json);
+    return User.fromJson(jsonDecode(store.getString("user")));
   }
 
   // ditto
   Future<void> storeUser(User u) async {
     SharedPreferences store = await _getLocalStore();
-    store.setString("user", u.toJson());
+    store.setString("user", jsonEncode(u.toJson()));
   }
 
   Future<bool> signInAnon() async {

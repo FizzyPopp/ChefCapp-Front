@@ -1,5 +1,7 @@
 import 'package:chef_capp/index.dart';
+part 'recipe_step.g.dart';
 
+@JsonSerializable(explicitToJson: true)
 class RecipeStep {
   final ID _id;
   final ID _previous;
@@ -7,12 +9,28 @@ class RecipeStep {
   // tempting to put a reference to the parent Recipe here, but don't think instantiation would work out with all these final fields
   final List<String> _chips;
   final List<DescPart> _description;
-  RecipeStep(this._id, this._previous, this._next, this._chips, this._description);
+
+  //RecipeStep(this._id, this._previous, this._next, this._chips, this._description);
+  RecipeStep(ID id, ID previous, ID next, List<String> chips, List<DescPart> description) :
+        this._id = id,
+        this._previous = previous,
+        this._next = next,
+        this._chips = chips,
+        this._description = description;
+
   ID get id => _id;
+
   ID get previous => _previous;
+
   ID get next => _next;
+
   List<String> get chips => [..._chips];
+
   List<DescPart> get description => [..._description];
+
+  factory RecipeStep.fromJson(Map<String, dynamic> json) => _$RecipeStepFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RecipeStepToJson(this);
 
   static RecipeStep fromDB(data, RecipeInterface ri) {
     // sanitize

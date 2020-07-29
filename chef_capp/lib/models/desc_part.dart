@@ -1,11 +1,23 @@
 import 'package:chef_capp/index.dart';
+part 'desc_part.g.dart';
 
+@JsonSerializable()
 class DescPart {
   String _text;
+  @JsonKey(fromJson: stringToTextMod)
   TextMod _style;
-  DescPart(this._text, this._style);
+
+  DescPart(String text, TextMod style) :
+        this._text = text,
+        this._style = style;
+
   String get text => _text;
+
   TextMod get style => _style;
+
+  factory DescPart.fromJson(Map<String, dynamic> json) => _$DescPartFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DescPartToJson(this);
 
   static stringToTextMod(String s) {
     switch (s) {

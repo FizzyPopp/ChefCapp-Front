@@ -1,6 +1,8 @@
 import 'package:chef_capp/index.dart';
 import 'dart:math';
 
+// flutter pub run build_runner build
+
 /// Static helper class to generate models for use when testing
 /// Models will likely change after DB integration, so this class will have to change too
 class Dummy {

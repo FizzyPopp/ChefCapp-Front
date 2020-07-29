@@ -1,5 +1,7 @@
 import 'package:chef_capp/index.dart';
+part 'ingredient.g.dart';
 
+@JsonSerializable(explicitToJson: true)
 // need to include a category?? (see kitchen_homepage.dart)
 class Ingredient {
   // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient
@@ -9,7 +11,12 @@ class Ingredient {
   final double _quantity;
   final String _unit;
 
-  Ingredient(this._id, this._name, this._plural, this._quantity, this._unit);
+  Ingredient(ID id, String name, String plural, double quantity, String unit) :
+        this._id = id,
+        this._name = name,
+        this._plural = plural,
+        this._quantity = quantity,
+        this._unit = unit;
 
   ID get id => _id;
 
@@ -20,6 +27,14 @@ class Ingredient {
   double get quantity => _quantity;
 
   String get unit => _unit;
+
+  factory Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
+
+  Map<String, dynamic> toJson() => _$IngredientToJson(this);
+
+  bool equals(Ingredient other) {
+    return this.id.equals(other.id);
+  }
 
   String get amount {
     String out;
@@ -96,10 +111,6 @@ class Ingredient {
     } else {
       return "$whole" + fraction;
     }
-  }
-
-  bool equals(Ingredient other) {
-    return this.id.equals(other.id);
   }
 
   static Ingredient fromDB(data) {

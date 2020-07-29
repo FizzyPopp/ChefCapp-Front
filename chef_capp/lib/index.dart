@@ -1,4 +1,5 @@
 export 'package:flutter/material.dart';
+export 'package:json_annotation/json_annotation.dart';
 export 'dart:convert';
 
 export 'package:auto_size_text/auto_size_text.dart';

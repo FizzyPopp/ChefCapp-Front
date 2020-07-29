@@ -1,73 +1,43 @@
 import 'package:chef_capp/index.dart';
+part 'user.g.dart';
 
+@JsonSerializable(explicitToJson: true)
 class User {
   // look at db for more?
   final ID _id;
   final String _email;
+  @JsonKey(fromJson: stringToUnitPreference)
   final UnitPreference _weight;
   final List<DietaryRestriction> _restrictions;
 
-  User(this._id, this._email, this._weight, this._restrictions);
-
-  factory User.fromJson(String json) {
-    Map<String, dynamic> data = jsonDecode(json);
-
-    if (data["id"] == null) {
-      throw("bad id");
-    }
-    if (data["email"] == null) {
-      throw("bad email");
-    }
-    if (data["weight"] == null) {
-      throw("bad weight");
-    }
-    if (data["restrictions"] == null ||
-        data["restrictions"] is! List) {
-      throw("bad restrictions");
-    }
-
-    UnitPreference weight;
-    for (UnitPreference p in UnitPreference.values) {
-      if (p.toString() == data['weight']) {
-        weight = p;
-        break;
-      }
-    }
-    if (weight == null) {
-      throw ("Cannot find weight in UnitPreferences");
-    }
-
-    List<DietaryRestriction> restrictions;
-    for (String r in data["restrictions"]) {
-      restrictions.add(DietaryRestriction.fromJson(r));
-    }
-
-    return new User(
-        ID(data['id']),
-        data['email'],
-        weight,
-        restrictions
-    );
-  }
-
-  String toJson() {
-    List<String> restrictions = [];
-    for (DietaryRestriction r in _restrictions) {
-      restrictions.add(r.toJson());
-    }
-
-    return jsonEncode({
-      "id": _id.toString(),
-      "email": _email,
-      "weight": _weight.toString(),
-      "restrictions": jsonEncode(restrictions)
-    });
-  }
+  User(ID id, String email, UnitPreference weight, List<DietaryRestriction> restrictions) :
+        this._id = id,
+        this._email = email,
+        this._weight = weight,
+        this._restrictions = restrictions;
 
   ID get id => _id;
+
   String get email => _email;
+
   UnitPreference get weight => _weight;
+
   List<DietaryRestriction> get restrictions => [..._restrictions];
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  static UnitPreference stringToUnitPreference(String s) {
+    switch (s) {
+      case "metric":
+        return UnitPreference.metric;
+      case "imperial":
+        return UnitPreference.imperial;
+      default:
+        return UnitPreference.metric;
+    }
+  }
 }
 
 enum UnitPreference {

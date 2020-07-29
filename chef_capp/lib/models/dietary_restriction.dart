@@ -1,32 +1,20 @@
 import 'package:chef_capp/index.dart';
+part 'dietary_restriction.g.dart';
 
+@JsonSerializable(explicitToJson: true)
 class DietaryRestriction {
   final ID _id;
   final String _name;
-  DietaryRestriction(this._id, this._name);
+
+  DietaryRestriction(ID id, String name) :
+        this._id = id,
+        this._name = name;
+
   ID get id => _id;
+
   String get name => _name;
 
-  factory DietaryRestriction.fromJson(String json) {
-    Map<String, dynamic> data = jsonDecode(json);
+  factory DietaryRestriction.fromJson(Map<String, dynamic> json) => _$DietaryRestrictionFromJson(json);
 
-    if (data["id"] == null) {
-      throw("bad id");
-    }
-    if (data["name"] == null) {
-      throw("bad name");
-    }
-
-    return DietaryRestriction(
-      ID(data["id"]),
-      data["name"]
-    );
-  }
-
-  String toJson() {
-    return jsonEncode({
-      "id": _id.toString(),
-      "name": _name
-    });
-  }
+  Map<String, dynamic> toJson() => _$DietaryRestrictionToJson(this);
 }

@@ -1,9 +1,13 @@
 import 'package:chef_capp/index.dart';
+part 'ingredient_range.g.dart';
 
+@JsonSerializable(explicitToJson: true)
 class IngredientRange extends Ingredient {
   final List<double> _range;
 
-  IngredientRange(this._range, Ingredient i) : super(i.id, i.name, i.plural, i.quantity, i.unit) {
+  IngredientRange(List<double> range, Ingredient ingredient) :
+        this._range = range,
+        super(ingredient.id, ingredient.name, ingredient.plural, ingredient.quantity, ingredient.unit) {
     if (_range.length != 2) {
       throw ("bad range");
     }
@@ -14,9 +18,16 @@ class IngredientRange extends Ingredient {
     }
   }
 
+  @override
   double get quantity => -1;
 
-  List<double> get range => _range;
+  List<double> get range => [..._range];
+
+  Ingredient get ingredient => this as Ingredient;
+
+  factory IngredientRange.fromJson(Map<String, dynamic> json) => _$IngredientRangeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$IngredientRangeToJson(this);
 
   String get amount {
     String low = Ingredient.doubleToMixedFraction(_range[0]);
