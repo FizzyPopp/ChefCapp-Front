@@ -6,7 +6,6 @@ class User {
   // look at db for more?
   final ID _id;
   final String _email;
-  @JsonKey(fromJson: stringToUnitPreference)
   final UnitPreference _weight;
   final List<DietaryRestriction> _restrictions;
 
@@ -27,17 +26,6 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
-
-  static UnitPreference stringToUnitPreference(String s) {
-    switch (s) {
-      case "metric":
-        return UnitPreference.metric;
-      case "imperial":
-        return UnitPreference.imperial;
-      default:
-        return UnitPreference.metric;
-    }
-  }
 }
 
 enum UnitPreference {

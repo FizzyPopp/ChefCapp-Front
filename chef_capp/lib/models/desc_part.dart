@@ -4,7 +4,6 @@ part 'desc_part.g.dart';
 @JsonSerializable()
 class DescPart {
   String _text;
-  @JsonKey(fromJson: stringToTextMod)
   TextMod _style;
 
   DescPart(String text, TextMod style) :
