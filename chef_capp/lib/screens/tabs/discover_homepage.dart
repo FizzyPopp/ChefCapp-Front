@@ -17,7 +17,7 @@ class RecipeHomePage extends StatelessWidget {
             builder: (context, data, _) {
               return VerticalListBuilder(<Widget>[
                 Selector<DiscoverController, List<RecipeCollectionData>>(
-                    selector: (_, model) => model.hero,
+                    selector: (_, model) => model.collections,
                     builder: (context, data, _) {
                       return HorizontalListBuilder(
                         height: cardRowHeight(context, heroCardHeight(context)),

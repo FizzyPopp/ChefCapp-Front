@@ -1,7 +1,7 @@
 import 'package:chef_capp/index.dart';
 part 'id.g.dart';
-// use dart uuid package?
 
+// use dart uuid package?
 @JsonSerializable()
 class ID {
   final String _hash;
@@ -15,6 +15,8 @@ class ID {
   String toString() => _hash;
 
   bool equals(ID id) => id.hash == this.hash;
+
+  // setCurrentScreen cannot be called with the same class and name
 
   factory ID.fromJson(Map<String, dynamic> json) => _$IDFromJson(json);
 

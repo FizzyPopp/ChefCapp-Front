@@ -33,7 +33,7 @@ class Ingredient {
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
 
   bool equals(Ingredient other) {
-    return this.id.equals(other.id);
+    return this.id == other.id;
   }
 
   String get amount {

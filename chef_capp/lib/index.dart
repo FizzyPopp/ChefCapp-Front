@@ -1,5 +1,6 @@
 export 'package:flutter/material.dart';
 export 'package:json_annotation/json_annotation.dart';
+export 'package:tuple/tuple.dart';
 export 'dart:convert';
 
 export 'package:auto_size_text/auto_size_text.dart';
@@ -44,6 +45,8 @@ export 'package:chef_capp/services/inventory.dart';
 export 'package:chef_capp/services/database.dart';
 export 'package:chef_capp/services/auth.dart';
 export 'package:chef_capp/services/recipe.dart';
+export 'package:chef_capp/services/helpers/recipe_data.dart';
+export 'package:chef_capp/services/helpers/recipe_collection_data.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';
 export 'package:chef_capp/utilities/media_queries.dart';

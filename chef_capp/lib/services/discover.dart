@@ -3,14 +3,17 @@ import 'dart:math';
 
 /// Responsible for the Discover homepage, as well as generic lists of recipes (collections, history, favorites)
 class DiscoverController with ChangeNotifier {
-  List<RecipeCollectionData> hero;
+  // NOTE: when modifying any below list, first clone the variable to itself
+  // (x = List.from(x)), otherwise the Selector won't pick up on the change
+  List<RecipeCollectionData> collections;
   List<RecipeData> recent; // aka history
   List<RecipeData> favorite;
   List<RecipeData> custom;
-  int _heroStart;
+  List<RecipeData> generic; // used to display a single collection
+  int _heroStart; // used to give each recipe card a unique hero id
 
   DiscoverController() {
-    hero = List<RecipeCollectionData>();
+    collections = List<RecipeCollectionData>();
     recent = List<RecipeData>();
     favorite = List<RecipeData>();
     custom = List<RecipeData>();
@@ -33,10 +36,10 @@ class DiscoverController with ChangeNotifier {
   void genDummyLists() {
     Random rnd = Random(ParentController.SEED);
 
-    if (hero.length == 0) {
+    if (collections.length == 0) {
       int lim = rnd.nextInt(5) + 1;
       for (int i = 0; i < lim; i++) {
-        hero.add(RecipeCollectionData(Dummy.recipeCollection(rnd.nextInt(1000)), _genHeroID(), _genHeroID));
+        collections.add(RecipeCollectionData(Dummy.recipeCollection(rnd.nextInt(1000)), _genHeroID(), _genHeroID, _updateGeneric));
       }
     }
 
@@ -81,40 +84,9 @@ class DiscoverController with ChangeNotifier {
             ),
     ));
   }
-}
 
-class RecipeCollectionData {
-  final RecipeCollection _rc;
-  final String _heroID;
-  final Function _genHeroID;
-
-  RecipeCollectionData(this._rc, this._heroID, this._genHeroID);
-
-  RecipeCollection get rc => _rc;
-  String get heroID => _heroID;
-
-  Widget toHeroCard(BuildContext context) {
-    return
-      HeroCard(
-        cardHeading: _rc.heading,
-        cardText: _rc.title,
-        imgURL: _rc.imgURL,
-        heroID: _heroID,
-        onTap: (){onTapHeroCard(context);},
-      );
-  }
-
-  void onTapHeroCard(BuildContext context) {
-    final List<RecipeData> noUpdate = _rc.recipes.map((r) => RecipeData(r, _genHeroID())).toList();
-    Navigator.push(context, MaterialPageRoute(
-      builder: (BuildContext context) =>
-          DiscoverGenericList(
-              title: _rc.title,
-              // noUpdate does not come from model, so I don't think this page will ever re-render
-              // that means that all data needed for the page has to be available when this page is set up
-              // but I'm not exactly sure what data is needed
-              metaSelector: (DiscoverController model) => noUpdate
-          ),
-    ));
+  void _updateGeneric(List<RecipeData> c) {
+    generic = List.from(c);
+    notifyListeners();
   }
 }

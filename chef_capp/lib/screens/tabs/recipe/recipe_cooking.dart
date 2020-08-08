@@ -2,14 +2,15 @@ import 'package:chef_capp/index.dart';
 
 class RecipeCooking extends StatelessWidget {
   final RecipeController rc;
+  final Recipe recipe;
 
   RecipeCooking({
     @required this.rc,
-  });
+  }) : this.recipe = rc.rd.r; // recipe controller -> recipe data -> recipe
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> cookingSteps = getRecipeSteps(context, rc.rd.r);
+    List<Widget> cookingSteps = getRecipeSteps(context, recipe);
     return Scaffold(
       body: SafeArea(
         child: Stack(

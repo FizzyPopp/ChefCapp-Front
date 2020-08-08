@@ -3,8 +3,11 @@ import 'package:provider/provider.dart';
 
 class RecipeOverview extends StatelessWidget {
   final RecipeController rc;
+  final Recipe recipe;
 
-  RecipeOverview({@required this.rc});
+  RecipeOverview({
+    @required this.rc
+  }) : this.recipe = rc.rd.r; // recipe controller -> recipe data -> recipe
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +42,10 @@ class RecipeOverview extends StatelessWidget {
                 ];
               },
               body: TabBarView(children: <Widget>[
-                IngredientsOverview(rc.rd.r.ingredients),
+                IngredientsOverview(recipe.ingredients),
                 Consumer<RecipeController>(
                   builder: (context, rc, _) {
-                    return DirectionsOverview(rc.rd.r.steps);
+                    return DirectionsOverview(recipe.steps);
                   },
                 ),
                 //DirectionsOverview(rc.rd.r.steps),
@@ -57,8 +60,9 @@ class RecipeOverview extends StatelessWidget {
 
 class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
   final RecipeController rc;
+  final Recipe recipe;
 
-  RecipeHeader({@required this.rc});
+  RecipeHeader({@required this.rc}) : this.recipe = rc.rd.r;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +78,7 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
                 child: Text(
-                  rc.rd.r.title,
+                  recipe.title,
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -94,8 +98,8 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(rc.rd.r.prepTime.toString() + ' min prep'),
-                          Text('+ ' + rc.rd.r.cookTime.toString() + ' min cook')
+                          Text(recipe.prepTime.toString() + ' min prep'),
+                          Text('+ ' + recipe.cookTime.toString() + ' min cook')
                         ],
                       )
                     ],
@@ -108,7 +112,7 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
                         size: 16.0,
                       ),
                       SizedBox(width: 8.0),
-                      Text("Serves 4"), //Text(rc.rd.r.calories.toString() + ' cal / serving'),
+                      Text("Serves 4"), //Text(recipe.calories.toString() + ' cal / serving'),
                     ],
                   ),
                 ],
