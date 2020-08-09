@@ -11,7 +11,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 /// - universal source of truth
 ///
 /// Also holds the User object, but no other models
-class ParentController with ChangeNotifier {
+class ParentController {
   static final FirebaseAnalytics analytics = FirebaseAnalytics();
   static const int SEED = 2;
   static User _user;

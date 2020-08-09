@@ -68,10 +68,11 @@ class DiscoverController with ChangeNotifier {
   void discoverHistory(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
       builder: (BuildContext context) =>
-          DiscoverGenericList(
-              title: "My History",
-              metaSelector: (DiscoverController model) => model.recent
-          ),
+        DiscoverGenericList(
+            title: "My History",
+            metaSelector: (DiscoverController model) => model.recent
+        ),
+      settings: RouteSettings(name: context.widget.runtimeType.toString()),
     ));
   }
 
@@ -82,6 +83,7 @@ class DiscoverController with ChangeNotifier {
                 title: "My Favorites",
                 metaSelector: (DiscoverController model) => model.favorite
             ),
+        settings: RouteSettings(name: context.widget.runtimeType.toString()),
     ));
   }
 

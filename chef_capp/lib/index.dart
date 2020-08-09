@@ -39,14 +39,15 @@ export 'package:chef_capp/screens/tabs/recipe/recipe_cooking.dart';
 export 'package:chef_capp/screens/tabs/recipe/recipe_overview.dart';
 export 'package:chef_capp/screens/test_confetti.dart';
 
-export 'package:chef_capp/services/parent.dart';
-export 'package:chef_capp/services/discover.dart';
-export 'package:chef_capp/services/inventory.dart';
+export 'package:chef_capp/controllers/parent.dart';
+export 'package:chef_capp/controllers/discover.dart';
+export 'package:chef_capp/controllers/inventory.dart';
+export 'package:chef_capp/controllers/auth.dart';
+export 'package:chef_capp/controllers/recipe.dart';
+export 'package:chef_capp/controllers/models/recipe_data.dart';
+export 'package:chef_capp/controllers/models/recipe_collection_data.dart';
+
 export 'package:chef_capp/services/database.dart';
-export 'package:chef_capp/services/auth.dart';
-export 'package:chef_capp/services/recipe.dart';
-export 'package:chef_capp/services/helpers/recipe_data.dart';
-export 'package:chef_capp/services/helpers/recipe_collection_data.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';
 export 'package:chef_capp/utilities/media_queries.dart';

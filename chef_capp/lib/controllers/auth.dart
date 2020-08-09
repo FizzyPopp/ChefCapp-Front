@@ -52,7 +52,8 @@ class AuthController with ChangeNotifier {
           RecipeController rc = RecipeController(RecipeData(rp, "0"));
           // push RecipeOverview
           Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => RecipeOverview(rc: rc)
+              builder: (BuildContext context) => RecipeOverview(rc: rc),
+              settings: RouteSettings(name: context.widget.runtimeType.toString()),
           ));
           // load full Recipe
           rc.getFullRecipe();

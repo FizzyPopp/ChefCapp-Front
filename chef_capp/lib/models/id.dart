@@ -16,8 +16,6 @@ class ID {
 
   bool equals(ID id) => id.hash == this.hash;
 
-  // setCurrentScreen cannot be called with the same class and name
-
   factory ID.fromJson(Map<String, dynamic> json) => _$IDFromJson(json);
 
   Map<String, dynamic> toJson() => _$IDToJson(this);

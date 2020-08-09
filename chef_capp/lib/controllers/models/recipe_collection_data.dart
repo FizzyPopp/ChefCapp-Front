@@ -31,6 +31,7 @@ class RecipeCollectionData {
               title: _rc.title,
               metaSelector: (DiscoverController model) => model.generic
           ),
+      settings: RouteSettings(name: context.widget.runtimeType.toString()),
     ));
   }
 }

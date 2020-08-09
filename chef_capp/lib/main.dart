@@ -70,7 +70,8 @@ class Onboarding extends StatelessWidget {
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(
-                                  builder: (BuildContext context) => SignUp()
+                                  builder: (BuildContext context) => SignUp(),
+                                  settings: RouteSettings(name: context.widget.runtimeType.toString()),
                               ));
                             },
                           ),

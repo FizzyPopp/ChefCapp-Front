@@ -38,7 +38,8 @@ class RecipeController with ChangeNotifier {
       Navigator.push(context, MaterialPageRoute(
           builder: (BuildContext context) => RecipeCooking(
             rc: this,
-          )
+          ),
+          settings: RouteSettings(name: context.widget.runtimeType.toString()),
       ));
     }
   }
