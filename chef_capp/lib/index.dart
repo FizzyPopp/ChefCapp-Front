@@ -7,10 +7,6 @@ export 'package:google_fonts/google_fonts.dart';
 export 'package:confetti/confetti.dart';
 export 'package:search_widget/search_widget.dart';
 
-export 'package:chef_capp/screens/authentication/login.dart';
-export 'package:chef_capp/screens/authentication/signup.dart';
-export 'package:chef_capp/screens/authentication/easy_login.dart';
-
 export 'package:chef_capp/models/equipment.dart';
 export 'package:chef_capp/models/recipe.dart';
 export 'package:chef_capp/models/recipe_preview.dart';
@@ -25,6 +21,10 @@ export 'package:chef_capp/models/dummy.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
+export 'package:chef_capp/screens/authentication/login.dart';
+export 'package:chef_capp/screens/authentication/signup.dart';
+export 'package:chef_capp/screens/authentication/easy_login.dart';
+export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
 export 'package:chef_capp/screens/tabs/discover/discover_favorites.dart';

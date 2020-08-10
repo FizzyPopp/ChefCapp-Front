@@ -10,51 +10,102 @@ class RecipeCooking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> cookingSteps = getRecipeSteps(context, rc.rd.r);
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Swiper(
-              onIndexChanged: (int newIndex) {
-                ParentController.analytics.logEvent(
-                    name: "step_change",
-                    parameters: <String, dynamic>{
-                      'new_index': newIndex,
-                    },
-                );
-              },
-              itemBuilder: (BuildContext context, int index) {
-                return cookingSteps[index];
-              },
-              scrollDirection: Axis.horizontal,
-              pagination: SwiperPagination(
-                //alignment: Alignment.centerRight,
-                builder: SwiperPagination.fraction,
-              ),
-              control: SwiperControl(
-                padding: EdgeInsets.fromLTRB(
-                  xMargins - 6,
-                  xMargins,
-                  xMargins - 6,
-                  xMargins,
-                ),
-              ),
-              loop: false,
-              itemCount: cookingSteps.length,
-              viewportFraction: 1,
-              scale: 0.9,
-              fade: 0.1,
-            ),
-            Positioned(
-              right: 0,
-              child: IconButton(
-                icon: Icon(Icons.close),
+    return WillPopScope(
+      onWillPop: () {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Are you sure you would like to quit the recipe?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('I don\'t want to cook this'),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
                 },
               ),
-            ),
-          ],
+              FlatButton(
+                child: Text('I\'ve completed the recipe'),
+                onPressed: () {
+                  Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
+                },
+              ),
+              RaisedButton(
+                child: Text('Resume cooking'),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        );
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Swiper(
+                onIndexChanged: (int newIndex) {
+                  ParentController.analytics.logEvent(
+                      name: "step_change",
+                      parameters: <String, dynamic>{
+                        'new_index': newIndex,
+                      },
+                  );
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  return cookingSteps[index];
+                },
+                scrollDirection: Axis.horizontal,
+                pagination: SwiperPagination(
+                  //alignment: Alignment.centerRight,
+                  builder: SwiperPagination.fraction,
+                ),
+                control: SwiperControl(
+                  padding: EdgeInsets.fromLTRB(
+                    xMargins - 6,
+                    xMargins,
+                    xMargins - 6,
+                    xMargins,
+                  ),
+                ),
+                loop: false,
+                itemCount: cookingSteps.length,
+                viewportFraction: 1,
+                scale: 0.9,
+                fade: 0.1,
+              ),
+              Positioned(
+                right: 0,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    return showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Are you sure you would like to quit the recipe?'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('I don\'t want to cook this'),
+                            onPressed: () {
+                              Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('I\'ve completed the recipe'),
+                            onPressed: () {
+                              Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
+                            },
+                          ),
+                          RaisedButton(
+                            child: Text('Resume cooking'),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -241,3 +292,4 @@ class FinalStep extends StatelessWidget {
   }
 }
  */
+

@@ -32,9 +32,9 @@ class RecipeController with ChangeNotifier {
   void getCooking(BuildContext context) {
     if (_isFullRecipe) {
       Navigator.push(context, MaterialPageRoute(
-          builder: (BuildContext context) => RecipeCooking(
-            rc: this,
-          )
+        builder: (BuildContext context) => RecipeCooking(
+          rc: this,
+        ),
       ));
     }
   }
@@ -70,6 +70,7 @@ class RecipeData {
 
   void _onTapMiniRecipeCard(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
+        settings: RouteSettings(name: "/recipeOverview"),
         builder: (BuildContext context) => RecipeOverview(rc: RecipeController(this))
     ));
   }
@@ -88,6 +89,7 @@ class RecipeData {
 
   void onTapFullRecipeCard(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
+        settings: RouteSettings(name: "/recipeOverview"),
         builder: (BuildContext context) => RecipeOverview(rc: RecipeController(this))
     ));
   }
