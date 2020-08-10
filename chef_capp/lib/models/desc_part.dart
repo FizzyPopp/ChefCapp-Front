@@ -2,7 +2,7 @@ import 'package:chef_capp/index.dart';
 part 'desc_part.g.dart';
 
 @JsonSerializable()
-class DescPart {
+class DescPart implements EqualsInterface {
   String _text;
   TextMod _style;
 
@@ -13,6 +13,11 @@ class DescPart {
   String get text => _text;
 
   TextMod get style => _style;
+
+  bool equals(var other) {
+    if (other is! DescPart) return false;
+    return jsonEncode(this.toJson()) == jsonEncode((other as DescPart).toJson());
+  }
 
   factory DescPart.fromJson(Map<String, dynamic> json) => _$DescPartFromJson(json);
 

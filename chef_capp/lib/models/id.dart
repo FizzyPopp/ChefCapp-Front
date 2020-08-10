@@ -3,7 +3,7 @@ part 'id.g.dart';
 
 // use dart uuid package?
 @JsonSerializable()
-class ID {
+class ID implements EqualsInterface {
   final String _hash;
 
   ID(String hash) :
@@ -14,7 +14,10 @@ class ID {
   @override
   String toString() => _hash;
 
-  bool equals(ID id) => id.hash == this.hash;
+  bool equals(var other) {
+    if (other is! ID) return false;
+    return other.hash == this.hash;
+  }
 
   factory ID.fromJson(Map<String, dynamic> json) => _$IDFromJson(json);
 
