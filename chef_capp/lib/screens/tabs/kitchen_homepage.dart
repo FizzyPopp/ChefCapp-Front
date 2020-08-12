@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 class KitchenHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    /*
     return ChangeNotifierProvider.value(
         value: ParentController.inventory,
         child: Consumer<InventoryController>(
@@ -31,6 +31,77 @@ class KitchenHomepage extends StatelessWidget {
               );
             }
         ),
+     */
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => IngredientAdder()
+          ));
+        },
+      ),
+      body: VerticalListBuilder(
+        [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search ingredients...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          KitchenAccordion(
+            title: 'Category',
+            widgetList: <Widget>[
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                amount: '5',
+                onTap: () {
+
+                },
+              ),
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                amount: '5',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => IngredientAdjust(
+                        label: 'Ingredient',
+                        isExisting: true,
+                        onConfirm: () {
+                          Navigator.pop(context);
+                        },
+                        onDelete: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                  ));
+                },
+              ),
+            ],
+          ),
+          KitchenAccordion(
+            title: 'Category',
+            widgetList: <Widget>[
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                amount: '5',
+                onTap: () {
+                },
+              ),
+              KitchenRow(
+                ingredientText: 'Ingredient',
+                amount: '5',
+                onTap: () {
+                },
+              ),
+            ],
+          ),
+        ]
+      ),
     );
   }
 

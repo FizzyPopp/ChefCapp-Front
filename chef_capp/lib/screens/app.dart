@@ -7,7 +7,6 @@ class App extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        //appBar: MainTopBar(),
         drawer: MainDrawer(),
         body: SafeArea(
           child: NestedScrollView(

@@ -6,55 +6,60 @@ class MainDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-
-        ],
-      ),
-    );
-  }
-}
-
-
-class ChefDrawer extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
           DrawerHeader(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 CircleAvatar(
                   backgroundImage: AssetImage('assets/images/food.jpg'),
-                  radius: 50.0,
+                  radius: 24.0,
                 ),
-                Text('Johnny Chocolat')
+                InkWell(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Julian Caeser',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          SizedBox(height: 4.0,),
+                          Text(
+                            'julian.caeser@example.com',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                      Icon(Icons.settings),
+                    ],
+                  ),
+                  onTap: () {
+
+                  },
+                ),
               ],
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            ),
-            decoration:  BoxDecoration(
-            color: Colors.blue,
             ),
           ),
           ListTile(
-            title: Text('Settings'),
+            title: Text("Dietary Restrictions"),
           ),
           ListTile(
-            title: Text('Notifications'),
-          ),
-          ListTile(
-            title: Text('Help'),
-          ),
-          ListTile(
-            title: Text('Logout'),
+            title: Text("Unit Preferences"),
             onTap: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/',
-                (Route<dynamic> route) => false
-              );
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => OnboardingCookingPreferences()
+              ));
             },
+          ),
+          ListTile(
+            title: Text("Notifications"),
+          ),
+          ListTile(
+            title: Text("Help"),
           ),
         ],
       ),
