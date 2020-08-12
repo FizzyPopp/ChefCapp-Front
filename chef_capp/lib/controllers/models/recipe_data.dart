@@ -23,7 +23,7 @@ class RecipeData {
   void _onTapMiniRecipeCard(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
         builder: (BuildContext context) => RecipeOverview(rc: RecipeController(this)),
-        settings: RouteSettings(name: context.widget.runtimeType.toString()),
+        settings: RouteSettings(name: "/recipeOverview"),
     ));
   }
 
@@ -43,7 +43,7 @@ class RecipeData {
   void onTapFullRecipeCard(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
         builder: (BuildContext context) => RecipeOverview(rc: RecipeController(this)),
-        settings: RouteSettings(name: context.widget.runtimeType.toString()),
+        settings: RouteSettings(name: "/recipeOverview"),
     ));
   }
 }
