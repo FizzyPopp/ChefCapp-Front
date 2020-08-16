@@ -8,68 +8,47 @@ class RecipeCooking extends StatelessWidget {
     @required this.rc,
   }) : this.recipe = rc.rd.r; // recipe controller -> recipe data -> recipe
 
+  Function getOnWillPop(context) {
+    Future<bool> tmp() async {
+      // don't know what the significance of the returned bool is, but this seems to work
+      return showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              title: Text('Are you sure you would like to quit the recipe?'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('I don\'t want to cook this'),
+                  onPressed: () {
+                    Navigator.popUntil(
+                        context, ModalRoute.withName('/recipeOverview'));
+                  },
+                ),
+                FlatButton(
+                  child: Text('I\'ve completed the recipe'),
+                  onPressed: () {
+                    Navigator.popUntil(
+                        context, ModalRoute.withName('/recipeOverview'));
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Resume cooking'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+      );
+    }
+    return tmp;
+  }
+
   @override
   Widget build(BuildContext context) {
-/*
-    List<Widget> cookingSteps = getRecipeSteps(context, recipe);
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Swiper(
-              onIndexChanged: (int newIndex) {
-                ParentController.analytics.logEvent(
-                    name: "step_change",
-                    parameters: <String, dynamic>{
-                      'new_index': newIndex,
-                    },
-                );
-              },
-              itemBuilder: (BuildContext context, int index) {
-                return cookingSteps[index];
-              },
-              scrollDirection: Axis.horizontal,
-              pagination: SwiperPagination(
-                //alignment: Alignment.centerRight,
-                builder: SwiperPagination.fraction,
-              ),
-              control: SwiperControl(
-                padding: EdgeInsets.fromLTRB(
-                  xMargins - 6,
-                  xMargins,
-                  xMargins - 6,
-                  xMargins,
-                ),
-
- */
     List<Widget> cookingSteps = getRecipeSteps(context, rc.rd.r);
     return WillPopScope(
-      onWillPop: () {
-        return showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Are you sure you would like to quit the recipe?'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('I don\'t want to cook this'),
-                onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
-                },
-              ),
-              FlatButton(
-                child: Text('I\'ve completed the recipe'),
-                onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
-                },
-              ),
-              RaisedButton(
-                child: Text('Resume cooking'),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        );
-      },
+      onWillPop: getOnWillPop(context),
       child: Scaffold(
         body: SafeArea(
           child: Stack(
@@ -109,32 +88,7 @@ class RecipeCooking extends StatelessWidget {
                 right: 0,
                 child: IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: () {
-                    return showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Are you sure you would like to quit the recipe?'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('I don\'t want to cook this'),
-                            onPressed: () {
-                              Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
-                            },
-                          ),
-                          FlatButton(
-                            child: Text('I\'ve completed the recipe'),
-                            onPressed: () {
-                              Navigator.popUntil(context, ModalRoute.withName('/recipeOverview'));
-                            },
-                          ),
-                          RaisedButton(
-                            child: Text('Resume cooking'),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                  onPressed: getOnWillPop(context),
                 ),
               ),
             ],
@@ -309,20 +263,4 @@ class CookingStep extends StatelessWidget {
     }
   }
 }
-
-/*
-class FinalStep extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        child: Text('Am done le cooking!'),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-    );
-  }
-}
- */
 
