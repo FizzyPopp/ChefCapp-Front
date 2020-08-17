@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 class KitchenHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*
+
     return ChangeNotifierProvider.value(
         value: ParentController.inventory,
         child: Consumer<InventoryController>(
@@ -26,94 +26,25 @@ class KitchenHomepage extends StatelessWidget {
               return VerticalListBuilder(
                   [
                     child,
-                    ...parseInventory(ParentController.inventory.forDisplay),
+                    ...parseInventory(context, ParentController.inventory.forDisplay),
                   ]
               );
             }
         ),
-     */
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context) => IngredientAdder()
-          ));
-        },
-      ),
-      body: VerticalListBuilder(
-        [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search ingredients...',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          KitchenAccordion(
-            title: 'Category',
-            widgetList: <Widget>[
-              KitchenRow(
-                ingredientText: 'Ingredient',
-                amount: '5',
-                onTap: () {
-
-                },
-              ),
-              KitchenRow(
-                ingredientText: 'Ingredient',
-                amount: '5',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => IngredientAdjust(
-                        label: 'Ingredient',
-                        isExisting: true,
-                        onConfirm: () {
-                          Navigator.pop(context);
-                        },
-                        onDelete: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                  ));
-                },
-              ),
-            ],
-          ),
-          KitchenAccordion(
-            title: 'Category',
-            widgetList: <Widget>[
-              KitchenRow(
-                ingredientText: 'Ingredient',
-                amount: '5',
-                onTap: () {
-                },
-              ),
-              KitchenRow(
-                ingredientText: 'Ingredient',
-                amount: '5',
-                onTap: () {
-                },
-              ),
-            ],
-          ),
-        ]
-      ),
     );
   }
 
-  List<Widget> parseInventory(Map<String, List<IngredientRange>> m) {
+  List<Widget> parseInventory(context, Map<String, List<IngredientInterface>> m) {
     List<Widget> out = [];
-    m.forEach((String category, List<IngredientRange> rows) {
+    m.forEach((String category, List<IngredientInterface> rows) {
       List<KitchenRow> tmp = [];
-      rows.forEach((IngredientRange ingredient) {
+      rows.forEach((IngredientInterface ingredient) {
         tmp.add(KitchenRow(
           ingredientText: ingredient.name,
           amount: ingredient.amount,
-          onTap: () { print("tapped"); } // call the parent controller with this ingredient
+          onTap: () {
+            ParentController.inventory.onTap(context, ingredient.id);
+          } // call the parent controller with this ingredient
         ));
       });
       out.add(KitchenAccordion(

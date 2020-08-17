@@ -4,41 +4,45 @@ import 'dart:math';
 /// will be responsible for ingredients list (what the user has on hand)
 /// (read ingredients from db, modify ingredient amounts)
 class InventoryController with ChangeNotifier {
-  List<IngredientRange> ingredients;
-  Map<String, List<IngredientRange>> forDisplay;
-  bool updateDisplay;
+  Map<String, List<IngredientInterface>> forDisplay;
+  IngredientsWrangler _ingredients;
 
   InventoryController() {
-    ingredients = List<IngredientRange>();
-    forDisplay = Map<String, List<IngredientRange>>();
-    genDummyLists();
-    parseIngredientsIntoDisplay();
+    List<IngredientInterface> fake = genDummyList();
+    _ingredients = IngredientsWrangler(fake);
+    updateDisplay();
   }
 
-  void genDummyLists() {
+  List<IngredientInterface> genDummyList() {
+    int lim = 20;
     Random rnd = Random(ParentController.SEED);
-    if (ingredients.length == 0) {
-      int lim = 10;
-      for (int i = 0; i < lim; i++) {
-        ingredients.add(Dummy.ingredientRange(rnd.nextInt(1000)));
+    List<IngredientInterface> out = List<IngredientInterface>();
+    for (int i = 0; i < lim; i++) {
+      if (rnd.nextDouble() > .6) {
+        out.add(Dummy.ingredient(rnd.nextInt(1000)));
+      } else {
+        out.add(Dummy.ingredientRange(rnd.nextInt(1000)));
       }
     }
-  }
-
-  void parseIngredientsIntoDisplay() {
-    // NEED TO WORK OUT CATEGORIES
-    forDisplay["Category"] = [...ingredients];
+    return out;
   }
 
   void search(String s) {
-    if (s == "") {
-      parseIngredientsIntoDisplay();
-    } else {
-      forDisplay.keys.forEach((String key) {
-        forDisplay[key].removeWhere((IngredientRange ir) => !ir.name.contains(s));
-      });
-      forDisplay.removeWhere((String _, List<IngredientRange> rows) => rows.length == 0);
-    }
+    forDisplay = _ingredients.filter(s);
     notifyListeners();
+  }
+
+  void updateDisplay() {
+    forDisplay = _ingredients.filter("");
+    notifyListeners();
+  }
+
+  void onTap(context, ID id) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => IngredientAdjust(
+        controller: IngredientController(_ingredients, id),
+      ),
+      settings: RouteSettings(name: context.widget.runtimeType.toString()),
+    ));
   }
 }

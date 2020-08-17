@@ -7,7 +7,7 @@ class IngredientRange extends Ingredient {
 
   IngredientRange(List<double> range, Ingredient ingredient) :
         this._range = range,
-        super(ingredient.id, ingredient.name, ingredient.plural, ingredient.quantity, ingredient.unit) {
+        super(ingredient.id, ingredient.name, ingredient.plural, ingredient.quantity, ingredient.unit, ingredient.category) {
     if (_range.length != 2 || range[0] < 0 || range[1] < 0) {
       throw ("bad range");
     }
@@ -20,7 +20,7 @@ class IngredientRange extends Ingredient {
 
   List<double> get range => [..._range];
 
-  Ingredient get ingredient => Ingredient(this.id, this.name, this.plural, this.quantity, this.unit);
+  Ingredient get ingredient => Ingredient(this.id, this.name, this.plural, this.quantity, this.unit, this.category);
 
   factory IngredientRange.fromJson(Map<String, dynamic> json) => _$IngredientRangeFromJson(json);
 

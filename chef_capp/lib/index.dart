@@ -25,6 +25,7 @@ export 'package:chef_capp/models/dummy.dart';
 export 'package:chef_capp/models/dietary_restriction.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 export 'package:chef_capp/models/interfaces/equals_interface.dart';
+export 'package:chef_capp/models/interfaces/ingredient_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
 export 'package:chef_capp/screens/authentication/login.dart';
@@ -47,8 +48,10 @@ export 'package:chef_capp/controllers/discover.dart';
 export 'package:chef_capp/controllers/inventory.dart';
 export 'package:chef_capp/controllers/auth.dart';
 export 'package:chef_capp/controllers/recipe.dart';
+export 'package:chef_capp/controllers/ingredient.dart';
 export 'package:chef_capp/controllers/models/recipe_data.dart';
 export 'package:chef_capp/controllers/models/recipe_collection_data.dart';
+export 'package:chef_capp/controllers/models/ingredients_wrangler.dart';
 
 export 'package:chef_capp/services/database.dart';
 

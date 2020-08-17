@@ -3,20 +3,24 @@ part 'ingredient.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 // need to include a category?? (see kitchen_homepage.dart)
-class Ingredient {
+class Ingredient implements IngredientInterface {
   // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient
   final ID _id;
   final String _name;
   final String _plural;
   final double _quantity;
   final String _unit;
+  final String _category;
+  final List<double> _range;
 
-  Ingredient(ID id, String name, String plural, double quantity, String unit) :
+  Ingredient(ID id, String name, String plural, double quantity, String unit, String category) :
         this._id = id,
         this._name = name,
         this._plural = plural,
         this._quantity = quantity,
-        this._unit = unit;
+        this._unit = unit,
+        this._category = category,
+        this._range = [quantity, quantity];
 
   ID get id => _id;
 
@@ -27,6 +31,10 @@ class Ingredient {
   double get quantity => _quantity;
 
   String get unit => _unit;
+
+  String get category => _category;
+
+  List<double> get range => [..._range];
 
   factory Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
 
@@ -137,8 +145,10 @@ class Ingredient {
     String name = data["name"]["singular"];
     String plural = (data["name"]["plural"] ?? name);
 
+    // TODO: get category
+
     // return
-    return Ingredient(ID(data["id"]), name, plural, quantity, unit);
+    return Ingredient(ID(data["id"]), name, plural, quantity, unit, "A Category");
   }
 
   static List<Ingredient> listFromDB(data) {

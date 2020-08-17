@@ -1,8 +1,6 @@
 import 'package:chef_capp/index.dart';
 import 'dart:math';
 
-// flutter pub run build_runner build
-
 /// Static helper class to generate models for use when testing
 /// Models will likely change after DB integration, so this class will have to change too
 class Dummy {
@@ -107,7 +105,8 @@ class Dummy {
         "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
         "${_ingredients[i][1]} plural [id: ${_ingredients[i][0]}]",
         (100 * rnd.nextDouble()),
-        "g"
+        "g",
+        (rnd.nextDouble() > .5) ? "A Category" : "B Category",
     );
   }
 

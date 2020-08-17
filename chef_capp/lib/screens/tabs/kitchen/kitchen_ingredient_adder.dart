@@ -65,11 +65,8 @@ class IngredientAdderChip extends StatelessWidget {
       onSelected: (bool value) {
         Navigator.push(context, MaterialPageRoute(
             builder: (context) => IngredientAdjust(
-              label: 'Ingredient',
-              isExisting: false,
-              onConfirm: () {
-                Navigator.pop(context);
-              },
+              // TODO
+              controller: IngredientController.empty(null),
             )
         ));
       },

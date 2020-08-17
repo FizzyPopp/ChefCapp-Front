@@ -13,6 +13,7 @@ Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
     json['plural'] as String,
     (json['quantity'] as num)?.toDouble(),
     json['unit'] as String,
+    json['category'] as String,
   );
 }
 
@@ -23,4 +24,5 @@ Map<String, dynamic> _$IngredientToJson(Ingredient instance) =>
       'plural': instance.plural,
       'quantity': instance.quantity,
       'unit': instance.unit,
+      'category': instance.category,
     };
