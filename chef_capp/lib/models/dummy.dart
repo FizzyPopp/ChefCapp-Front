@@ -85,25 +85,26 @@ class Dummy {
   }
 
   static var _ingredients = [
-    [id(), "chicken"],
-    [id(), "potato"],
-    [id(), "garlic"],
-    [id(), "cheese"],
-    [id(), "rice"],
-    [id(), "beans"],
-    [id(), "apples"],
-    [id(), "orange"],
-    [id(), "venison"],
-    [id(), "carrot"],
-    [id(), "chocolate"]
+    "chicken",
+    "potato",
+    "garlic",
+    "cheese",
+    "rice",
+    "beans",
+    "apples",
+    "orange",
+    "venison",
+    "carrot",
+    "chocolate"
   ];
   static Ingredient ingredient(int seed) {
     Random rnd = Random(seed);
     int i = rnd.nextInt(_ingredients.length);
+    ID iid = id();
     return Ingredient(
-        _ingredients[i][0],
-        "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
-        "${_ingredients[i][1]} plural [id: ${_ingredients[i][0]}]",
+        iid,
+        "${_ingredients[i]} [id: ${iid}]",
+        "${_ingredients[i]} plural [id: ${iid}]",
         (100 * rnd.nextDouble()),
         "g",
         (rnd.nextDouble() > .5) ? "A Category" : "B Category",

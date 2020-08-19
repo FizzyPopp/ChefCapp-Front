@@ -20,7 +20,7 @@ class IngredientRange extends Ingredient {
 
   List<double> get range => [..._range];
 
-  Ingredient get ingredient => Ingredient(this.id, this.name, this.plural, this.quantity, this.unit, this.category);
+  Ingredient get ingredient => Ingredient.fromRange(this);
 
   factory IngredientRange.fromJson(Map<String, dynamic> json) => _$IngredientRangeFromJson(json);
 

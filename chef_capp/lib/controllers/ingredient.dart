@@ -2,7 +2,7 @@ import 'package:chef_capp/index.dart';
 
 class IngredientController with ChangeNotifier {
   final IngredientsWrangler _wrangler;
-  Ingredient _ingredient;
+  IngredientInterface _ingredient;
   bool _isEstimate;
   bool _isExisting;
 
@@ -26,8 +26,16 @@ class IngredientController with ChangeNotifier {
   void onConfirm(context) {
     if (_isExisting) {
       // we are modifying an existing ingredient
+      if (_isEstimate && _ingredient is! IngredientRange) {
+        _ingredient = IngredientRange([0,0], _ingredient);
+      } else if (!_isEstimate && _ingredient is IngredientRange) {
+        _ingredient = Ingredient.fromRange(_ingredient);
+      }
+      _wrangler.update(_ingredient);
     } else {
       // we are creating a new ingredient
+      Ingredient ingr = Dummy.ingredient(5);
+      _wrangler.add(ingr);
     }
     Navigator.pop(context);
   }
@@ -35,7 +43,7 @@ class IngredientController with ChangeNotifier {
   void onDelete(context) {
     if (_isExisting) {
       // remove an existing ingredient
-      _wrangler.removeIngredient(_ingredient.id);
+      _wrangler.removeIngredient(_ingredient);
     }
     ParentController.inventory.updateDisplay();
     Navigator.pop(context);

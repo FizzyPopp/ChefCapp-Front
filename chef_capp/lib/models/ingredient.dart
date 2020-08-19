@@ -22,6 +22,15 @@ class Ingredient implements IngredientInterface {
         this._category = category,
         this._range = [quantity, quantity];
 
+  Ingredient.fromRange(IngredientRange ir) :
+        this._id = ir.id,
+        this._name = ir.name,
+        this._plural = ir.plural,
+        this._quantity = ir.quantity,
+        this._unit = ir.unit,
+        this._category = ir.category,
+        this._range = [ir.quantity, ir.quantity];
+
   ID get id => _id;
 
   String get name => _name;

@@ -2,11 +2,19 @@ import 'package:chef_capp/index.dart';
 
 // TODO: is this implementation efficient?
 class IngredientsWrangler {
-  List<IngredientInterface> _allIngredients;
+  Map<ID, IngredientInterface> _allIngredients;
 
-  IngredientsWrangler(this._allIngredients);
+  IngredientsWrangler(Iterable<IngredientInterface> raw) {
+    _allIngredients =  Map<ID, IngredientInterface>();
+    for (IngredientInterface ingr in raw) {
+      if (_allIngredients.containsKey(ingr.id)) {
+        throw ("two or more ingredients have the same id");
+      }
+      _allIngredients[ingr.id] = ingr;
+    }
+  }
 
-  Map<String, List<IngredientInterface>> _categorize(List<IngredientInterface> base) {
+  Map<String, List<IngredientInterface>> _categorize(Iterable<IngredientInterface> base) {
     Map<String, List<IngredientInterface>> out = Map<String, List<IngredientInterface>>();
     base.forEach((ingr) {
       if (!out.containsKey(ingr.category)) {
@@ -19,10 +27,10 @@ class IngredientsWrangler {
 
   Map<String, List<IngredientInterface>> filter(String s) {
     if (s == "") {
-      return _categorize(_allIngredients);
+      return _categorize(_allIngredients.values);
     }
 
-    List<IngredientInterface> tmp = [..._allIngredients];
+    List<IngredientInterface> tmp = [..._allIngredients.values];
     tmp.removeWhere((IngredientInterface ingr) {
       return !ingr.name.toLowerCase().contains(s.toLowerCase());
     });
@@ -30,28 +38,26 @@ class IngredientsWrangler {
   }
 
   IngredientInterface getIngredientById(ID id) {
-    IngredientInterface out;
-    bool found = false;
-    for (IngredientInterface ingr in _allIngredients) {
-      if (ingr.id.equals(id)) {
-        found = true;
-        out = ingr;
-        break;
-      }
-    }
-
-    if (!found) {
-      throw("Could not find matching ingredient");
-    }
-
-    return out;
+    return _allIngredients[id];
   }
 
-  bool removeIngredient(ID id) {
-    int initialLength = _allIngredients.length;
-    _allIngredients.removeWhere((ingr) {
-      return ingr.id.equals(id);
-    });
-    return (initialLength != _allIngredients.length);
+  bool update(IngredientInterface ingr) {
+    if (!_allIngredients.containsKey(ingr.id)) {
+      return false;
+    }
+    _allIngredients[ingr.id] = ingr;
+    return true;
+  }
+
+  bool add(IngredientInterface ingr) {
+    if (_allIngredients.containsKey(ingr.id)) {
+      return false;
+    }
+    _allIngredients[ingr.id] = ingr;
+    return true;
+  }
+
+  bool removeIngredient(IngredientInterface ingr) {
+    return (_allIngredients.remove(ingr.id) != null);
   }
 }
