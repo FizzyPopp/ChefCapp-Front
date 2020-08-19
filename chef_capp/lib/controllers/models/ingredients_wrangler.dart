@@ -1,6 +1,7 @@
 import 'package:chef_capp/index.dart';
 
-// TODO: is this implementation efficient?
+// if we store just Ingredient name and id (for fast reference), it's roughly 2mb per per 10,000 ingredients
+
 class IngredientsWrangler {
   Map<ID, IngredientInterface> _allIngredients;
 

@@ -7,29 +7,39 @@ class KitchenHomepage extends StatelessWidget {
 
     return ChangeNotifierProvider.value(
         value: ParentController.inventory,
-        child: Consumer<InventoryController>(
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => IngredientAdder()
+              ));
+            },
+          ),
+          body: Consumer<InventoryController>(
             // don't need to rebuild search TextField every time
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
-              child: TextField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Search ingredients...',
-                  border: OutlineInputBorder(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: xMargins, vertical: gutters / 2),
+                child: TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search ingredients...',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (String s) {
+                    ParentController.inventory.search(s);
+                  },
                 ),
-                onChanged: (String s) {
-                  ParentController.inventory.search(s);
-                },
               ),
-            ),
-            builder: (context, data, child) {
-              return VerticalListBuilder(
-                  [
-                    child,
-                    ...parseInventory(context, ParentController.inventory.forDisplay),
-                  ]
-              );
-            }
+              builder: (context, data, child) {
+                return VerticalListBuilder(
+                    [
+                      child,
+                      ...parseInventory(context, ParentController.inventory.forDisplay),
+                    ]
+                );
+              }
+          ),
         ),
     );
   }
