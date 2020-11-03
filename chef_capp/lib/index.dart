@@ -24,6 +24,7 @@ export 'package:chef_capp/screens/app.dart';
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
 export 'package:chef_capp/screens/authentication/easy_login.dart';
+export 'package:chef_capp/screens/drawer/drawer_notifications.dart';
 export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
