@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'app_user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return User(
+AppUser _$AppUserFromJson(Map<String, dynamic> json) {
+  return AppUser(
     json['id'] == null ? null : ID.fromJson(json['id'] as Map<String, dynamic>),
     json['email'] as String,
     _$enumDecodeNullable(_$UnitPreferenceEnumMap, json['weight']),
@@ -19,7 +19,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
       'id': instance.id?.toJson(),
       'email': instance.email,
       'weight': _$UnitPreferenceEnumMap[instance.weight],

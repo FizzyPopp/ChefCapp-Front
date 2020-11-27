@@ -14,21 +14,21 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 class ParentController {
   static final FirebaseAnalytics analytics = FirebaseAnalytics();
   static const int SEED = 2;
-  static User _user;
+  static AppUser _appUser;
   static AuthController _authController;
   static DatabaseService _databaseService;
   static DiscoverController _discoverController;
   static InventoryController _inventoryController;
 
-  static void set user(User user) {
-    if (_user != null) {
+  static void set appUser(AppUser user) {
+    if (_appUser != null) {
       throw("User already present");
     }
-    _user = user;
+    _appUser = user;
   }
 
-  static User get user {
-    return _user;
+  static AppUser get appUser {
+    return _appUser;
   }
 
   static AuthController get auth {

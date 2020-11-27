@@ -137,9 +137,9 @@ class Dummy {
     );
   }
 
-  static User user(int seed) {
+  static AppUser user(int seed) {
     Random rnd = Random(seed);
-    return User(
+    return AppUser(
         id(),
         "loblaw@lawblog.com",
         UnitPreference.metric,

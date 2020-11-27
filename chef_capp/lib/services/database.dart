@@ -19,7 +19,7 @@ import 'package:chef_capp/index.dart';
 
 class DatabaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser _user;
+  User _user;
   SharedPreferences _localStore;
 
   Future<SharedPreferences> _getLocalStore() async {
@@ -29,16 +29,16 @@ class DatabaseService {
     return _localStore;
   }
 
-  // I'm not happy with this, it needs to be more robust ("user" should be a constant?)
-  Future<User> loadUser() async {
+  // I'm not happy with this, it needs to be more robust ("appUser" should be a constant?)
+  Future<AppUser> loadAppUser() async {
     SharedPreferences store = await _getLocalStore();
-    return User.fromJson(jsonDecode(store.getString("user")));
+    return AppUser.fromJson(jsonDecode(store.getString("appUser")));
   }
 
   // ditto
-  Future<void> storeUser(User u) async {
+  Future<void> storeAppUser(AppUser u) async {
     SharedPreferences store = await _getLocalStore();
-    store.setString("user", jsonEncode(u.toJson()));
+    store.setString("appUser", jsonEncode(u.toJson()));
   }
 
   Future<bool> signInAnon() async {
@@ -54,7 +54,7 @@ class DatabaseService {
   }
 
   Future<RecipePreview> getTestRecipePreview() async {
-    DocumentSnapshot snapshot = await Firestore.instance.collection('recipes').document('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('recipes').doc('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
     String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
     if (!snapshot.exists) {
@@ -66,14 +66,14 @@ class DatabaseService {
 
   Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
     // later on some documents might not be a step, but don't worry about it for now
-    QuerySnapshot qs = await Firestore.instance.collection('components').where('id', whereIn: rp.componentIDs).getDocuments();
+    QuerySnapshot qs = await FirebaseFirestore.instance.collection('components').where('id', whereIn: rp.componentIDs).get();
 
-    if (qs.documents.length != rp.componentIDs.length) {
+    if (qs.docs.length != rp.componentIDs.length) {
       throw ("Did not fetch correct number of components from the DB");
     }
 
     List<RecipeStep> steps = [];
-    for (var d in qs.documents) {
+    for (var d in qs.docs) {
       steps.add(RecipeStep.fromDB(d.data, rp));
     }
 
@@ -82,7 +82,7 @@ class DatabaseService {
 
   Future<String> getImageURL(String path) async {
     final ref = FirebaseStorage.instance.ref().child(path);
-    String url = await ref.getDownloadURL() as String;
+    String url = await ref.getDownloadURL();
     return url;
   }
 }
