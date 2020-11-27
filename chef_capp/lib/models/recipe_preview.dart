@@ -13,10 +13,10 @@ class RecipePreview implements RecipeInterface {
   final List<Tag> _tags;
   final List<Ingredient> _ingredients;
   final List<Equipment> _cookware;
-  final List<String> _componentIDs;
+  final List<String> _stepIDs;
   final String _imgURL;
 
-  RecipePreview(ID id, String title, int prepTime, int cookTime, int calories, List<Tag> tags, List<Ingredient> ingredients, List<Equipment> cookware, List<String> componentIDs, String imgURL) :
+  RecipePreview(ID id, String title, int prepTime, int cookTime, int calories, List<Tag> tags, List<Ingredient> ingredients, List<Equipment> cookware, List<String> stepIDs, String imgURL) :
         this._id = id,
         this._title = title,
         this._prepTime = prepTime,
@@ -25,7 +25,7 @@ class RecipePreview implements RecipeInterface {
         this._tags = tags,
         this._ingredients = ingredients,
         this._cookware = cookware,
-        this._componentIDs = componentIDs,
+        this._stepIDs = stepIDs,
         this._imgURL = imgURL;
 
   ID get id => _id;
@@ -46,7 +46,7 @@ class RecipePreview implements RecipeInterface {
 
   List<RecipeStep> get steps => [];
 
-  List<String> get componentIDs => _componentIDs;
+  List<String> get stepIDs => _stepIDs;
 
   String get imgURL => _imgURL;
 
@@ -80,9 +80,9 @@ class RecipePreview implements RecipeInterface {
         data["ingredients"] is! Map) {
       throw ("bad ingredients");
     }
-    if (data["components"] == null ||
-        data["components"] is! List){
-      throw ("bad components");
+    if (data["steps"] == null ||
+        data["steps"] is! List){
+      throw ("bad steps");
     }
 
     // parse
@@ -98,6 +98,6 @@ class RecipePreview implements RecipeInterface {
     List<Equipment> cookware = [];
 
     // return
-    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["components"]), imgURL);
+    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["steps"]), imgURL);
   }
 }

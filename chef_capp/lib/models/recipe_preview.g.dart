@@ -39,6 +39,6 @@ Map<String, dynamic> _$RecipePreviewToJson(RecipePreview instance) =>
       'tags': instance.tags?.map((e) => e?.toJson())?.toList(),
       'ingredients': instance.ingredients?.map((e) => e?.toJson())?.toList(),
       'cookware': instance.cookware?.map((e) => e?.toJson())?.toList(),
-      'componentIDs': instance.componentIDs,
+      'componentIDs': instance.stepIDs,
       'imgURL': instance.imgURL,
     };

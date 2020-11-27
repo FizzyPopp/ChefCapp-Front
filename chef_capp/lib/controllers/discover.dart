@@ -18,6 +18,8 @@ class DiscoverController with ChangeNotifier {
     favorite = List<RecipeData>();
     custom = List<RecipeData>();
     _heroStart = 0;
+
+    testActualRecipes();
   }
 
   // on app start:
@@ -31,6 +33,12 @@ class DiscoverController with ChangeNotifier {
 
   String _genHeroID() {
     return (_heroStart++).toString();
+  }
+
+  void testActualRecipes() async {
+    List<RecipePreview> recipes = await ParentController.database.getRecipePreviews();
+    custom = [...recipes.map((rp) => RecipeData(rp, _genHeroID())).toList()];
+    notifyListeners();
   }
 
   void genDummyLists() {
@@ -57,12 +65,14 @@ class DiscoverController with ChangeNotifier {
       }
     }
 
+    /*
     if (custom.length == 0) {
       int lim = rnd.nextInt(5) + 3;
       for (int i = 0; i < lim; i++) {
         custom.add(RecipeData(Dummy.recipe(rnd.nextInt(1000)), _genHeroID()));
       }
     }
+     */
   }
 
   void discoverHistory(BuildContext context) {

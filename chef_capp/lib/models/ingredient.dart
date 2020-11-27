@@ -150,7 +150,7 @@ class Ingredient implements IngredientInterface {
 
     // parse
     double quantity = data["quantity"].toDouble();
-    String unit = data["unit"];
+    String unit = data["unit"]["singular"];
     String name = data["name"]["singular"];
     String plural = (data["name"]["plural"] ?? name);
 
