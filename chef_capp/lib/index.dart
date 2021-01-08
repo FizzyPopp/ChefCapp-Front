@@ -53,7 +53,9 @@ export 'package:chef_capp/controllers/models/recipe_data.dart';
 export 'package:chef_capp/controllers/models/recipe_collection_data.dart';
 export 'package:chef_capp/controllers/models/ingredients_wrangler.dart';
 
+export 'package:chef_capp/services/parent.dart';
 export 'package:chef_capp/services/database.dart';
+export 'package:chef_capp/services/auth.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';
 export 'package:chef_capp/utilities/media_queries.dart';

@@ -19,30 +19,26 @@ import 'package:chef_capp/index.dart';
 // need to store preferences locally in case they sign in anonymously
 
 class DatabaseService {
-  FireState _fireState;
   FirebaseAuth _auth;
   User _user;
   SharedPreferences _localStore;
 
-  DatabaseService() {
-    /// track connection status
-    _fireState = FireState.Uninitialized;
-  }
-
   Future<bool> init() async {
-    if (_fireState == FireState.Initialized) {
-      return true;
-    } else if (_fireState == FireState.Uninitialized) {
-      _fireState = FireState.Initializing;
-      await Firebase.initializeApp();
-      _auth = FirebaseAuth.instance;
-      _fireState = FireState.Initialized;
-      return true;
+    FireState fireState = ParentService.getState();
+    if (fireState != FireState.Initialized) {
+      return false;
     } else {
-      while (_fireState != FireState.Initialized) {
-        await Future.delayed(Duration(milliseconds: 10));
+      LoginState loginState = ParentService.auth().getLoginState();
+      if (loginState == LoginState.LoggingIn) {
+        while (fireState == LoginState.LoggingIn) {
+          await Future.delayed(Duration(milliseconds: 10));
+        }
       }
-      return true;
+      if (loginState == LoginState.LoggedIn) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -130,10 +126,4 @@ class DatabaseService {
     String url = await ref.getDownloadURL();
     return url;
   }
-}
-
-enum FireState {
-  Uninitialized,
-  Initializing,
-  Initialized,
 }
