@@ -20,7 +20,7 @@ class RecipeController with ChangeNotifier {
   Future<void> getFullRecipe() async {
     if (this._rd.r is RecipePreview) {
       try {
-        ParentController.database.getRecipeFromPreview(this._rd.r).then((r) {
+        ParentService.database.getRecipeFromPreview(this._rd.r).then((r) {
           this._rd.r = r;
           _isFullRecipe = true;
           notifyListeners();

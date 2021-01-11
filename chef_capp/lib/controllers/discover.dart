@@ -36,7 +36,7 @@ class DiscoverController with ChangeNotifier {
   }
 
   void testActualRecipes() async {
-    List<RecipePreview> recipes = await ParentController.database.getRecipePreviews();
+    List<RecipePreview> recipes = await ParentService.database.getRecipePreviews();
     custom = [...recipes.map((rp) => RecipeData(rp, _genHeroID())).toList()];
     notifyListeners();
   }

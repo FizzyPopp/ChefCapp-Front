@@ -61,6 +61,12 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             title: Text("Help"),
           ),
+          FlatButton(
+            child: Text(
+              "Logout"
+            ),
+            onPressed: () { ParentController.auth.handleLogout(context); },
+          ),
         ],
       ),
     );

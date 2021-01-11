@@ -28,9 +28,15 @@ export 'package:chef_capp/models/interfaces/equals_interface.dart';
 export 'package:chef_capp/models/interfaces/ingredient_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
-export 'package:chef_capp/screens/authentication/login.dart';
-export 'package:chef_capp/screens/authentication/signup.dart';
-export 'package:chef_capp/screens/authentication/easy_login.dart';
+//export 'package:chef_capp/screens/authentication/login.dart';
+//export 'package:chef_capp/screens/authentication/signup.dart';
+//export 'package:chef_capp/screens/authentication/easy_login.dart';
+export 'package:chef_capp/screens/authentication/welcome.dart';
+export 'package:chef_capp/screens/authentication/allergy_prefs.dart';
+export 'package:chef_capp/screens/authentication/diet_prefs.dart';
+export 'package:chef_capp/screens/authentication/measurement_prefs.dart';
+export 'package:chef_capp/screens/authentication/register_form.dart';
+export 'package:chef_capp/screens/authentication/login_form.dart';
 export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';

@@ -24,12 +24,10 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
-        '/': (context) => EasyLogin(),
+        '/': (context) => Welcome(),
         '/home': (context) => App(),
-        '/login': (context) => LoginPage(),
-        '/endTest': (context) => ConfettiSample(),
       },
     );
   }
@@ -69,10 +67,7 @@ class Onboarding extends StatelessWidget {
                             child: Text('Get Started'),
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (BuildContext context) => SignUp(),
-                                  settings: RouteSettings(name: context.widget.runtimeType.toString()),
-                              ));
+                              print("Get Started in main.dart pressed");
                             },
                           ),
                           SizedBox(height: 12.0),

@@ -94,13 +94,13 @@ class EasyLogin extends StatelessWidget {
                         return
                           RaisedButton(
                             child: Text(
-                              data.loginButtonText,
+                              "Huh",
                               style: TextStyle(
                                 color: Colors.deepOrange[900]
                               ),
                             ),
                             color: Colors.white,
-                            onPressed: () { data.loginFunction(context); },
+                            onPressed: () { print("button pressed in easy_login.dart"); },
                           );
                       }
                   ),

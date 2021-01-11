@@ -16,19 +16,21 @@ class ParentService {
       await Firebase.initializeApp();
       _fireState = FireState.Initialized;
       return true;
+    } else if (_fireState == FireState.Initialized) {
+      return true;
     } else {
       return false;
     }
   }
 
-  static DatabaseService database() {
+  static DatabaseService get database {
     if (_databaseService == null) {
       _databaseService = new DatabaseService();
     }
     return _databaseService;
   }
 
-  static AuthService auth() {
+  static AuthService get auth {
     if (_authService == null) {
       _authService = new AuthService();
     }

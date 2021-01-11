@@ -24,21 +24,20 @@ class DatabaseService {
   SharedPreferences _localStore;
 
   Future<bool> init() async {
-    FireState fireState = ParentService.getState();
-    if (fireState != FireState.Initialized) {
+    bool appStarted = await ParentService.init();
+    if (!appStarted) {
       return false;
+    }
+    LoginState loginState = ParentService.auth.getLoginState();
+    if (loginState == LoginState.LoggingIn) {
+      while (loginState == LoginState.LoggingIn) {
+        await Future.delayed(Duration(milliseconds: 10));
+      }
+    }
+    if (loginState == LoginState.LoggedIn) {
+      return true;
     } else {
-      LoginState loginState = ParentService.auth().getLoginState();
-      if (loginState == LoginState.LoggingIn) {
-        while (fireState == LoginState.LoggingIn) {
-          await Future.delayed(Duration(milliseconds: 10));
-        }
-      }
-      if (loginState == LoginState.LoggedIn) {
-        return true;
-      } else {
-        return false;
-      }
+      return false;
     }
   }
 
@@ -59,20 +58,6 @@ class DatabaseService {
   Future<void> storeAppUser(AppUser u) async {
     SharedPreferences store = await _getLocalStore();
     store.setString("appUser", jsonEncode(u.toJson()));
-  }
-
-  Future<bool> signInAnon() async {
-    await init();
-
-    if (_user == null) {
-      try {
-        _user = (await _auth.signInAnonymously()).user;
-        ParentController.analytics.logLogin(loginMethod: "anonymous");
-      } catch (e) {
-        print(e);
-      }
-    }
-    return (_user != null);
   }
 
   Future<RecipePreview> getTestRecipePreview() async {

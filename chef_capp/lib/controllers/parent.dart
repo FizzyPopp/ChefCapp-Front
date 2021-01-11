@@ -16,7 +16,6 @@ class ParentController {
   static const int SEED = 2;
   static AppUser _appUser;
   static AuthController _authController;
-  static DatabaseService _databaseService;
   static DiscoverController _discoverController;
   static InventoryController _inventoryController;
 
@@ -36,13 +35,6 @@ class ParentController {
       _authController = AuthController();
     }
     return _authController;
-  }
-
-  static DatabaseService get database {
-    if (_databaseService == null) {
-      _databaseService = DatabaseService();
-    }
-    return _databaseService;
   }
 
   static DiscoverController get discover {

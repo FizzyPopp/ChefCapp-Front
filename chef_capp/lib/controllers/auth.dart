@@ -20,64 +20,87 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
-  String _loginButtonText;
-  Function _loginFunction;
-
-  AuthController() {
-    _loginButtonText = "START";
-    _loginFunction = loadTestRecipe;
+  Future<void> handleWelcomeGetStarted(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) => MeasurementPrefs(),
+      settings: RouteSettings(name: "/measurement_prefs"),
+    ));
   }
 
-  String get loginButtonText => _loginButtonText;
-  Function get loginFunction => _loginFunction;
+  Future<void> handleWelcomeLogIn(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) => LoginForm(),
+      settings: RouteSettings(name: "/login_form"),
+    ));
+  }
 
-  Future<void> loadTestRecipe(BuildContext context) async {
-    _loginButtonText = "LOADING...";
-    _loginFunction = null;
-    notifyListeners();
-    ParentController.database.signInAnon().then((success) async {
+  Future<void> handleWelcomeBrowse(BuildContext context) {
+    ParentService.auth.loginAnon().then((success) async {
       if (success) {
-        // get recipe from db
-        RecipePreview rp;
-        bool error = false;
-        try {
-          rp = await ParentController.database
-              .getTestRecipePreview();
-        } catch (e) {
-          print(e);
-          error = true;
-        }
-        if (!error) {
-          // convert into RecipeData and pass to RecipeController
-          RecipeController rc = RecipeController(RecipeData(rp, "0"));
-          // push RecipeOverview
-          Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => RecipeOverview(rc: rc),
-              settings: RouteSettings(name: context.widget.runtimeType.toString()),
-          ));
-          // load full Recipe
-          rc.getFullRecipe();
-        }
+        // maybe don't pushNamedAndRemoveUntil? just push
+        Navigator.pushNamedAndRemoveUntil(context,
+            '/home', (Route<dynamic> route) => false);
+      } else {
+        print("cannot browse");
       }
-      _loginButtonText = "START";
-      _loginFunction = loadTestRecipe;
       notifyListeners();
     });
   }
 
-  void signInAnon(BuildContext context) async {
-    _loginButtonText = "connecting";
-    _loginFunction = null;
-    notifyListeners();
-    ParentController.database.signInAnon().then((success) {
+  Future<void> handleMeasurementPrefsNext(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) => AllergyPrefs(),
+      settings: RouteSettings(name: "/allergy_prefs"),
+    ));
+  }
+
+  Future<void> handleAllergyPrefsNext(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) => DietPrefs(),
+      settings: RouteSettings(name: "/diet_prefs"),
+    ));
+  }
+
+  Future<void> handleDietPrefsNext(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) => RegisterForm(),
+      settings: RouteSettings(name: "/register_form"),
+    ));
+  }
+
+  Future<void> handleLogin(BuildContext context, String email, String password) {
+    ParentService.auth.loginEmailPassword(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
             '/home', (Route<dynamic> route) => false);
       } else {
-        _loginButtonText = "Try again";
-        _loginFunction = signInAnon;
-        notifyListeners();
+        print("cannot login");
       }
+      notifyListeners();
+    });
+  }
+
+  Future<void> handleRegister(BuildContext context, String email, String password) {
+    ParentService.auth.register(email, password).then((success) async {
+      if (success) {
+        Navigator.pushNamedAndRemoveUntil(context,
+            '/home', (Route<dynamic> route) => false);
+      } else {
+        print("cannot register");
+      }
+      notifyListeners();
+    });
+  }
+
+  Future<void> handleLogout(BuildContext context) {
+    ParentService.auth.logout().then((success) async {
+      if (success) {
+        Navigator.pushNamedAndRemoveUntil(context,
+            '/', (Route<dynamic> route) => false);
+      } else {
+        print("cannot logout");
+      }
+      notifyListeners();
     });
   }
 }
