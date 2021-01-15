@@ -1,81 +1,145 @@
-import 'package:chef_capp/models/user.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
-/// Used to deal with all aspects of authentication: register, sign in, sign out, recover password
-/// Responsible for all unauthenticated screens
-class AuthController with ChangeNotifier {
+class AuthService {
+  RegisterState _registerState;
+  LoginState _loginState;
+  FirebaseAuth _auth;
+  User _user;
 
-  /*
-   * Database should allow anonymous users, each anonymous user is unique.
-   * The app will automatically create an anonymous user the first time it's started.
-   * When a user logs in for the first time, the app's anonymous user is converted into a named user.
-   * When an app's anonymous user is converted into a named user, the app no longer has an anonymous user.
-   * If: the app is open, no one is logged in, and the app does not have an anonymous user, then:
-     the app should create a new anonymous user.
-
-   * Anonymous users have read-only access to recipes (and everything you need for a recipe).
-   * A named user has write access to store their ingredients, history, and favorites,
-     as well as all the access that an anonymous user has.
-   * No anonymous user has read or write access to any named user's data.
-   * No named user has access to another named user's data.
-   * Super users obv have access to everything.
-   */
-
-  String _loginButtonText;
-  Function _loginFunction;
-
-  AuthController() {
-    _loginButtonText = "START";
-    _loginFunction = loadTestRecipe;
+  AuthService() {
+   _registerState = RegisterState.Unknown;
+   _loginState = LoginState.NotLoggedIn;
   }
 
-  String get loginButtonText => _loginButtonText;
-  Function get loginFunction => _loginFunction;
+  Future<bool> init() async {
+    bool appStarted = await ParentService.init();
+    if (!appStarted) {
+      return false;
+    }
+    if (_auth == null) {
+      _auth = FirebaseAuth.instance;
+    }
+    return true;
+  }
 
-  Future<void> loadTestRecipe(BuildContext context) async {
-    _loginButtonText = "LOADING...";
-    _loginFunction = null;
-    notifyListeners();
-    ParentController.database.signInAnon().then((success) async {
-      if (success) {
-        // get recipe from db
-        RecipePreview rp;
-        try {
-          rp = await ParentController.database
-              .getTestRecipePreview();
-        } catch (e) {
-          print(e);
-          return;
-        }
-        // convert into RecipeData and pass to RecipeController
-        RecipeController rc = RecipeController(RecipeData(rp, "0"));
-        // push RecipeOverview
-        Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => RecipeOverview(rc: rc)
-        ));
-        // load full Recipe
-        rc.getFullRecipe();
+  LoginState getLoginState() {
+    return _loginState;
+  }
+
+  Future<bool> loginAnon() async {
+    if (_loginState != LoginState.LoggingIn) {
+      if (!(await init())) {
+        return false;
       }
-      _loginButtonText = "START";
-      _loginFunction = loadTestRecipe;
-      notifyListeners();
-    });
-  }
-
-  void signInAnon(BuildContext context) async {
-    _loginButtonText = "connecting";
-    _loginFunction = null;
-    notifyListeners();
-    ParentController.database.signInAnon().then((success) {
-      if (success) {
-        Navigator.pushNamedAndRemoveUntil(context,
-            '/home', (Route<dynamic> route) => false);
+      _loginState = LoginState.LoggingIn;
+      UserCredential creds;
+      try {
+        creds = await _auth.signInAnonymously();
+      } catch (e) {
+        print(e);
+        _loginState = LoginState.NotLoggedIn;
+        return false;
+      }
+      if (creds.user == null) {
+        _loginState = LoginState.NotLoggedIn;
+        return false;
       } else {
-        _loginButtonText = "Try again";
-        _loginFunction = signInAnon;
-        notifyListeners();
+        _user = creds.user;
+        _loginState = LoginState.Anonymous;
+        return true;
       }
-    });
+    } else {
+      return false;
+    }
   }
+
+  Future<bool> loginEmailPassword(String email, String password) async {
+    if (_loginState != LoginState.LoggingIn) {
+      if (!(await init())) {
+        return false;
+      }
+      _loginState = LoginState.LoggingIn;
+      UserCredential creds;
+      try {
+        creds = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      } catch (e) {
+        print(e);
+        _loginState = LoginState.NotLoggedIn;
+        return false;
+      }
+      if (creds.user == null) {
+        _loginState = LoginState.NotLoggedIn;
+        return false;
+      } else {
+        _user = creds.user;
+        _loginState = LoginState.LoggedIn;
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  // does this sign in on success??
+  Future<bool> register(String email, String password) async {
+    if (_registerState != RegisterState.Registering) {
+      if (!(await init())) {
+        return false;
+      }
+      _registerState = RegisterState.Registering;
+      UserCredential creds;
+      try {
+        creds = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+      } catch (e) {
+        print(e);
+        _registerState = RegisterState.RegistrationFailed;
+        return false;
+      }
+      if (creds.user == null) {
+        _registerState = RegisterState.RegistrationFailed;
+        return false;
+      } else {
+        _user = creds.user;
+        _registerState = RegisterState.Registered;
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> sendPasswordResetEmail(email) async {
+    try {
+      _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e);
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> logout() async {
+    try {
+      _auth.signOut();
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+}
+
+enum RegisterState {
+  Unknown,
+  Registering,
+  Registered,
+  RegistrationFailed
+}
+
+enum LoginState {
+  NotLoggedIn,
+  LoggingIn,
+  LoggedIn,
+  Anonymous
 }

@@ -6,8 +6,8 @@ class MainSliverAppBar extends StatelessWidget{
     return SliverAppBar(
       //expandedHeight: 200.0,
       title: Text('Chef Capp'),
-      floating: true,
-      snap: true,
+      floating: false,
+      snap: false,
       forceElevated: true,
       actions: <Widget>[
         IconButton(

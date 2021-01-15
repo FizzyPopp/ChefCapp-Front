@@ -133,3 +133,32 @@ class StepRow extends StatelessWidget {
     );
   }
 }
+
+class KitchenRow extends StatelessWidget {
+  final String ingredientText;
+  final String amount;
+  final Function onTap;
+
+  KitchenRow({
+    @required this.ingredientText,
+    @required this.amount,
+    @required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.all(xMargins),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(ingredientText),
+            Text(amount),
+          ],
+        ),
+      ),
+    );
+  }
+}

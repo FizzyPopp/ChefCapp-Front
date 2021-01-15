@@ -1,32 +1,70 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
-/// Controllers have no concept of the database, instead they use this class for all data calls, including calls to local storage
+/// Controllers have no concept of the database, instead they use this class for all data calls, including calls to local storage (yet to be implemented)
+/// Flutter firebase handles local db caching automagically, so no need to worry about that
 /// This class holds all CRUD actions, regardless of screen or controller, ensuring consistent and orderly access
-/// secretly checks to see if a cached version of the item is available
+/// Methods from this class should always be called within a try / catch block
 
-// should have a dedicated class to translate db to model for each relevant call?
-// most of this class is from a tutorial and only for illustration
+// what do we actually need to store on the device?
+// want: all recipe titles (and maybe tags, and maybe ingredients) and uuids
+// maybe even full recipes, depending on size of db
+// want: most recent favourites and history, store images to file
+// we definitely need a toJson() and fromJson() for each model
+// then these strings can be stored in: sql, nosql, individual files, or one giant file
+// need to store preferences locally in case they sign in anonymously
+
 class DatabaseService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser _user;
+  FirebaseAuth _auth;
+  User _user;
+  SharedPreferences _localStore;
 
-  Future<bool> signInAnon() async {
-    if (_user == null) {
-      try {
-        _user = (await _auth.signInAnonymously()).user;
-      } catch (e) {
-        print(e);
+  Future<bool> init() async {
+    bool appStarted = await ParentService.init();
+    if (!appStarted) {
+      return false;
+    }
+    LoginState loginState = ParentService.auth.getLoginState();
+    if (loginState == LoginState.LoggingIn) {
+      while (loginState == LoginState.LoggingIn) {
+        await Future.delayed(Duration(milliseconds: 10));
       }
     }
-    return (_user != null);
+    if (loginState == LoginState.LoggedIn) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<SharedPreferences> _getLocalStore() async {
+    if (_localStore == null) {
+      _localStore = await SharedPreferences.getInstance();
+    }
+    return _localStore;
+  }
+
+  // I'm not happy with this, it needs to be more robust ("appUser" should be a constant?)
+  Future<AppUser> loadAppUser() async {
+    SharedPreferences store = await _getLocalStore();
+    return AppUser.fromJson(jsonDecode(store.getString("appUser")));
+  }
+
+  // ditto
+  Future<void> storeAppUser(AppUser u) async {
+    SharedPreferences store = await _getLocalStore();
+    store.setString("appUser", jsonEncode(u.toJson()));
   }
 
   Future<RecipePreview> getTestRecipePreview() async {
-    DocumentSnapshot snapshot = await Firestore.instance.collection('recipes').document('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
-    String imgURL = await getActualImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
+    await init();
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('recipes').doc('f680874b-cb0b-4b25-ba74-a8ed39824202').get();
+    String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
     if (!snapshot.exists) {
       throw ("Document does not exist");
@@ -35,100 +73,42 @@ class DatabaseService {
     return RecipePreview.fromDB(snapshot.data, imgURL);
   }
 
-  Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
-    // later on some documents might not be a step, but don't worry about it for now
-    QuerySnapshot qs = await Firestore.instance.collection('components').where('id', whereIn: rp.componentIDs).getDocuments();
+  Future<List<RecipePreview>> getRecipePreviews() async {
+    await init();
 
-    if (qs.documents.length != rp.componentIDs.length) {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('recipe').get();
+    String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
+
+    List<RecipePreview> out = [];
+    for (QueryDocumentSnapshot qds in snapshot.docs) {
+      out.add(RecipePreview.fromDB(qds.data(), imgURL));
+    }
+
+    return out;
+  }
+
+  Future<Recipe> getRecipeFromPreview(RecipePreview rp) async {
+    await init();
+
+    // later on some documents might not be a step, but don't worry about it for now
+    QuerySnapshot qs = await FirebaseFirestore.instance.collection('components').where('id', whereIn: rp.stepIDs).get();
+
+    if (qs.docs.length != rp.stepIDs.length) {
       throw ("Did not fetch correct number of components from the DB");
     }
 
     List<RecipeStep> steps = [];
-    for (var d in qs.documents) {
+    for (var d in qs.docs) {
       steps.add(RecipeStep.fromDB(d.data, rp));
     }
 
     return Recipe.fromPreview(rp, steps);
   }
 
-  // create user obj based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user) {
-    //return user != null ? User(uid: user.uid) : null;
-    return null;
-  }
-
-  // auth change user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged
-        .map(_userFromFirebaseUser);
-  }
-
-  // sign in with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
-      return user;
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
-      // create a new document for the user with the uid
-      //await DatabaseService(uid: user.uid).updateUserData('0','new crew member', 100);
-      return _userFromFirebaseUser(user);
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  // sign out
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  // will this work to load images async from text?
-  Future<String> getActualImageURL(String path) async {
+  Future<String> getImageURL(String path) async {
+    await init();
     final ref = FirebaseStorage.instance.ref().child(path);
-    String url = await ref.getDownloadURL() as String;
+    String url = await ref.getDownloadURL();
     return url;
   }
-
-  /*
-  // collection reference
-  final CollectionReference brewCollection = Firestore.instance.collection('brews');
-
-  // get brews stream
-  Stream<List<Brew>> get brews {
-    return brewCollection.snapshots()
-        .map(_brewListFromSnapshot);
-  }
-
-  // brew list from snapshot
-  List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc){
-      print(doc.data);
-      return Recipe(
-          doc.data['id'] ?? '',
-          doc.data['title'] ?? '',
-          doc.data['prepTime'] ?? 0,
-          //doc.data['blurb'] ?? '',
-          doc.data['tags'] ?? [],
-          doc.data['ingredients'] ?? []
-      );
-    }).toList();
-  }
-   */
 }

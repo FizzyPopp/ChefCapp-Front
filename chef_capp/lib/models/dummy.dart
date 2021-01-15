@@ -29,7 +29,7 @@ class Dummy {
         [for (int i=0; i<numIngredients; i++) ingredient(rnd.nextInt(100))],
         [for (int i=0; i<numEquipments; i++) equipment()],
         [for (int i=0; i<numSteps; i++) recipeStep(rnd.nextInt(100))],
-        null
+        "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2016%2F0804%2Fr110027_1296x729_16%2D9.jpg&w=920&h=518&scale=crop&cquality=80&location=origin&format=jpg"
     );
   }
 
@@ -42,7 +42,7 @@ class Dummy {
       "Collection Heading " + rcID.hash,
       "Collection Title " + rcID.hash,
         [for (int i=0; i<numRecipes; i++) recipe(rnd.nextInt(100))],
-        Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover)
+        "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2016%2F0804%2Fr110027_1296x729_16%2D9.jpg&w=920&h=518&scale=crop&cquality=80&location=origin&format=jpg"
     );
   }
 
@@ -85,57 +85,65 @@ class Dummy {
   }
 
   static var _ingredients = [
-    [id(), "chicken"],
-    [id(), "potato"],
-    [id(), "garlic"],
-    [id(), "cheese"],
-    [id(), "rice"],
-    [id(), "beans"],
-    [id(), "apples"],
-    [id(), "orange"],
-    [id(), "venison"],
-    [id(), "carrot"],
-    [id(), "chocolate"]
+    "chicken",
+    "potato",
+    "garlic",
+    "cheese",
+    "rice",
+    "beans",
+    "apples",
+    "orange",
+    "venison",
+    "carrot",
+    "chocolate"
   ];
   static Ingredient ingredient(int seed) {
     Random rnd = Random(seed);
     int i = rnd.nextInt(_ingredients.length);
+    ID iid = id();
     return Ingredient(
-        _ingredients[i][0],
-        "${_ingredients[i][1]} [id: ${_ingredients[i][0]}]",
-        "${_ingredients[i][1]} plural [id: ${_ingredients[i][0]}]",
+        iid,
+        "${_ingredients[i]} [id: ${iid}]",
+        "${_ingredients[i]} plural [id: ${iid}]",
         (100 * rnd.nextDouble()),
-        "g"
+        "g",
+        (rnd.nextDouble() > .5) ? "A Category" : "B Category",
     );
   }
 
+  static IngredientRange ingredientRange(int seed) {
+    Random rnd = Random(seed);
+    return IngredientRange([rnd.nextDouble(), 4 * rnd.nextDouble()], ingredient(seed));
+  }
+
   static var _tags = [
-    [id(), "spicy"],
-    [id(), "hot"],
-    [id(), "salty"],
-    [id(), "sweet"],
-    [id(), "gluten-free"],
-    [id(), "keto"],
-    [id(), "vegetarian"],
-    [id(), "vegan"],
-    [id(), "lunch"],
-    [id(), "dinner"],
-    [id(), "breakfast"],
-    [id(), "dessert"]
+    "spicy",
+    "hot",
+    "salty",
+    "sweet",
+    "gluten-free",
+    "keto",
+    "vegetarian",
+    "vegan",
+    "lunch",
+    "dinner",
+    "breakfast",
+    "dessert"
   ];
   static Tag tag(int seed) {
     int i = Random(seed).nextInt(_ingredients.length);
     return Tag(
-        _tags[i][0],
-        _tags[i][1]
+        _tags[i]
     );
   }
 
-  static User user(int seed) {
+  static AppUser user(int seed) {
     Random rnd = Random(seed);
-    return User(
+    return AppUser(
         id(),
-        "loblaw@lawblog.com"
+        "loblaw@lawblog.com",
+        UnitPreference.metric,
+        []
     );
   }
 }

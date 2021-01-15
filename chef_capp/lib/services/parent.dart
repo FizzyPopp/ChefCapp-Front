@@ -1,60 +1,45 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:chef_capp/index.dart';
-import 'package:sqflite/sqflite.dart';
 
-// https://firebase.google.com/docs/reference/js/firebase.analytics.Analytics
-
-/// Static object holds most other Controllers
-/// - created on startup
-/// - static ensures only one instance exists at a time
-/// - static ensures objects don't get deleted accidentally
-/// - static ensures everything has access, and thus easy access to almost any other controller
-/// - universal source of truth
-///
-/// Also holds the User object, but no other models
-class ParentController with ChangeNotifier {
-  static const int SEED = 2;
-  static User _user;
-  static AuthController _authController;
+class ParentService {
   static DatabaseService _databaseService;
-  static DiscoverController _discoverController;
-  static InventoryController _inventoryController;
+  static AuthService _authService;
+  static FireState _fireState = FireState.Uninitialized;
 
-  static void set user(User user) {
-    if (_user != null) {
-      throw("User already present");
-    }
-    _user = user;
+  static FireState getState() {
+    return _fireState;
   }
 
-  static User get user {
-    return _user;
-  }
-
-  static AuthController get auth {
-    if (_authController == null) {
-      _authController = AuthController();
+  static Future<bool> init() async {
+    if (_fireState != FireState.Initializing) {
+      _fireState = FireState.Initializing;
+      await Firebase.initializeApp();
+      _fireState = FireState.Initialized;
+      return true;
+    } else if (_fireState == FireState.Initialized) {
+      return true;
+    } else {
+      return false;
     }
-    return _authController;
   }
 
   static DatabaseService get database {
     if (_databaseService == null) {
-      _databaseService = DatabaseService();
+      _databaseService = new DatabaseService();
     }
     return _databaseService;
   }
 
-  static DiscoverController get discover {
-    if (_discoverController == null) {
-      _discoverController = DiscoverController();
+  static AuthService get auth {
+    if (_authService == null) {
+      _authService = new AuthService();
     }
-    return _discoverController;
+    return _authService;
   }
+}
 
-  static InventoryController get inventory {
-    if (_inventoryController == null) {
-      _inventoryController = InventoryController();
-    }
-    return _inventoryController;
-  }
+enum FireState {
+  Uninitialized,
+  Initializing,
+  Initialized,
 }

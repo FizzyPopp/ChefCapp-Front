@@ -72,6 +72,7 @@ class FullRecipeCard extends StatelessWidget {
   final int haveIngredients;
   final int totalIngredients;
   final Function onTap;
+  final String heroID;
 
   FullRecipeCard({
     @required this.cardText,
@@ -80,7 +81,8 @@ class FullRecipeCard extends StatelessWidget {
     @required this.calories,
     @required this.haveIngredients,
     @required this.totalIngredients,
-    @required this.onTap
+    @required this.onTap,
+    @required this.heroID
   });
 
   Color _cardCaptionColor(BuildContext context) {
@@ -113,10 +115,13 @@ class FullRecipeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/placeholder.jpg',
-                  image: imgURL,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: heroID,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder.jpg',
+                    image: imgURL,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               SizedBox(
@@ -213,14 +218,14 @@ class HeroCard extends StatelessWidget {
   final String cardHeading;
   final String cardText;
   final String heroID;
-  final Image cardImage;
+  final String imgURL;
   final Function onTap;
 
   HeroCard({
     @required this.cardHeading,
     @required this.cardText,
     @required this.heroID,
-    @required this.cardImage,
+    @required this.imgURL,
     @required this.onTap,
   });
 
@@ -240,7 +245,11 @@ class HeroCard extends StatelessWidget {
               Expanded(
                 child: Hero(
                   tag: heroID,
-                  child: cardImage,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder.jpg',
+                    image: imgURL,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Padding(
@@ -272,3 +281,33 @@ class HeroCard extends StatelessWidget {
     );
   }
 }
+
+class NotificationCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.symmetric(
+        vertical: cardMargins,
+        horizontal: cardMargins * 2,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: gutters, vertical: gutters),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Title',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            SizedBox(height: gutters / 2,),
+            Text(
+              'Description',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

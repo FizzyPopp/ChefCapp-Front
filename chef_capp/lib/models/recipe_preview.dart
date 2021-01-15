@@ -1,5 +1,7 @@
 import 'package:chef_capp/index.dart';
+part 'recipe_preview.g.dart';
 
+@JsonSerializable(explicitToJson: true)
 /// This is just Recipe without steps
 class RecipePreview implements RecipeInterface {
   // serving size??
@@ -11,10 +13,20 @@ class RecipePreview implements RecipeInterface {
   final List<Tag> _tags;
   final List<Ingredient> _ingredients;
   final List<Equipment> _cookware;
-  final List<String> _componentIDs;
+  final List<String> _stepIDs;
   final String _imgURL;
 
-  RecipePreview(this._id, this._title, this._prepTime, this._cookTime, this._calories, this._tags, this._ingredients, this._cookware, this._componentIDs, this._imgURL);
+  RecipePreview(ID id, String title, int prepTime, int cookTime, int calories, List<Tag> tags, List<Ingredient> ingredients, List<Equipment> cookware, List<String> stepIDs, String imgURL) :
+        this._id = id,
+        this._title = title,
+        this._prepTime = prepTime,
+        this._cookTime = cookTime,
+        this._calories = calories,
+        this._tags = tags,
+        this._ingredients = ingredients,
+        this._cookware = cookware,
+        this._stepIDs = stepIDs,
+        this._imgURL = imgURL;
 
   ID get id => _id;
 
@@ -34,9 +46,13 @@ class RecipePreview implements RecipeInterface {
 
   List<RecipeStep> get steps => [];
 
-  List<String> get componentIDs => _componentIDs;
+  List<String> get stepIDs => _stepIDs;
 
   String get imgURL => _imgURL;
+
+  factory RecipePreview.fromJson(Map<String, dynamic> json) => _$RecipePreviewFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RecipePreviewToJson(this);
 
   static RecipePreview fromDB(data, String imgURL) {
     // sanitize
@@ -64,9 +80,9 @@ class RecipePreview implements RecipeInterface {
         data["ingredients"] is! Map) {
       throw ("bad ingredients");
     }
-    if (data["components"] == null ||
-        data["components"] is! List){
-      throw ("bad components");
+    if (data["steps"] == null ||
+        data["steps"] is! List){
+      throw ("bad steps");
     }
 
     // parse
@@ -76,12 +92,12 @@ class RecipePreview implements RecipeInterface {
     int calories = 0;
     List<Tag> tags = [];
     data["tags"].forEach((t) {
-      tags.add(Tag(Dummy.id(), t));
+      tags.add(Tag(t));
     });
     List<Ingredient> ingredients = Ingredient.listFromDB(data["ingredients"]);
     List<Equipment> cookware = [];
 
     // return
-    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["components"]), imgURL);
+    return RecipePreview(ID(data["id"]), title, prepTime, cookTime, calories, tags, ingredients, cookware, List<String>.from(data["steps"]), imgURL);
   }
 }
