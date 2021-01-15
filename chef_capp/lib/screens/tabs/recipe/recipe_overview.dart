@@ -45,7 +45,7 @@ class RecipeOverview extends StatelessWidget {
                 IngredientsOverview(recipe.ingredients),
                 Consumer<RecipeController>(
                   builder: (context, rc, _) {
-                    return DirectionsOverview(recipe.steps);
+                    return DirectionsOverview(rc.rd.r.steps);
                   },
                 ),
                 //DirectionsOverview(rc.rd.r.steps),

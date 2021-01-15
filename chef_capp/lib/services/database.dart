@@ -76,12 +76,33 @@ class DatabaseService {
   Future<List<RecipePreview>> getRecipePreviews() async {
     await init();
 
-    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('recipe').get();
+    QuerySnapshot qs = await FirebaseFirestore.instance.collection('recipe').get();
     String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
+    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<int> covered = [];
+    for (int i = 0; i < qs.docs.length; i++) {
+      if (covered.contains(i)) {
+        continue;
+      }
+
+      covered.add(i);
+      int mostRecent = i;
+      for (int j = i+1; j < qs.docs.length; j++) {
+        if (qs.docs[j].data()["id"] == qs.docs[mostRecent].data()["id"]) {
+          covered.add(j);
+          if (qs.docs[j].data()["timestamp"] > qs.docs[mostRecent].data()["timestamp"]) {
+            mostRecent = j;
+          }
+        }
+      }
+
+      unique.add(qs.docs[mostRecent].data());
+    }
+
     List<RecipePreview> out = [];
-    for (QueryDocumentSnapshot qds in snapshot.docs) {
-      out.add(RecipePreview.fromDB(qds.data(), imgURL));
+    for (Map<String, dynamic> doc in unique) {
+      out.add(RecipePreview.fromDB(doc, imgURL));
     }
 
     return out;

@@ -50,7 +50,7 @@ class Ingredient implements IngredientInterface {
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
 
   bool equals(Ingredient other) {
-    return this.id == other.id;
+    return this.id.equals(other.id);
   }
 
   String get amount {
