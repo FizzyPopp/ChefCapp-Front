@@ -24,18 +24,18 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
-        '/': (context) => EasyLogin(),
+        '/': (context) => Onboarding(),
         '/home': (context) => App(),
-        '/login': (context) => LoginPage(),
+        '/login': (context) => OldLoginPage(),
         '/endTest': (context) => ConfettiSample(),
       },
     );
   }
 }
 
-class Onboarding extends StatelessWidget {
+class OldOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

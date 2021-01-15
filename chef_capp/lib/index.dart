@@ -21,9 +21,10 @@ export 'package:chef_capp/models/dummy.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
-export 'package:chef_capp/screens/authentication/login.dart';
-export 'package:chef_capp/screens/authentication/signup.dart';
 export 'package:chef_capp/screens/authentication/easy_login.dart';
+export 'package:chef_capp/screens/authentication/login.dart';
+export 'package:chef_capp/screens/authentication/onboarding.dart';
+export 'package:chef_capp/screens/authentication/signup.dart';
 export 'package:chef_capp/screens/drawer/drawer_notifications.dart';
 export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
@@ -44,12 +45,16 @@ export 'package:chef_capp/services/database.dart';
 export 'package:chef_capp/services/auth.dart';
 export 'package:chef_capp/services/recipe.dart';
 
+export 'package:chef_capp/styles/colors.dart';
+export 'package:chef_capp/styles/text.dart';
+
 export 'package:chef_capp/utilities/dummies.dart';
 export 'package:chef_capp/utilities/media_queries.dart';
 export 'package:chef_capp/utilities/sizing.dart';
 export 'package:chef_capp/utilities/spacing.dart';
 
 export 'package:chef_capp/widgets/appbars.dart';
+export 'package:chef_capp/widgets/buttons.dart';
 export 'package:chef_capp/widgets/cards.dart';
 export 'package:chef_capp/widgets/drawers.dart';
 export 'package:chef_capp/widgets/list_builders.dart';
