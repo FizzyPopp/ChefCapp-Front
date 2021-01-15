@@ -57,6 +57,11 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Notifications"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => DrawerNotifications()
+              ));
+            },
           ),
           ListTile(
             title: Text("Help"),

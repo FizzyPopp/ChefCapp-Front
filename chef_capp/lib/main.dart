@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Welcome(),
+        '/': (context) => Onboarding(),
         '/home': (context) => App(),
       },
     );
   }
 }
 
-class Onboarding extends StatelessWidget {
+class OldOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

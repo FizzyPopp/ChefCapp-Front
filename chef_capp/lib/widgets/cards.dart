@@ -281,3 +281,33 @@ class HeroCard extends StatelessWidget {
     );
   }
 }
+
+class NotificationCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.symmetric(
+        vertical: cardMargins,
+        horizontal: cardMargins * 2,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: gutters, vertical: gutters),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Title',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            SizedBox(height: gutters / 2,),
+            Text(
+              'Description',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
