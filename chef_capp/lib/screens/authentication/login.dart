@@ -2,6 +2,9 @@ import 'package:chef_capp/index.dart';
 import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatelessWidget {
+  String email = "";
+  String password = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +67,9 @@ class LoginPage extends StatelessWidget {
                             labelText: 'Email',
                             border: OutlineInputBorder(),
                           ),
+                          onChanged: (text) {
+                            email = text;
+                          },
                         ),
                         SizedBox(height: 16.0,),
                         TextFormField(
@@ -72,6 +78,9 @@ class LoginPage extends StatelessWidget {
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.remove_red_eye),
                           ),
+                          onChanged: (text) {
+                            password = text;
+                          },
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
@@ -95,7 +104,7 @@ class LoginPage extends StatelessWidget {
                             style: CCText.darkButton,
                           ),
                           onPressed: () {
-
+                            ParentController.auth.handleLogin(context, email, password);
                           },
                           gradient: CCColors.secondaryGradient,
                         ),

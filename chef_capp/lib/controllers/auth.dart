@@ -20,20 +20,6 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
-  Future<void> handleWelcomeGetStarted(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (BuildContext context) => MeasurementPrefs(),
-      settings: RouteSettings(name: "/measurement_prefs"),
-    ));
-  }
-
-  Future<void> handleWelcomeLogIn(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (BuildContext context) => LoginForm(),
-      settings: RouteSettings(name: "/login_form"),
-    ));
-  }
-
   Future<void> handleWelcomeBrowse(BuildContext context) {
     ParentService.auth.loginAnon().then((success) async {
       if (success) {
@@ -45,20 +31,6 @@ class AuthController with ChangeNotifier {
       }
       notifyListeners();
     });
-  }
-
-  Future<void> handleMeasurementPrefsNext(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (BuildContext context) => AllergyPrefs(),
-      settings: RouteSettings(name: "/allergy_prefs"),
-    ));
-  }
-
-  Future<void> handleAllergyPrefsNext(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (BuildContext context) => DietPrefs(),
-      settings: RouteSettings(name: "/diet_prefs"),
-    ));
   }
 
   Future<void> handleDietPrefsNext(BuildContext context) async {
