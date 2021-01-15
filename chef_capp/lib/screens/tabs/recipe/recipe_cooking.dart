@@ -2,7 +2,7 @@ import 'package:chef_capp/index.dart';
 
 class RecipeCooking extends StatelessWidget {
   final RecipeController rc;
-  final Recipe recipe;
+  final RecipeInterface recipe;
 
   RecipeCooking({
     @required this.rc,

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 class RecipeOverview extends StatelessWidget {
   final RecipeController rc;
-  final Recipe recipe;
+  final RecipeInterface recipe;
 
   RecipeOverview({
     @required this.rc
@@ -60,7 +60,7 @@ class RecipeOverview extends StatelessWidget {
 
 class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
   final RecipeController rc;
-  final Recipe recipe;
+  final RecipeInterface recipe;
 
   RecipeHeader({@required this.rc}) : this.recipe = rc.rd.r;
 
