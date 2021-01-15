@@ -6,8 +6,8 @@ class MainSliverAppBar extends StatelessWidget{
     return SliverAppBar(
       //expandedHeight: 200.0,
       title: Text('Chef Capp'),
-      floating: true,
-      snap: true,
+      floating: false,
+      snap: false,
       forceElevated: true,
       actions: <Widget>[
         IconButton(
@@ -34,6 +34,68 @@ class MainSliverAppBar extends StatelessWidget{
       ),
     );
   }
+}
+
+class RecipeSliverAppBar extends StatelessWidget {
+  final RecipeController rc;
+  
+  RecipeSliverAppBar({
+    @required this.rc,
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      backgroundColor: Theme.of(context).canvasColor,
+      expandedHeight: 400.0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Container(
+          padding: EdgeInsets.only(bottom: 156.0),
+          child: Hero(
+            tag: rc.rd.heroID,
+            child: ShaderMask(
+              shaderCallback: (rect) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.black45, Colors.transparent],
+                ).createShader(
+                    Rect.fromLTRB(0, 0, rect.width, rect.height));
+              },
+              blendMode: BlendMode.srcATop,
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/images/placeholder.jpg',
+                image: rc.rd.r.imgURL,
+                fit: BoxFit.cover,
+              )
+            ),
+          ),
+        ),
+      ),
+      bottom: RecipeHeader(
+        rc: rc
+      ),
+    );
+  }
+}
+
+class GenericAppBar extends StatelessWidget with PreferredSizeWidget{
+  final String appBarTitle;
+
+  GenericAppBar({
+    @required this.appBarTitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(appBarTitle),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
 
@@ -72,74 +134,3 @@ class MainAppBar extends StatelessWidget with PreferredSizeWidget{
   Size get preferredSize => Size.fromHeight(kToolbarHeight + kTextTabBarHeight + 26);
 }
 
-
-class MainTopBar extends StatelessWidget with PreferredSizeWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: Text('Chef Capp'),
-      bottom: MainTabs(),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.search,
-            semanticLabel: 'search',
-          ),
-          onPressed: () {
-            print('Search Button');
-          },
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.tune,
-            semanticLabel: 'filter',
-          ),
-          onPressed: () {
-            print('Filter Button');
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  Size get preferredSize => Size.fromHeight(100);
-}
-
-class SliverMainTopBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      title: Text("Chef Capp"),
-      forceElevated: true,
-      elevation: 4,
-      backgroundColor: Colors.orange[800],
-      expandedHeight: 130.0,
-      floating: true,
-      pinned: false,
-      snap: true,
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.search,
-            semanticLabel: 'search',
-          ),
-          onPressed: () {
-            print('Search Button');
-          },
-        ),
-        IconButton(
-                    icon: Icon(
-                      Icons.tune,
-                      semanticLabel: 'filter',
-                    ),
-                    onPressed: () {
-                      print('Filter Button');
-                    },
-                  ),
-      ],
-      bottom: MainTabs(),
-    );
-  }
-}

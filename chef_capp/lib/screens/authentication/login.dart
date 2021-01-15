@@ -1,16 +1,129 @@
 import 'package:chef_capp/index.dart';
+import 'package:flutter/widgets.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 48.0,
+              child: FlatButton.icon(
+                icon: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  size: 14.0,
+                  color: CCText.lightButton.color,
+                ),
+                label: Text(
+                  'DON\'T HAVE AN ACCOUNT? SIGN UP',
+                  style: CCText.lightButton,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 12.0,
+                    ),
+                    child: AutoSizeText(
+                      "Log in for a personalized experience",
+                      style: CCText.mobileDisplayLarge,
+                      maxLines: 2,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Image.asset(
+                          "assets/images/onboarding/onboarding002.png"
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 16.0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        SizedBox(height: 16.0,),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.remove_red_eye),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: FlatButton(
+                            padding: EdgeInsets.symmetric(horizontal: 0),
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                color: Color(0xFF4E4B66),
+                                letterSpacing: 0.20,
+                              ),
+                            ),
+                            onPressed: () {
+
+                            },
+                          ),
+                        ),
+                        GradientButton(
+                          child: Text(
+                            "LOG IN",
+                            style: CCText.darkButton,
+                          ),
+                          onPressed: () {
+
+                          },
+                          gradient: CCColors.secondaryGradient,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _LoginPageState extends State<LoginPage> {
+
+class OldLoginPage extends StatefulWidget {
+  @override
+  _OldLoginPageState createState() => _OldLoginPageState();
+}
+
+class _OldLoginPageState extends State<OldLoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   //final _bloc = LoginBLoC();
 
-  _LoginPageState() {
+  _OldLoginPageState() {
     /*
     var stream = _bloc.authEvent;
     stream.listen((success) {
@@ -42,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 12.0),
                   Image(
-                    image: AssetImage('assets/food.jpg'),
+                    image: AssetImage('assets/images/food.jpg'),
                   ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,

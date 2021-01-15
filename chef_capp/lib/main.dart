@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:firebase_analytics/observer.dart';
 
 // model, screen, services, shared
 
@@ -10,27 +11,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: ParentController.analytics),
+      ],
       title: appTitle,
       theme: ThemeData(
         primaryColor: Colors.deepOrange,
-        accentColor: Colors.tealAccent,
+        accentColor: Colors.teal,
         textTheme: TextTheme(
           button: TextStyle(
             color: Colors.deepOrange,
           )
         )
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => Onboarding(),
         '/home': (context) => App(),
-        '/login': (context) => LoginPage(),
+        '/login': (context) => OldLoginPage(),
+        '/endTest': (context) => ConfettiSample(),
       },
     );
   }
 }
 
-class Onboarding extends StatelessWidget {
+class OldOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +48,7 @@ class Onboarding extends StatelessWidget {
                 child: Column(
                     children: <Widget>[
                       Image(
-                        image: AssetImage('assets/food.jpg'),
+                        image: AssetImage('assets/images/food.jpg'),
                       ),
                       SizedBox(height: 12.0),
                       Container(

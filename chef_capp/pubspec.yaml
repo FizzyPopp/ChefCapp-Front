@@ -14,20 +14,29 @@ description: Chef Capp
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   http: ^0.12.0+2
   flutter:
     sdk: flutter
-  firebase_core: ^0.4.0+9
-  firebase_analytics: ^5.0.2
-  firebase_auth: ^0.14.0+5
-  cloud_firestore: ^0.12.9+5
-  cloud_functions: ^0.4.2+2
+  firebase_core: ^0.4.5
+  firebase_analytics: ^5.0.16
+  firebase_auth: ^0.16.1
+  firebase_storage: ^3.1.6
+  cloud_firestore: ^0.13.6
+  cloud_functions: ^0.5.0
   provider: ^4.0.4
   concentric_transition: ^0.1.1
   auto_size_text: ^2.1.0
+  google_fonts: ^1.1.0
+  flutter_swiper:
+    git:
+      url: git://github.com/thepiper/flutter_swiper.git
+      ref: master
+  flutter_launcher_icons: ^0.7.5
+  confetti: ^0.5.2
+  search_widget: ^1.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,6 +48,12 @@ dev_dependencies:
   pedantic: ^1.8.0
   mockito: ^4.1.1
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#FF5722"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -47,6 +62,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/images/onboarding/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

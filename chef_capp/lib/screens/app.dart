@@ -7,7 +7,6 @@ class App extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        //appBar: MainTopBar(),
         drawer: MainDrawer(),
         body: SafeArea(
           child: NestedScrollView(
@@ -21,41 +20,12 @@ class App extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               children: <Widget>[
                 RecipeHomePage(),
-                RecipeHomePage(),
+                KitchenHomepage(),
               ],
             ),
           ),
           top: false,
         ),
-      ),
-    );
-  }
-}
-
-
-class OldApp extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        //appBar: MainTopBar(),
-        body: SafeArea(
-          child: NestedScrollView(
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverMainTopBar(),
-              ];
-            },
-            body: TabBarView(children: <Widget>[
-              RecipeHomePage(),
-              InventoryHomePage(),
-            ]),
-          ),
-          top: false,
-        ),
-        drawer: ChefDrawer(),
       ),
     );
   }
