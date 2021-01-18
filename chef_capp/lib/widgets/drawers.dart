@@ -75,6 +75,15 @@ class MainDrawer extends StatelessWidget {
                 ParentController.auth.handleLogout(context);
                 },
             ),
+          if (ParentService.auth.getLoginState() == LoginState.Anonymous)
+            ListTile(
+              title: Text(
+                  "Sign up"
+              ),
+              onTap: () {
+                ParentController.auth.handleSignUpLink(context);
+              },
+            ),
         ],
       ),
     );
