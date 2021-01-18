@@ -20,6 +20,7 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
+
   Future<void> handleWelcomeBrowse(BuildContext context) {
     ParentService.auth.loginAnon().then((success) async {
       if (success) {

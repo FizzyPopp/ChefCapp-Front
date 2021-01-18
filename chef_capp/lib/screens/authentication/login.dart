@@ -81,6 +81,7 @@ class LoginPage extends StatelessWidget {
                           onChanged: (text) {
                             password = text;
                           },
+                          obscureText: true,
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
