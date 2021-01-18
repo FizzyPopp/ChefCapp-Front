@@ -84,7 +84,7 @@ class Onboarding extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-
+                            ParentController.auth.handleAnonBrowse(context);
                           },
                         )
                       ],

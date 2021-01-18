@@ -20,12 +20,10 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
-  Future<void> handleWelcomeBrowse(BuildContext context) {
+  Future<void> handleAnonBrowse(BuildContext context) {
     ParentService.auth.loginAnon().then((success) async {
       if (success) {
-        // maybe don't pushNamedAndRemoveUntil? just push
-        Navigator.pushNamedAndRemoveUntil(context,
-            '/home', (Route<dynamic> route) => false);
+        Navigator.pushNamed(context, '/home');
       } else {
         print("cannot browse");
       }
