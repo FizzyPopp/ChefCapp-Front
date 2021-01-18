@@ -1,6 +1,14 @@
 import 'package:chef_capp/index.dart';
 
 class SignUp extends StatelessWidget {
+  bool _emailIsValid = false;
+  bool _passwordIsValid = false;
+  RegExp _emailRegExp = new RegExp(r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
+  RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
+  RegExp _digitRegExp = new RegExp(r"\d");
+  RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +63,19 @@ class SignUp extends StatelessWidget {
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (email) {
+                      String _emailMatch = _emailRegExp.stringMatch(email);
+                      if (email == _emailMatch)  {
+                        _emailIsValid = true;
+                        return null;
+                      }
+                      else {
+                        _emailIsValid = false;
+                        return 'Please enter a valid email address.';
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: 16.0,),
                   TextFormField(
@@ -63,6 +84,22 @@ class SignUp extends StatelessWidget {
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.remove_red_eye),
                     ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (password) {
+                      if ( password.length > 16
+                        || password.length > 8
+                        && _alphaLowerRegExp.hasMatch(password)
+                        && _alphaUpperRegExp.hasMatch(password)
+                        && _digitRegExp.hasMatch(password)
+                        && _specialCharRegExp.hasMatch(password)) {
+                          _passwordIsValid = true;
+                          return null;
+                        } else {
+                          _passwordIsValid = false;
+                          return 'Please ensure password meets the requirements below.';
+                      }
+                    },
+                    keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                   ),
                   SizedBox(height: 16.0,),
@@ -88,7 +125,11 @@ class SignUp extends StatelessWidget {
                     ),
                     gradient: CCColors.primaryGradient,
                     onPressed: () {
-
+                      if (_passwordIsValid && _emailIsValid) {
+                        //Submit register requests
+                      } else {
+                        //not sure how to do warning here
+                      }
                     },
                   ),
                 ],
