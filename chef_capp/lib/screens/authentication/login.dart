@@ -1,5 +1,5 @@
 import 'package:chef_capp/index.dart';
-import 'package:flutter/widgets.dart';
+import 'package:chef_capp/screens/authentication/forgot_password.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
                       color: CCText.lightButton.color,
                     ),
                     label: Text(
-                      'DON\'T HAVE AN ACCOUNT? SIGN UP',
+                      'BACK',
                       style: CCText.lightButton,
                     ),
                     onPressed: () {
@@ -121,7 +121,12 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ForgotPassword()
+                                    ),
+                                  );
                                 },
                               ),
                             ),
