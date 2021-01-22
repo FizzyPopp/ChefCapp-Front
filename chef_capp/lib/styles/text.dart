@@ -8,6 +8,11 @@ class CCText {
     fontSize: 48.0,
   );
 
+  static TextStyle mobileDisplaySmall = GoogleFonts.workSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 24.0,
+  );
+
   static const TextStyle lightButton = TextStyle(
     color: CCColors.primary,
     fontWeight: FontWeight.w500,
