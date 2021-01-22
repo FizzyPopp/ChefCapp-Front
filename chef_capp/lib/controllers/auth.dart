@@ -28,6 +28,10 @@ class AuthController with ChangeNotifier {
     );
   }
 
+  void notify() {
+    notifyListeners();
+  }
+
   Future<void> handleAnonBrowse(BuildContext context) {
     ParentService.auth.loginAnon().then((success) async {
       if (success) {

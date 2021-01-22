@@ -30,7 +30,6 @@ export 'package:chef_capp/models/interfaces/ingredient_interface.dart';
 export 'package:chef_capp/screens/app.dart';
 
 export 'package:chef_capp/screens/authentication/login.dart';
-//export 'package:chef_capp/screens/authentication/signup.dart';
 //export 'package:chef_capp/screens/authentication/easy_login.dart';
 export 'package:chef_capp/screens/authentication/register_form.dart';
 export 'package:chef_capp/screens/authentication/onboarding.dart';

@@ -1,122 +1,155 @@
 import 'package:chef_capp/index.dart';
-import 'package:flutter/widgets.dart';
+import 'package:chef_capp/screens/authentication/forgot_password.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  String email = "";
-  String password = "";
+  String _email = "";
+  String _password = "";
+  bool _obscurePassword = true;
+
+  Icon _obscurePasswordIcon = Icon(Icons.remove_red_eye_outlined);
+
+  void _toggleObscurePassword() {
+    _obscurePassword = !_obscurePassword;
+
+    if (_obscurePassword) {
+      _obscurePasswordIcon = Icon(Icons.remove_red_eye_outlined);
+    } else if (!_obscurePassword) {
+      _obscurePasswordIcon = Icon(Icons.remove_red_eye);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              height: 48.0,
-              child: FlatButton.icon(
-                icon: Icon(
-                  Icons.arrow_back_ios_sharp,
-                  size: 14.0,
-                  color: CCText.lightButton.color,
-                ),
-                label: Text(
-                  'DON\'T HAVE AN ACCOUNT? SIGN UP',
-                  style: CCText.lightButton,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32.0,
-                      vertical: 12.0,
+    return ChangeNotifierProvider.value(
+      value: ParentController.auth,
+      child: Scaffold(
+          body: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  height: 48.0,
+                  child: FlatButton.icon(
+                    icon: Icon(
+                      Icons.arrow_back_ios_sharp,
+                      size: 14.0,
+                      color: CCText.lightButton.color,
                     ),
-                    child: AutoSizeText(
-                      "Log in for a personalized experience",
-                      style: CCText.mobileDisplayLarge,
-                      maxLines: 2,
+                    label: Text(
+                      'BACK',
+                      style: CCText.lightButton,
                     ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Image.asset(
-                          "assets/images/onboarding/onboarding002.png"
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32.0,
+                          vertical: 12.0,
+                        ),
+                        child: AutoSizeText(
+                          "Log in for a personalized experience",
+                          style: CCText.mobileDisplayLarge,
+                          maxLines: 2,
+                        ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32.0,
-                      vertical: 16.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            border: OutlineInputBorder(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Image.asset(
+                              "assets/images/onboarding/onboarding002.png"
                           ),
-                          onChanged: (text) {
-                            email = text;
-                          },
                         ),
-                        SizedBox(height: 16.0,),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.remove_red_eye),
-                          ),
-                          onChanged: (text) {
-                            password = text;
-                          },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32.0,
+                          vertical: 16.0,
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: FlatButton(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                color: Color(0xFF4E4B66),
-                                letterSpacing: 0.20,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                border: OutlineInputBorder(),
+                              ),
+                              onChanged: (text) {
+                                _email = text;
+                              },
+                            ),
+                            SizedBox(height: 16.0,),
+                            Consumer<AuthController>(
+                              builder: (context, data, _) {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: IconButton(
+                                      icon: _obscurePasswordIcon,
+                                      onPressed: () {
+                                        _toggleObscurePassword();
+                                        data.notify();
+                                      },
+                                    ),
+                                  ),
+                                  onChanged: (text) {
+                                    _password = text;
+                                  },
+                                  obscureText: _obscurePassword,
+                                );
+                              }
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: FlatButton(
+                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                child: Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(
+                                    color: Color(0xFF4E4B66),
+                                    letterSpacing: 0.20,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ForgotPassword()
+                                    ),
+                                  );
+                                },
                               ),
                             ),
-                            onPressed: () {
-
-                            },
-                          ),
+                            GradientButton(
+                              child: Text(
+                                "LOG IN",
+                                style: CCText.darkButton,
+                              ),
+                              onPressed: () {
+                                ParentController.auth.handleLogin(context, _email, _password);
+                              },
+                              gradient: CCColors.secondaryGradient,
+                            ),
+                          ],
                         ),
-                        GradientButton(
-                          child: Text(
-                            "LOG IN",
-                            style: CCText.darkButton,
-                          ),
-                          onPressed: () {
-                            ParentController.auth.handleLogin(context, email, password);
-                          },
-                          gradient: CCColors.secondaryGradient,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
     );
   }
 }
