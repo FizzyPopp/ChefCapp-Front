@@ -112,21 +112,22 @@ class AuthService {
 
   Future<bool> sendPasswordResetEmail(email) async {
     try {
-      _auth.sendPasswordResetEmail(email: email);
+      await _auth.sendPasswordResetEmail(email: email).then((_) {
+        return true;
+      });
     } catch (e) {
       print(e);
       return false;
     }
-    return true;
   }
 
   Future<bool> logout() async {
     try {
-      _auth.signOut();
+      await _auth.signOut();
+      return true;
     } catch (e) {
       return false;
     }
-    return true;
   }
 }
 
