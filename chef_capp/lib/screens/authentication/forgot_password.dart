@@ -77,7 +77,7 @@ class ForgotPassword extends StatelessWidget {
                             style: CCText.darkButton,
                           ),
                           onPressed: () {
-                            //ParentController.auth.handleLogin(context, _email, _password);
+                            ParentController.auth.handleForgotPassword(context, _email);
                           },
                           gradient: CCColors.secondaryGradient,
                         ),

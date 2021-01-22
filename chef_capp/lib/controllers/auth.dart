@@ -32,6 +32,16 @@ class AuthController with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> handleForgotPassword(BuildContext context, String email) {
+    ParentService.auth.sendPasswordResetEmail(email).then((success) async {
+      if (success) {
+        print("sent email");
+      } else {
+        print("failed to send email");
+      }
+    });
+  }
+
   Future<void> handleAnonBrowse(BuildContext context) {
     ParentService.auth.loginAnon().then((success) async {
       if (success) {
@@ -55,7 +65,8 @@ class AuthController with ChangeNotifier {
     });
   }
 
-  Future<void> handleRegister(BuildContext context, String email, String password) {
+  Future<void> handleSignUp(BuildContext context, String name, String email, String password) {
+    // what do we do with the name?
     ParentService.auth.register(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
@@ -66,6 +77,8 @@ class AuthController with ChangeNotifier {
       notifyListeners();
     });
   }
+
+
 
   Future<void> handleLogout(BuildContext context) {
     ParentService.auth.logout().then((success) async {

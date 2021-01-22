@@ -11,6 +11,8 @@ class SignUp extends StatelessWidget {
   RegExp _digitRegExp = new RegExp(r"\d");
   RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
 
+  String _name, _email, _password;
+
   bool _obscurePassword = true;
   Icon _obscurePasswordIcon = Icon(Icons.remove_red_eye_outlined);
 
@@ -73,6 +75,9 @@ class SignUp extends StatelessWidget {
                         labelText: 'Name',
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (text) {
+                        _name = text;
+                      }
                     ),
                     SizedBox(height: 16.0,),
                     TextFormField(
@@ -91,6 +96,9 @@ class SignUp extends StatelessWidget {
                           _emailIsValid = false;
                           return 'Please enter a valid email address.';
                         }
+                      },
+                      onChanged: (text) {
+                        _email = text;
                       },
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -126,6 +134,9 @@ class SignUp extends StatelessWidget {
                                 return 'Please ensure password meets the requirements below.';
                               }
                             },
+                            onChanged: (text) {
+                              _password = text;
+                            },
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: _obscurePassword,
                           );
@@ -155,7 +166,8 @@ class SignUp extends StatelessWidget {
                       gradient: CCColors.primaryGradient,
                       onPressed: () {
                         if (_passwordIsValid && _emailIsValid) {
-                          //Submit register requests
+                          // Submit register requests
+                          ParentController.auth.handleSignUp(context, _name, _email, _password);
                         } else {
                           //not sure how to do warning here
                         }
