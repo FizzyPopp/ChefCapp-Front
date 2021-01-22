@@ -103,7 +103,7 @@ class SignUp extends StatelessWidget {
                     obscureText: true,
                   ),
                   SizedBox(height: 16.0,),
-                  Text(
+                  Text( //TODO: discuss whether passwords that we accept might still be rejected by Google
                     'Password must be a minimum of 8 characters long,'
                         ' including one number (0-9), one special character'
                         ' (~!@#\$%^&), one uppercase letter, and one lowercase '
