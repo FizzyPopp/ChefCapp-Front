@@ -2,6 +2,10 @@ import 'package:chef_capp/index.dart';
 
 class ForgotPassword extends StatelessWidget {
   String _email = '';
+  String _failMessage = 'It doesn\'t look like you have an account yet.';
+  String _successMessage() {
+    return 'Reset instructions have been sent to ' + _email;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +73,19 @@ class ForgotPassword extends StatelessWidget {
                           onChanged: (text) {
                             _email = text;
                           },
+                        ),
+                        SizedBox(height: 16.0,),
+                        Text(
+                          _successMessage(),
+                          style: TextStyle(
+                            color: CCColors.successDark,
+                          ),
+                        ),
+                        Text(
+                          _failMessage,
+                          style: TextStyle(
+                            color: CCColors.errorDark,
+                          ),
                         ),
                         SizedBox(height: 16.0,),
                         GradientButton(
