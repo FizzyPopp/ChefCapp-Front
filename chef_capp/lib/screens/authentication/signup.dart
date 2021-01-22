@@ -2,8 +2,18 @@ import 'package:chef_capp/index.dart';
 import 'package:provider/provider.dart';
 
 class SignUp extends StatelessWidget {
-  bool _obscurePassword = true;
+  bool _emailIsValid = false;
+  bool _passwordIsValid = false;
+  RegExp _emailRegExp = new RegExp(
+      r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
+  RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
+  RegExp _digitRegExp = new RegExp(r"\d");
+  RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
 
+  String _name, _email, _password;
+
+  bool _obscurePassword = true;
   Icon _obscurePasswordIcon = Icon(Icons.remove_red_eye_outlined);
 
   void _toggleObscurePassword() {
@@ -65,6 +75,9 @@ class SignUp extends StatelessWidget {
                         labelText: 'Name',
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (text) {
+                        _name = text;
+                      }
                     ),
                     SizedBox(height: 16.0,),
                     TextFormField(
@@ -72,25 +85,62 @@ class SignUp extends StatelessWidget {
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (email) {
+                        String _emailMatch = _emailRegExp.stringMatch(email);
+                        if (email == _emailMatch) {
+                          _emailIsValid = true;
+                          return null;
+                        }
+                        else {
+                          _emailIsValid = false;
+                          return 'Please enter a valid email address.';
+                        }
+                      },
+                      onChanged: (text) {
+                        _email = text;
+                      },
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: 16.0,),
                     Consumer<AuthController>(
-                      builder: (context, data, _) {
-                        return TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              icon: _obscurePasswordIcon,
-                              onPressed: () {
-                                _toggleObscurePassword();
-                                data.notify();
-                              },
+                        builder: (context, data, _) {
+                          return TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              border: OutlineInputBorder(),
+                              suffixIcon: IconButton(
+                                icon: _obscurePasswordIcon,
+                                onPressed: () {
+                                  _toggleObscurePassword();
+                                  data.notify();
+                                },
+                              ),
                             ),
-                          ),
-                          obscureText: _obscurePassword,
-                        );
-                      }
+                            autovalidateMode: AutovalidateMode
+                                .onUserInteraction,
+                            validator: (password) {
+                              if (password.length > 16
+                                  || password.length > 8
+                                      && _alphaLowerRegExp.hasMatch(password)
+                                      && _alphaUpperRegExp.hasMatch(password)
+                                      && _digitRegExp.hasMatch(password)
+                                      &&
+                                      _specialCharRegExp.hasMatch(password)) {
+                                _passwordIsValid = true;
+                                return null;
+                              } else {
+                                _passwordIsValid = false;
+                                return 'Please ensure password meets the requirements below.';
+                              }
+                            },
+                            onChanged: (text) {
+                              _password = text;
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: _obscurePassword,
+                          );
+                        }
                     ),
                     SizedBox(height: 16.0,),
                     Text(
@@ -105,7 +155,7 @@ class SignUp extends StatelessWidget {
                     SizedBox(height: 16.0,),
                     Text(
                         'By clicking Sign Up, you agree and consent to the User'
-                        ' Agreement and the Privacy Policy.'
+                            ' Agreement and the Privacy Policy.'
                     ),
                     SizedBox(height: 16.0,),
                     GradientButton(
@@ -115,7 +165,12 @@ class SignUp extends StatelessWidget {
                       ),
                       gradient: CCColors.primaryGradient,
                       onPressed: () {
-
+                        if (_passwordIsValid && _emailIsValid) {
+                          // Submit register requests
+                          ParentController.auth.handleSignUp(context, _name, _email, _password);
+                        } else {
+                          //not sure how to do warning here
+                        }
                       },
                     ),
                   ],

@@ -10,10 +10,11 @@ class RecipeController with ChangeNotifier {
   bool get isFullRecipe => _isFullRecipe;
 
   RecipeController(this._rd) {
-    if (this._rd.r is RecipePreview) {
-      _isFullRecipe = false;
-    } else {
+    if (this._rd.r is Recipe) {
       _isFullRecipe = true;
+    } else {
+      _isFullRecipe = false;
+      getFullRecipe();
     }
   }
 

@@ -19,6 +19,10 @@ class ID implements EqualsInterface {
     return other.hash == this.hash;
   }
 
+  static String nilUUID() {
+    return "00000000-0000-0000-0000-000000000000";
+  }
+
   factory ID.fromJson(Map<String, dynamic> json) => _$IDFromJson(json);
 
   Map<String, dynamic> toJson() => _$IDToJson(this);

@@ -76,12 +76,33 @@ class DatabaseService {
   Future<List<RecipePreview>> getRecipePreviews() async {
     await init();
 
-    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('recipe').get();
+    QuerySnapshot qs = await FirebaseFirestore.instance.collection('recipe').get();
     String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
+    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<int> covered = [];
+    for (int i = 0; i < qs.docs.length; i++) {
+      if (covered.contains(i)) {
+        continue;
+      }
+
+      covered.add(i);
+      int mostRecent = i;
+      for (int j = i+1; j < qs.docs.length; j++) {
+        if (qs.docs[j].data()["id"] == qs.docs[mostRecent].data()["id"]) {
+          covered.add(j);
+          if (qs.docs[j].data()["timestamp"] > qs.docs[mostRecent].data()["timestamp"]) {
+            mostRecent = j;
+          }
+        }
+      }
+
+      unique.add(qs.docs[mostRecent].data());
+    }
+
     List<RecipePreview> out = [];
-    for (QueryDocumentSnapshot qds in snapshot.docs) {
-      out.add(RecipePreview.fromDB(qds.data(), imgURL));
+    for (Map<String, dynamic> doc in unique) {
+      out.add(RecipePreview.fromDB(doc, imgURL));
     }
 
     return out;
@@ -91,15 +112,51 @@ class DatabaseService {
     await init();
 
     // later on some documents might not be a step, but don't worry about it for now
-    QuerySnapshot qs = await FirebaseFirestore.instance.collection('components').where('id', whereIn: rp.stepIDs).get();
+    QuerySnapshot qs = await FirebaseFirestore.instance.collection('step').where('id', whereIn: rp.stepIDs).get();
 
-    if (qs.docs.length != rp.stepIDs.length) {
-      throw ("Did not fetch correct number of components from the DB");
+    // find the most recent version of each step and save it to "unique"
+    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<int> covered = [];
+    for (int i = 0; i < qs.docs.length; i++) {
+      if (covered.contains(i)) {
+        continue;
+      }
+      covered.add(i);
+      int mostRecent = i;
+      for (int j = i+1; j < qs.docs.length; j++) {
+        if (qs.docs[j].data()["id"] == qs.docs[mostRecent].data()["id"]) {
+          covered.add(j);
+          if (qs.docs[j].data()["timestamp"] > qs.docs[mostRecent].data()["timestamp"]) {
+            mostRecent = j;
+          }
+        }
+      }
+      unique.add(qs.docs[mostRecent].data());
+    }
+
+    if (unique.length != rp.stepIDs.length) {
+      throw ("Did not fetch correct number of steps from the DB");
+    }
+
+    List<Map<String, dynamic>> uniqueInOrder = [];
+    if (unique.length > 0) {
+      Map<String, dynamic> r = unique.firstWhere((j) => j["previous"] == ID.nilUUID());
+      while (r != null) {
+        uniqueInOrder.add(r);
+        if (r["next"] == ID.nilUUID()) {
+          break;
+        }
+        r = unique.firstWhere((j) => j["previous"] == r["id"], orElse: () => null);
+      }
+
+      if (uniqueInOrder.length != unique.length) {
+        throw("Did not order the correct number of steps");
+      }
     }
 
     List<RecipeStep> steps = [];
-    for (var d in qs.docs) {
-      steps.add(RecipeStep.fromDB(d.data, rp));
+    for (var d in uniqueInOrder) {
+      steps.add(RecipeStep.fromDB(d, rp));
     }
 
     return Recipe.fromPreview(rp, steps);

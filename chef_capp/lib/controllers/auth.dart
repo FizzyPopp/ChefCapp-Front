@@ -20,28 +20,37 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
+  void handleSignUpLink(BuildContext context) {
+    Navigator.push( context,
+      MaterialPageRoute(
+          builder: (context) => SignUp()
+      ),
+    );
+  }
+
   void notify() {
     notifyListeners();
   }
 
-  Future<void> handleWelcomeBrowse(BuildContext context) {
+  Future<void> handleForgotPassword(BuildContext context, String email) {
+    ParentService.auth.sendPasswordResetEmail(email).then((success) async {
+      if (success) {
+        print("sent email");
+      } else {
+        print("failed to send email");
+      }
+    });
+  }
+
+  Future<void> handleAnonBrowse(BuildContext context) {
     ParentService.auth.loginAnon().then((success) async {
       if (success) {
-        // maybe don't pushNamedAndRemoveUntil? just push
-        Navigator.pushNamedAndRemoveUntil(context,
-            '/home', (Route<dynamic> route) => false);
+        Navigator.pushNamed(context, '/home');
       } else {
         print("cannot browse");
       }
       notifyListeners();
     });
-  }
-
-  Future<void> handleDietPrefsNext(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (BuildContext context) => RegisterForm(),
-      settings: RouteSettings(name: "/register_form"),
-    ));
   }
 
   Future<void> handleLogin(BuildContext context, String email, String password) {
@@ -56,7 +65,8 @@ class AuthController with ChangeNotifier {
     });
   }
 
-  Future<void> handleRegister(BuildContext context, String email, String password) {
+  Future<void> handleSignUp(BuildContext context, String name, String email, String password) {
+    // what do we do with the name?
     ParentService.auth.register(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
@@ -67,6 +77,8 @@ class AuthController with ChangeNotifier {
       notifyListeners();
     });
   }
+
+
 
   Future<void> handleLogout(BuildContext context) {
     ParentService.auth.logout().then((success) async {

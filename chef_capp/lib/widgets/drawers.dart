@@ -66,12 +66,24 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             title: Text("Help"),
           ),
-          FlatButton(
-            child: Text(
-              "Logout"
+          if (ParentService.auth.getLoginState() == LoginState.LoggedIn)
+            ListTile(
+              title: Text(
+                "Logout"
+              ),
+              onTap: () {
+                ParentController.auth.handleLogout(context);
+                },
             ),
-            onPressed: () { ParentController.auth.handleLogout(context); },
-          ),
+          if (ParentService.auth.getLoginState() == LoginState.Anonymous)
+            ListTile(
+              title: Text(
+                  "Sign up"
+              ),
+              onTap: () {
+                ParentController.auth.handleSignUpLink(context);
+              },
+            ),
         ],
       ),
     );
