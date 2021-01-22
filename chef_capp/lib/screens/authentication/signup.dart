@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 class SignUp extends StatelessWidget {
   bool _emailIsValid = false;
   bool _passwordIsValid = false;
-  RegExp _emailRegExp = new RegExp(r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  RegExp _emailRegExp = new RegExp(
+      r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
   RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
   RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
   RegExp _digitRegExp = new RegExp(r"\d");
@@ -82,7 +83,7 @@ class SignUp extends StatelessWidget {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) {
                         String _emailMatch = _emailRegExp.stringMatch(email);
-                        if (email == _emailMatch)  {
+                        if (email == _emailMatch) {
                           _emailIsValid = true;
                           return null;
                         }
@@ -95,38 +96,40 @@ class SignUp extends StatelessWidget {
                     ),
                     SizedBox(height: 16.0,),
                     Consumer<AuthController>(
-                      builder: (context, data, _) {
-                        return TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              icon: _obscurePasswordIcon,
-                              onPressed: () {
-                                _toggleObscurePassword();
-                                data.notify();
-                              },
+                        builder: (context, data, _) {
+                          return TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              border: OutlineInputBorder(),
+                              suffixIcon: IconButton(
+                                icon: _obscurePasswordIcon,
+                                onPressed: () {
+                                  _toggleObscurePassword();
+                                  data.notify();
+                                },
+                              ),
                             ),
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (password) {
-                            if ( password.length > 16
-                                || password.length > 8
-                                    && _alphaLowerRegExp.hasMatch(password)
-                                    && _alphaUpperRegExp.hasMatch(password)
-                                    && _digitRegExp.hasMatch(password)
-                                    && _specialCharRegExp.hasMatch(password)) {
-                              _passwordIsValid = true;
-                              return null;
-                            } else {
-                              _passwordIsValid = false;
-                              return 'Please ensure password meets the requirements below.';
-                            }
-                          },
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: _obscurePassword,
-                        );
-                      }
+                            autovalidateMode: AutovalidateMode
+                                .onUserInteraction,
+                            validator: (password) {
+                              if (password.length > 16
+                                  || password.length > 8
+                                      && _alphaLowerRegExp.hasMatch(password)
+                                      && _alphaUpperRegExp.hasMatch(password)
+                                      && _digitRegExp.hasMatch(password)
+                                      &&
+                                      _specialCharRegExp.hasMatch(password)) {
+                                _passwordIsValid = true;
+                                return null;
+                              } else {
+                                _passwordIsValid = false;
+                                return 'Please ensure password meets the requirements below.';
+                              }
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: _obscurePassword,
+                          );
+                        }
                     ),
                     SizedBox(height: 16.0,),
                     Text(
@@ -141,7 +144,7 @@ class SignUp extends StatelessWidget {
                     SizedBox(height: 16.0,),
                     Text(
                         'By clicking Sign Up, you agree and consent to the User'
-                        ' Agreement and the Privacy Policy.'
+                            ' Agreement and the Privacy Policy.'
                     ),
                     SizedBox(height: 16.0,),
                     GradientButton(
@@ -166,6 +169,5 @@ class SignUp extends StatelessWidget {
         ),
       ),
     );
-     */
   }
 }
