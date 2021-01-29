@@ -172,6 +172,8 @@ class SignUp extends StatelessWidget {
                           //not sure how to do warning here
                         }
                       },
+                      loading: false,
+                      enabled: true,
                     ),
                   ],
                 ),
