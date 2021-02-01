@@ -62,18 +62,23 @@ class AuthController with ChangeNotifier {
       return "Email already in use";
     }
     String _emailMatch = _emailRegExp.stringMatch(email);
-    if (email == _emailMatch) {
+    if (email.length == 0) {
+      _emailIsValid = false;
+      return null;
+    } else if (email == _emailMatch) {
       _emailIsValid = true;
       return null;
-    }
-    else {
+    } else {
       _emailIsValid = false;
       return 'Please enter a valid email address.';
     }
   }
 
   String validatePassword(String password) {
-    if (password.length > 16
+    if (password.length == 0) {
+      _passwordIsValid = false;
+      return null;
+    } else if (password.length > 16
         || password.length > 8
             && _alphaLowerRegExp.hasMatch(password)
             && _alphaUpperRegExp.hasMatch(password)
