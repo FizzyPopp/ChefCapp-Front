@@ -30,6 +30,7 @@ class AuthController with ChangeNotifier {
   RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
   RegExp _digitRegExp = new RegExp(r"\d");
   RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
+  bool _emailAlreadyUsed = false;
 
   bool getLoggingIn() {
     return _loggingIn;
@@ -56,6 +57,10 @@ class AuthController with ChangeNotifier {
   }
 
   String validateEmail(String email) {
+    if (_emailAlreadyUsed) {
+      _emailAlreadyUsed = false;
+      return "Email already in use";
+    }
     String _emailMatch = _emailRegExp.stringMatch(email);
     if (email == _emailMatch) {
       _emailIsValid = true;
@@ -128,6 +133,8 @@ class AuthController with ChangeNotifier {
         Navigator.pushNamedAndRemoveUntil(context,
             '/home', (Route<dynamic> route) => false);
       } else {
+        // could be some other reason, but idk
+        _emailAlreadyUsed = true;
         print("cannot register");
       }
       _signingUp = false;

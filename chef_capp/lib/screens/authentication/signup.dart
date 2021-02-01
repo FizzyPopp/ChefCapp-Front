@@ -143,7 +143,7 @@ class SignUp extends StatelessWidget {
                             ParentController.auth.handleSignUp(context, _name, _email, _password);
                           },
                           loading: data.getSigningUp(),
-                          enabled: !data.getCanSignUp(),
+                          enabled: data.getCanSignUp(),
                         );
                       }
                     ),
