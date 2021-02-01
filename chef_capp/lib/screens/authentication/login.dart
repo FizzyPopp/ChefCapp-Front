@@ -83,9 +83,12 @@ class LoginPage extends StatelessWidget {
                                 labelText: 'Email',
                                 border: OutlineInputBorder(),
                               ),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (email) => ParentController.auth.validateEmail(email),
                               onChanged: (text) {
                                 _email = text;
                               },
+                              keyboardType: TextInputType.emailAddress,
                             ),
                             SizedBox(height: 16.0,),
                             Consumer<AuthController>(
@@ -102,9 +105,13 @@ class LoginPage extends StatelessWidget {
                                       },
                                     ),
                                   ),
+                                  autovalidateMode: AutovalidateMode
+                                      .onUserInteraction,
+                                  validator: (password) => ParentController.auth.validatePassword(password),
                                   onChanged: (text) {
                                     _password = text;
                                   },
+                                  keyboardType: TextInputType.visiblePassword,
                                   obscureText: _obscurePassword,
                                 );
                               }
