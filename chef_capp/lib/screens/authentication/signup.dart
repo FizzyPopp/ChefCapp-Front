@@ -80,8 +80,9 @@ class SignUp extends StatelessWidget {
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (email) => ParentController.auth.validateEmail(email),
-                          onChanged: (text) {
-                            _email = text;
+                          onChanged: (email) {
+                            _email = email;
+                            ParentController.auth.validateEmail(email);
                             data.notify();
                           },
                           keyboardType: TextInputType.emailAddress,
@@ -106,8 +107,9 @@ class SignUp extends StatelessWidget {
                             autovalidateMode: AutovalidateMode
                                 .onUserInteraction,
                             validator: (password) => ParentController.auth.validatePassword(password),
-                            onChanged: (text) {
-                              _password = text;
+                            onChanged: (password) {
+                              _password = password;
+                              ParentController.auth.validatePassword(password);
                               data.notify();
                             },
                             keyboardType: TextInputType.visiblePassword,
@@ -143,7 +145,7 @@ class SignUp extends StatelessWidget {
                             ParentController.auth.handleSignUp(context, _name, _email, _password);
                           },
                           loading: data.getSigningUp(),
-                          enabled: data.getCanSignUp(),
+                          enabled: data.canSignUp(),
                         );
                       }
                     ),

@@ -36,12 +36,16 @@ class AuthController with ChangeNotifier {
     return _loggingIn;
   }
 
+  bool canLogIn() {
+    return (!_loggingIn) && _emailIsValid && _passwordIsValid;
+  }
+
   bool getSigningUp() {
     return _signingUp;
   }
 
-  bool getCanSignUp() {
-    return !_signingUp && _emailIsValid && _passwordIsValid;
+  bool canSignUp() {
+    return (!_signingUp) && _emailIsValid && _passwordIsValid;
   }
 
   void handleSignUpLink(BuildContext context) {

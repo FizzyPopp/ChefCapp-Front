@@ -7,8 +7,6 @@ class LoginPage extends StatelessWidget {
   String _email = "";
   String _password = "";
   bool _obscurePassword = true;
-  bool _isLoading = false;
-  bool _buttonIsActive = true;
 
   Icon _obscurePasswordIcon = Icon(Icons.remove_red_eye_outlined);
 
@@ -81,17 +79,23 @@ class LoginPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Email',
-                                border: OutlineInputBorder(),
-                              ),
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              validator: (email) => ParentController.auth.validateEmail(email),
-                              onChanged: (text) {
-                                _email = text;
-                              },
-                              keyboardType: TextInputType.emailAddress,
+                            Consumer<AuthController>(
+                              builder: (context, data, _) {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (email) => ParentController.auth.validateEmail(email),
+                                  onChanged: (email) {
+                                    _email = email;
+                                    ParentController.auth.validateEmail(email);
+                                    data.notify();
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                );
+                              }
                             ),
                             SizedBox(height: 16.0,),
                             Consumer<AuthController>(
@@ -111,8 +115,10 @@ class LoginPage extends StatelessWidget {
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
                                   validator: (password) => ParentController.auth.validatePassword(password),
-                                  onChanged: (text) {
-                                    _password = text;
+                                  onChanged: (password) {
+                                    _password = password;
+                                    ParentController.auth.validatePassword(password);
+                                    data.notify();
                                   },
                                   keyboardType: TextInputType.visiblePassword,
                                   obscureText: _obscurePassword,
@@ -152,7 +158,7 @@ class LoginPage extends StatelessWidget {
                                   },
                                   gradient: CCColors.secondaryGradient,
                                   loading: data.getLoggingIn(),
-                                  enabled: !data.getLoggingIn(),
+                                  enabled: data.canLogIn(),
                                 );
                               }
                             ),
