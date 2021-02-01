@@ -141,14 +141,11 @@ class LoginPage extends StatelessWidget {
                                     style: CCText.darkButton,
                                   ),
                                   onPressed: () {
-                                    _isLoading = !_isLoading;
-                                    _buttonIsActive = !_buttonIsActive;
-                                    data.notify();
                                     ParentController.auth.handleLogin(context, _email, _password);
                                   },
                                   gradient: CCColors.secondaryGradient,
-                                  loading: _isLoading,
-                                  enabled: _buttonIsActive,
+                                  loading: data.getLoggingIn(),
+                                  enabled: !data.getLoggingIn(),
                                 );
                               }
                             ),

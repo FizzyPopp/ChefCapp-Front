@@ -80,27 +80,32 @@ class SignUp extends StatelessWidget {
                       }
                     ),
                     SizedBox(height: 16.0,),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(),
-                      ),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (email) {
-                        String _emailMatch = _emailRegExp.stringMatch(email);
-                        if (email == _emailMatch) {
-                          _emailIsValid = true;
-                          return null;
-                        }
-                        else {
-                          _emailIsValid = false;
-                          return 'Please enter a valid email address.';
-                        }
-                      },
-                      onChanged: (text) {
-                        _email = text;
-                      },
-                      keyboardType: TextInputType.emailAddress,
+                    Consumer<AuthController>(
+                      builder: (context, data, _) {
+                        return TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(),
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (email) {
+                            String _emailMatch = _emailRegExp.stringMatch(email);
+                            if (email == _emailMatch) {
+                              _emailIsValid = true;
+                              return null;
+                            }
+                            else {
+                              _emailIsValid = false;
+                              return 'Please enter a valid email address.';
+                            }
+                          },
+                          onChanged: (text) {
+                            _email = text;
+                            data.notify();
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                        );
+                      }
                     ),
                     SizedBox(height: 16.0,),
                     Consumer<AuthController>(
@@ -136,6 +141,7 @@ class SignUp extends StatelessWidget {
                             },
                             onChanged: (text) {
                               _password = text;
+                              data.notify();
                             },
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: _obscurePassword,
@@ -158,22 +164,26 @@ class SignUp extends StatelessWidget {
                             ' Agreement and the Privacy Policy.'
                     ),
                     SizedBox(height: 16.0,),
-                    GradientButton(
-                      child: Text(
-                        "SIGN UP",
-                        style: CCText.darkButton,
-                      ),
-                      gradient: CCColors.primaryGradient,
-                      onPressed: () {
-                        if (_passwordIsValid && _emailIsValid) {
-                          // Submit register requests
-                          ParentController.auth.handleSignUp(context, _name, _email, _password);
-                        } else {
-                          //not sure how to do warning here
-                        }
-                      },
-                      loading: false,
-                      enabled: true,
+                    Consumer<AuthController>(
+                      builder: (context, data, _) {
+                        return GradientButton(
+                          child: Text(
+                            "SIGN UP",
+                            style: CCText.darkButton,
+                          ),
+                          gradient: CCColors.primaryGradient,
+                          onPressed: () {
+                            if (_passwordIsValid && _emailIsValid) {
+                              // Submit register requests
+                              ParentController.auth.handleSignUp(context, _name, _email, _password);
+                            } else {
+                              // not sure how to do warning here
+                            }
+                          },
+                          loading: data.getSigningUp(),
+                          enabled: !data.getSigningUp() && _emailIsValid && _passwordIsValid,
+                        );
+                      }
                     ),
                   ],
                 ),

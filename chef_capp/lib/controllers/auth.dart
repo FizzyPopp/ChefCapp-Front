@@ -20,6 +20,17 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
+  bool _loggingIn = false;
+  bool _signingUp = false;
+
+  bool getLoggingIn() {
+    return _loggingIn;
+  }
+
+  bool getSigningUp() {
+    return _signingUp;
+  }
+
   void handleSignUpLink(BuildContext context) {
     Navigator.push( context,
       MaterialPageRoute(
@@ -54,6 +65,8 @@ class AuthController with ChangeNotifier {
   }
 
   Future<void> handleLogin(BuildContext context, String email, String password) {
+    _loggingIn = true;
+    notifyListeners();
     ParentService.auth.loginEmailPassword(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
@@ -61,12 +74,15 @@ class AuthController with ChangeNotifier {
       } else {
         print("cannot login");
       }
+      _loggingIn = false;
       notifyListeners();
     });
   }
 
   Future<void> handleSignUp(BuildContext context, String name, String email, String password) {
     // what do we do with the name?
+    _signingUp = true;
+    notifyListeners();
     ParentService.auth.register(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
@@ -74,6 +90,7 @@ class AuthController with ChangeNotifier {
       } else {
         print("cannot register");
       }
+      _signingUp = false;
       notifyListeners();
     });
   }
