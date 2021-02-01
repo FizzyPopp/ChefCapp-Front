@@ -84,6 +84,10 @@ class SignUp extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
+                        suffixIcon: Icon(
+                          Icons.error,
+                          color: Colors.red[700],
+                        )
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) {
