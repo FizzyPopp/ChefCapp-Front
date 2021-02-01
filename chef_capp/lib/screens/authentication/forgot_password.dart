@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPassword extends StatelessWidget {
   String _email = '';
@@ -70,9 +71,12 @@ class ForgotPassword extends StatelessWidget {
                             labelText: 'Email',
                             border: OutlineInputBorder(),
                           ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (email) => ParentController.auth.validateEmail(email),
                           onChanged: (text) {
                             _email = text;
                           },
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         SizedBox(height: 16.0,),
                         Text(
