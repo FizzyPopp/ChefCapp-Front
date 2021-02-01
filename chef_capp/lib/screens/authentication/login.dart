@@ -1,11 +1,14 @@
 import 'package:chef_capp/index.dart';
 import 'package:chef_capp/screens/authentication/forgot_password.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   String _email = "";
   String _password = "";
   bool _obscurePassword = true;
+  bool _isLoading = false;
+  bool _buttonIsActive = true;
 
   Icon _obscurePasswordIcon = Icon(Icons.remove_red_eye_outlined);
 
@@ -130,15 +133,24 @@ class LoginPage extends StatelessWidget {
                                 },
                               ),
                             ),
-                            GradientButton(
-                              child: Text(
-                                "LOG IN",
-                                style: CCText.darkButton,
-                              ),
-                              onPressed: () {
-                                ParentController.auth.handleLogin(context, _email, _password);
-                              },
-                              gradient: CCColors.secondaryGradient,
+                            Consumer<AuthController>(
+                              builder: (context, data, _) {
+                                return GradientButton(
+                                  child: Text(
+                                    "LOG IN",
+                                    style: CCText.darkButton,
+                                  ),
+                                  onPressed: () {
+                                    _isLoading = !_isLoading;
+                                    _buttonIsActive = !_buttonIsActive;
+                                    data.notify();
+                                    ParentController.auth.handleLogin(context, _email, _password);
+                                  },
+                                  gradient: CCColors.secondaryGradient,
+                                  loading: _isLoading,
+                                  enabled: _buttonIsActive,
+                                );
+                              }
                             ),
                           ],
                         ),
