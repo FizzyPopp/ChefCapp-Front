@@ -7,6 +7,10 @@ class CCColors {
 
   static const Color secondary = Color(0xFFEF0081);
 
+  static const Color successDark = Color(0xFF177D2D);
+
+  static const Color errorDark = Color(0xFF9A175E);
+
   static const Gradient primaryGradient = LinearGradient(
     colors: <Color>[
       Color(0xFFFF5722),
