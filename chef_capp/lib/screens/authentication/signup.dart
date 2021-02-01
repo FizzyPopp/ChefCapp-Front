@@ -2,15 +2,6 @@ import 'package:chef_capp/index.dart';
 import 'package:provider/provider.dart';
 
 class SignUp extends StatelessWidget {
-  bool _emailIsValid = false;
-  bool _passwordIsValid = false;
-  RegExp _emailRegExp = new RegExp(
-      r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-  RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
-  RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
-  RegExp _digitRegExp = new RegExp(r"\d");
-  RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
-
   String _name, _email, _password;
 
   bool _obscurePassword = true;
@@ -88,17 +79,7 @@ class SignUp extends StatelessWidget {
                             border: OutlineInputBorder(),
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (email) {
-                            String _emailMatch = _emailRegExp.stringMatch(email);
-                            if (email == _emailMatch) {
-                              _emailIsValid = true;
-                              return null;
-                            }
-                            else {
-                              _emailIsValid = false;
-                              return 'Please enter a valid email address.';
-                            }
-                          },
+                          validator: (email) => ParentController.auth.validateEmail(email),
                           onChanged: (text) {
                             _email = text;
                             data.notify();
@@ -124,21 +105,7 @@ class SignUp extends StatelessWidget {
                             ),
                             autovalidateMode: AutovalidateMode
                                 .onUserInteraction,
-                            validator: (password) {
-                              if (password.length > 16
-                                  || password.length > 8
-                                      && _alphaLowerRegExp.hasMatch(password)
-                                      && _alphaUpperRegExp.hasMatch(password)
-                                      && _digitRegExp.hasMatch(password)
-                                      &&
-                                      _specialCharRegExp.hasMatch(password)) {
-                                _passwordIsValid = true;
-                                return null;
-                              } else {
-                                _passwordIsValid = false;
-                                return 'Please ensure password meets the requirements below.';
-                              }
-                            },
+                            validator: (password) => ParentController.auth.validatePassword(password),
                             onChanged: (text) {
                               _password = text;
                               data.notify();
@@ -173,15 +140,10 @@ class SignUp extends StatelessWidget {
                           ),
                           gradient: CCColors.primaryGradient,
                           onPressed: () {
-                            if (_passwordIsValid && _emailIsValid) {
-                              // Submit register requests
-                              ParentController.auth.handleSignUp(context, _name, _email, _password);
-                            } else {
-                              // not sure how to do warning here
-                            }
+                            ParentController.auth.handleSignUp(context, _name, _email, _password);
                           },
                           loading: data.getSigningUp(),
-                          enabled: !data.getSigningUp() && _emailIsValid && _passwordIsValid,
+                          enabled: !data.getCanSignUp(),
                         );
                       }
                     ),

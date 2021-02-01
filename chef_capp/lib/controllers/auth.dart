@@ -22,6 +22,14 @@ class AuthController with ChangeNotifier {
 
   bool _loggingIn = false;
   bool _signingUp = false;
+  bool _emailIsValid = false;
+  bool _passwordIsValid = false;
+  RegExp _emailRegExp = new RegExp(
+  r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
+  RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
+  RegExp _digitRegExp = new RegExp(r"\d");
+  RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
 
   bool getLoggingIn() {
     return _loggingIn;
@@ -29,6 +37,10 @@ class AuthController with ChangeNotifier {
 
   bool getSigningUp() {
     return _signingUp;
+  }
+
+  bool getCanSignUp() {
+    return !_signingUp && _emailIsValid && _passwordIsValid;
   }
 
   void handleSignUpLink(BuildContext context) {
@@ -41,6 +53,34 @@ class AuthController with ChangeNotifier {
 
   void notify() {
     notifyListeners();
+  }
+
+  String validateEmail(String email) {
+    String _emailMatch = _emailRegExp.stringMatch(email);
+    if (email == _emailMatch) {
+      _emailIsValid = true;
+      return null;
+    }
+    else {
+      _emailIsValid = false;
+      return 'Please enter a valid email address.';
+    }
+  }
+
+  String validatePassword(String password) {
+    if (password.length > 16
+        || password.length > 8
+            && _alphaLowerRegExp.hasMatch(password)
+            && _alphaUpperRegExp.hasMatch(password)
+            && _digitRegExp.hasMatch(password)
+            &&
+            _specialCharRegExp.hasMatch(password)) {
+      _passwordIsValid = true;
+      return null;
+    } else {
+      _passwordIsValid = false;
+      return 'Please ensure password meets the requirements below.';
+    }
   }
 
   Future<void> handleForgotPassword(BuildContext context, String email) {
@@ -94,8 +134,6 @@ class AuthController with ChangeNotifier {
       notifyListeners();
     });
   }
-
-
 
   Future<void> handleLogout(BuildContext context) {
     ParentService.auth.logout().then((success) async {
