@@ -88,6 +88,31 @@ class SignUp extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                         );
                       }
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(
+                          Icons.error,
+                          color: Colors.red[700],
+                        )
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (email) {
+                        String _emailMatch = _emailRegExp.stringMatch(email);
+                        if (email == _emailMatch) {
+                          _emailIsValid = true;
+                          return null;
+                        }
+                        else {
+                          _emailIsValid = false;
+                          return 'Please enter a valid email address.';
+                        }
+                      },
+                      onChanged: (text) {
+                        _email = text;
+                      },
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: 16.0,),
                     Consumer<AuthController>(
