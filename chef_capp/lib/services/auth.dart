@@ -23,6 +23,10 @@ class AuthService {
     return true;
   }
 
+  RegisterState getRegisterState() {
+    return _registerState;
+  }
+
   LoginState getLoginState() {
     return _loginState;
   }
@@ -111,10 +115,12 @@ class AuthService {
   }
 
   Future<bool> sendPasswordResetEmail(email) async {
+    if (!(await init())) {
+      return false;
+    }
     try {
-      await _auth.sendPasswordResetEmail(email: email).then((_) {
-        return true;
-      });
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
     } catch (e) {
       print(e);
       return false;

@@ -20,6 +20,45 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
+  bool _loggingIn = false;
+  bool _signingUp = false;
+  bool _emailIsValid = false;
+  bool _passwordIsValid = false;
+  RegExp _emailRegExp = new RegExp(
+  r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
+  RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
+  RegExp _digitRegExp = new RegExp(r"\d");
+  RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
+  bool _emailAlreadyUsed = false;
+  ResetEmailStatus _resetEmailSent = ResetEmailStatus.unattempted;
+
+
+
+  ResetEmailStatus getResetEmailSent() {
+    return _resetEmailSent;
+  }
+
+  void resetResetEmailSent() {
+    _resetEmailSent = ResetEmailStatus.unattempted;
+  }
+
+  bool getLoggingIn() {
+    return _loggingIn;
+  }
+
+  bool canLogIn() {
+    return (!_loggingIn) && _emailIsValid;
+  }
+
+  bool getSigningUp() {
+    return _signingUp;
+  }
+
+  bool canSignUp() {
+    return (!_signingUp) && _emailIsValid && _passwordIsValid;
+  }
+
   void handleSignUpLink(BuildContext context) {
     Navigator.push( context,
       MaterialPageRoute(
@@ -32,13 +71,51 @@ class AuthController with ChangeNotifier {
     notifyListeners();
   }
 
+  String validateEmail(String email) {
+    if (_emailAlreadyUsed) {
+      _emailAlreadyUsed = false;
+      return "Email already in use";
+    }
+    String _emailMatch = _emailRegExp.stringMatch(email);
+    if (email.length == 0) {
+      _emailIsValid = false;
+      return null;
+    } else if (email == _emailMatch) {
+      _emailIsValid = true;
+      return null;
+    } else {
+      _emailIsValid = false;
+      return 'Please enter a valid email address.';
+    }
+  }
+
+  String validatePassword(String password) {
+    if (password.length == 0) {
+      _passwordIsValid = false;
+      return null;
+    } else if (password.length > 16
+        || password.length > 8
+            && _alphaLowerRegExp.hasMatch(password)
+            && _alphaUpperRegExp.hasMatch(password)
+            && _digitRegExp.hasMatch(password)
+            &&
+            _specialCharRegExp.hasMatch(password)) {
+      _passwordIsValid = true;
+      return null;
+    } else {
+      _passwordIsValid = false;
+      return 'Please ensure password meets the requirements below.';
+    }
+  }
+
   Future<void> handleForgotPassword(BuildContext context, String email) {
     ParentService.auth.sendPasswordResetEmail(email).then((success) async {
       if (success) {
-        print("sent email");
+        _resetEmailSent = ResetEmailStatus.sent;
       } else {
-        print("failed to send email");
+        _resetEmailSent = ResetEmailStatus.failed;
       }
+      notifyListeners();
     });
   }
 
@@ -54,6 +131,8 @@ class AuthController with ChangeNotifier {
   }
 
   Future<void> handleLogin(BuildContext context, String email, String password) {
+    _loggingIn = true;
+    notifyListeners();
     ParentService.auth.loginEmailPassword(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
@@ -61,24 +140,28 @@ class AuthController with ChangeNotifier {
       } else {
         print("cannot login");
       }
+      _loggingIn = false;
       notifyListeners();
     });
   }
 
   Future<void> handleSignUp(BuildContext context, String name, String email, String password) {
     // what do we do with the name?
+    _signingUp = true;
+    notifyListeners();
     ParentService.auth.register(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
             '/home', (Route<dynamic> route) => false);
       } else {
+        // could be some other reason, but idk
+        _emailAlreadyUsed = true;
         print("cannot register");
       }
+      _signingUp = false;
       notifyListeners();
     });
   }
-
-
 
   Future<void> handleLogout(BuildContext context) {
     ParentService.auth.logout().then((success) async {
@@ -91,4 +174,10 @@ class AuthController with ChangeNotifier {
       notifyListeners();
     });
   }
+}
+
+enum ResetEmailStatus {
+  unattempted,
+  failed,
+  sent
 }

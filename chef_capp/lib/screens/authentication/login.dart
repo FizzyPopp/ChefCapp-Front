@@ -1,5 +1,6 @@
 import 'package:chef_capp/index.dart';
 import 'package:chef_capp/screens/authentication/forgot_password.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -78,14 +79,23 @@ class LoginPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Email',
-                                border: OutlineInputBorder(),
-                              ),
-                              onChanged: (text) {
-                                _email = text;
-                              },
+                            Consumer<AuthController>(
+                              builder: (context, data, _) {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (email) => ParentController.auth.validateEmail(email),
+                                  onChanged: (email) {
+                                    _email = email;
+                                    ParentController.auth.validateEmail(email);
+                                    data.notify();
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                );
+                              }
                             ),
                             SizedBox(height: 16.0,),
                             Consumer<AuthController>(
@@ -102,9 +112,12 @@ class LoginPage extends StatelessWidget {
                                       },
                                     ),
                                   ),
-                                  onChanged: (text) {
-                                    _password = text;
+                                  autovalidateMode: AutovalidateMode
+                                      .onUserInteraction,
+                                  onChanged: (password) {
+                                    _password = password;
                                   },
+                                  keyboardType: TextInputType.visiblePassword,
                                   obscureText: _obscurePassword,
                                 );
                               }
@@ -130,15 +143,21 @@ class LoginPage extends StatelessWidget {
                                 },
                               ),
                             ),
-                            GradientButton(
-                              child: Text(
-                                "LOG IN",
-                                style: CCText.darkButton,
-                              ),
-                              onPressed: () {
-                                ParentController.auth.handleLogin(context, _email, _password);
-                              },
-                              gradient: CCColors.secondaryGradient,
+                            Consumer<AuthController>(
+                              builder: (context, data, _) {
+                                return GradientButton(
+                                  child: Text(
+                                    "LOG IN",
+                                    style: CCText.darkButton,
+                                  ),
+                                  onPressed: () {
+                                    ParentController.auth.handleLogin(context, _email, _password);
+                                  },
+                                  gradient: CCColors.secondaryGradient,
+                                  loading: data.getLoggingIn(),
+                                  enabled: data.canLogIn(),
+                                );
+                              }
                             ),
                           ],
                         ),
