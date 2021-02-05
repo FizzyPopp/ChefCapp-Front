@@ -23,6 +23,10 @@ class AuthService {
     return true;
   }
 
+  RegisterState getRegisterState() {
+    return _registerState;
+  }
+
   LoginState getLoginState() {
     return _loginState;
   }

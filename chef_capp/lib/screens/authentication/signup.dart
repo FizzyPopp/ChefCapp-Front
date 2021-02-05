@@ -71,17 +71,23 @@ class SignUp extends StatelessWidget {
                       }
                     ),
                     SizedBox(height: 16.0,),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(),
-                      ),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (email) => ParentController.auth.validateEmail(email),
-                      onChanged: (text) {
-                        _email = text;
-                      },
-                      keyboardType: TextInputType.emailAddress,
+                    Consumer<AuthController>(
+                      builder: (context, data, _) {
+                        return TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(),
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (email) => ParentController.auth.validateEmail(email),
+                          onChanged: (email) {
+                            _email = email;
+                            ParentController.auth.validateEmail(email);
+                            data.notify();
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                        );
+                      }
                     ),
                     SizedBox(height: 16.0,),
                     Consumer<AuthController>(
@@ -101,8 +107,10 @@ class SignUp extends StatelessWidget {
                             autovalidateMode: AutovalidateMode
                                 .onUserInteraction,
                             validator: (password) => ParentController.auth.validatePassword(password),
-                            onChanged: (text) {
-                              _password = text;
+                            onChanged: (password) {
+                              _password = password;
+                              ParentController.auth.validatePassword(password);
+                              data.notify();
                             },
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: _obscurePassword,
@@ -125,17 +133,21 @@ class SignUp extends StatelessWidget {
                             ' Agreement and the Privacy Policy.'
                     ),
                     SizedBox(height: 16.0,),
-                    GradientButton(
-                      child: Text(
-                        "SIGN UP",
-                        style: CCText.darkButton,
-                      ),
-                      gradient: CCColors.primaryGradient,
-                      onPressed: () {
-                        ParentController.auth.handleSignUp(context, _name, _email, _password);
-                      },
-                      loading: false,
-                      enabled: true,
+                    Consumer<AuthController>(
+                      builder: (context, data, _) {
+                        return GradientButton(
+                          child: Text(
+                            "SIGN UP",
+                            style: CCText.darkButton,
+                          ),
+                          gradient: CCColors.primaryGradient,
+                          onPressed: () {
+                            ParentController.auth.handleSignUp(context, _name, _email, _password);
+                          },
+                          loading: data.getSigningUp(),
+                          enabled: data.canSignUp(),
+                        );
+                      }
                     ),
                   ],
                 ),

@@ -20,14 +20,33 @@ class AuthController with ChangeNotifier {
    * Super users obv have access to everything.
    */
 
+  bool _loggingIn = false;
+  bool _signingUp = false;
   bool _emailIsValid = false;
   bool _passwordIsValid = false;
   RegExp _emailRegExp = new RegExp(
-      r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  r"[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
   RegExp _alphaLowerRegExp = new RegExp(r"[a-z]");
   RegExp _alphaUpperRegExp = new RegExp(r"[A-Z]");
   RegExp _digitRegExp = new RegExp(r"\d");
   RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
+  bool _emailAlreadyUsed = false;
+
+  bool getLoggingIn() {
+    return _loggingIn;
+  }
+
+  bool canLogIn() {
+    return (!_loggingIn) && _emailIsValid && _passwordIsValid;
+  }
+
+  bool getSigningUp() {
+    return _signingUp;
+  }
+
+  bool canSignUp() {
+    return (!_signingUp) && _emailIsValid && _passwordIsValid;
+  }
 
   void handleSignUpLink(BuildContext context) {
     Navigator.push( context,
@@ -42,6 +61,10 @@ class AuthController with ChangeNotifier {
   }
 
   String validateEmail(String email) {
+    if (_emailAlreadyUsed) {
+      _emailAlreadyUsed = false;
+      return "Email already in use";
+    }
     String _emailMatch = _emailRegExp.stringMatch(email);
     if (email.length == 0) {
       _emailIsValid = false;
@@ -96,6 +119,8 @@ class AuthController with ChangeNotifier {
   }
 
   Future<void> handleLogin(BuildContext context, String email, String password) {
+    _loggingIn = true;
+    notifyListeners();
     ParentService.auth.loginEmailPassword(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
@@ -103,19 +128,25 @@ class AuthController with ChangeNotifier {
       } else {
         print("cannot login");
       }
+      _loggingIn = false;
       notifyListeners();
     });
   }
 
   Future<void> handleSignUp(BuildContext context, String name, String email, String password) {
     // what do we do with the name?
+    _signingUp = true;
+    notifyListeners();
     ParentService.auth.register(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
             '/home', (Route<dynamic> route) => false);
       } else {
+        // could be some other reason, but idk
+        _emailAlreadyUsed = true;
         print("cannot register");
       }
+      _signingUp = false;
       notifyListeners();
     });
   }
