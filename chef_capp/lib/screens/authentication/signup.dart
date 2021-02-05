@@ -134,6 +134,8 @@ class SignUp extends StatelessWidget {
                       onPressed: () {
                         ParentController.auth.handleSignUp(context, _name, _email, _password);
                       },
+                      loading: false,
+                      enabled: true,
                     ),
                   ],
                 ),
