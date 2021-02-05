@@ -94,12 +94,11 @@ class AuthController with ChangeNotifier {
       _passwordIsValid = false;
       return null;
     } else if (password.length > 16
-        || password.length > 8
+            || password.length > 8
             && _alphaLowerRegExp.hasMatch(password)
             && _alphaUpperRegExp.hasMatch(password)
             && _digitRegExp.hasMatch(password)
-            &&
-            _specialCharRegExp.hasMatch(password)) {
+            && _specialCharRegExp.hasMatch(password)) {
       _passwordIsValid = true;
       return null;
     } else {
