@@ -114,11 +114,8 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
-                                  validator: (password) => ParentController.auth.validatePassword(password),
                                   onChanged: (password) {
                                     _password = password;
-                                    ParentController.auth.validatePassword(password);
-                                    data.notify();
                                   },
                                   keyboardType: TextInputType.visiblePassword,
                                   obscureText: _obscurePassword,
