@@ -31,13 +31,24 @@ class AuthController with ChangeNotifier {
   RegExp _digitRegExp = new RegExp(r"\d");
   RegExp _specialCharRegExp = new RegExp(r"[^a-zA-Z0-9]");
   bool _emailAlreadyUsed = false;
+  ResetEmailStatus _resetEmailSent = ResetEmailStatus.unattempted;
+
+
+
+  ResetEmailStatus getResetEmailSent() {
+    return _resetEmailSent;
+  }
+
+  void resetResetEmailSent() {
+    _resetEmailSent = ResetEmailStatus.unattempted;
+  }
 
   bool getLoggingIn() {
     return _loggingIn;
   }
 
   bool canLogIn() {
-    return (!_loggingIn) && _emailIsValid && _passwordIsValid;
+    return (!_loggingIn) && _emailIsValid;
   }
 
   bool getSigningUp() {
@@ -83,12 +94,11 @@ class AuthController with ChangeNotifier {
       _passwordIsValid = false;
       return null;
     } else if (password.length > 16
-        || password.length > 8
+            || password.length > 8
             && _alphaLowerRegExp.hasMatch(password)
             && _alphaUpperRegExp.hasMatch(password)
             && _digitRegExp.hasMatch(password)
-            &&
-            _specialCharRegExp.hasMatch(password)) {
+            && _specialCharRegExp.hasMatch(password)) {
       _passwordIsValid = true;
       return null;
     } else {
@@ -100,10 +110,11 @@ class AuthController with ChangeNotifier {
   Future<void> handleForgotPassword(BuildContext context, String email) {
     ParentService.auth.sendPasswordResetEmail(email).then((success) async {
       if (success) {
-        print("sent email");
+        _resetEmailSent = ResetEmailStatus.sent;
       } else {
-        print("failed to send email");
+        _resetEmailSent = ResetEmailStatus.failed;
       }
+      notifyListeners();
     });
   }
 
@@ -162,4 +173,10 @@ class AuthController with ChangeNotifier {
       notifyListeners();
     });
   }
+}
+
+enum ResetEmailStatus {
+  unattempted,
+  failed,
+  sent
 }
