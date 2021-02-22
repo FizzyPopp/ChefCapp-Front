@@ -9,6 +9,7 @@ class PreferencesController with ChangeNotifier {
     // this is just for testing. Should actually get it from DatabaseService
     // DatabaseService will return a Preferences.localized() if it can't find any existing
     this._p = Preferences.localized();
+    // should have a "refresh" function which queries db again
   }
 
   Preferences get preferences => this._p.copy();

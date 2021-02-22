@@ -53,6 +53,7 @@ export 'package:chef_capp/controllers/discover.dart';
 export 'package:chef_capp/controllers/inventory.dart';
 export 'package:chef_capp/controllers/auth.dart';
 export 'package:chef_capp/controllers/recipe.dart';
+export 'package:chef_capp/controllers/preferences.dart';
 export 'package:chef_capp/controllers/ingredient.dart';
 export 'package:chef_capp/controllers/models/recipe_data.dart';
 export 'package:chef_capp/controllers/models/recipe_collection_data.dart';
