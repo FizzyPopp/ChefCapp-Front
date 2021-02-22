@@ -9,7 +9,21 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
+              alignment: Alignment.centerLeft,
               height: 48.0,
+              child: FlatButton.icon(
+                icon: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  size: 14.0,
+                ),
+                label: Text(
+                  'Back',
+                  //style: CCText.lightButton,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
             Expanded(
               child: Column(
