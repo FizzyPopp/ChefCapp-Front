@@ -26,6 +26,10 @@ class Preferences {
         this.allergies = [...allergies],
         this.dietaryRestrictions = [...dietaryRestrictions];
 
+  Preferences copy() {
+    return Preferences.fromJson(this.toJson());
+  }
+
   factory Preferences.fromJson(Map<String, dynamic> json) => _$PreferencesFromJson(json);
 
   Map<String, dynamic> toJson() => _$PreferencesToJson(this);
