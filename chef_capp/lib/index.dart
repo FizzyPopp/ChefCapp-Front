@@ -24,7 +24,6 @@ export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/app_user.dart';
 export 'package:chef_capp/models/id.dart';
 export 'package:chef_capp/models/dummy.dart';
-export 'package:chef_capp/models/dietary_restriction.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 export 'package:chef_capp/models/interfaces/equals_interface.dart';
 export 'package:chef_capp/models/interfaces/ingredient_interface.dart';

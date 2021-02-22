@@ -10,20 +10,12 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) {
   return AppUser(
     json['id'] == null ? null : ID.fromJson(json['id'] as Map<String, dynamic>),
     json['email'] as String,
-    _$enumDecodeNullable(_$UnitPreferenceEnumMap, json['weight']),
-    (json['restrictions'] as List)
-        ?.map((e) => e == null
-            ? null
-            : DietaryRestriction.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
   );
 }
 
 Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
       'id': instance.id?.toJson(),
       'email': instance.email,
-      'weight': _$UnitPreferenceEnumMap[instance.weight],
-      'restrictions': instance.restrictions?.map((e) => e?.toJson())?.toList(),
     };
 
 T _$enumDecode<T>(

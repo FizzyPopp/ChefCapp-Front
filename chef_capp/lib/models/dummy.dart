@@ -141,9 +141,7 @@ class Dummy {
     Random rnd = Random(seed);
     return AppUser(
         id(),
-        "loblaw@lawblog.com",
-        UnitPreference.metric,
-        []
+        "loblaw@lawblog.com"
     );
   }
 }
