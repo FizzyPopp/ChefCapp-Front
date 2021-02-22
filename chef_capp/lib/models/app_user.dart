@@ -19,8 +19,3 @@ class AppUser {
 
   Map<String, dynamic> toJson() => _$AppUserToJson(this);
 }
-
-enum UnitPreference {
-  metric,
-  imperial
-}

@@ -22,6 +22,7 @@ export 'package:chef_capp/models/ingredient.dart';
 export 'package:chef_capp/models/ingredient_range.dart';
 export 'package:chef_capp/models/tag.dart';
 export 'package:chef_capp/models/app_user.dart';
+export 'package:chef_capp/models/preferences.dart';
 export 'package:chef_capp/models/id.dart';
 export 'package:chef_capp/models/dummy.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';

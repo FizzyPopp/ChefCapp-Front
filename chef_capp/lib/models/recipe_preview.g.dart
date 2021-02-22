@@ -24,7 +24,7 @@ RecipePreview _$RecipePreviewFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Equipment.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    (json['componentIDs'] as List)?.map((e) => e as String)?.toList(),
+    (json['stepIDs'] as List)?.map((e) => e as String)?.toList(),
     json['imgURL'] as String,
   );
 }
@@ -39,6 +39,6 @@ Map<String, dynamic> _$RecipePreviewToJson(RecipePreview instance) =>
       'tags': instance.tags?.map((e) => e?.toJson())?.toList(),
       'ingredients': instance.ingredients?.map((e) => e?.toJson())?.toList(),
       'cookware': instance.cookware?.map((e) => e?.toJson())?.toList(),
-      'componentIDs': instance.stepIDs,
+      'stepIDs': instance.stepIDs,
       'imgURL': instance.imgURL,
     };
