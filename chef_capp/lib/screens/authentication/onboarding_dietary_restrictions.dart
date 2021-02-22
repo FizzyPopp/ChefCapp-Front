@@ -1,7 +1,6 @@
 import 'package:chef_capp/index.dart';
-import 'package:chef_capp/screens/authentication/onboarding_units.dart';
 
-class Onboarding extends StatelessWidget {
+class OnboardingDietaryRestrictions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,17 +22,17 @@ class Onboarding extends StatelessWidget {
                       vertical: 12.0,
                     ),
                     child: AutoSizeText(
-                      "Welcome to Chef Capp",
+                      "Do you have any dietary restrictions?",
                       style: CCText.mobileDisplayLarge,
-                      maxLines: 2,
+                      maxLines: 3,
                     ),
                   ),
-                  Expanded(
+/*                  Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Image.asset("assets/images/onboarding/onboarding001.png"),
                     ),
-                  ),
+                  ),*/
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32.0,
@@ -44,49 +43,18 @@ class Onboarding extends StatelessWidget {
                       children: [
                         GradientButton(
                           child: Text(
-                            "GET STARTED",
+                            "NEXT",
                             style: CCText.darkButton,
                           ),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OnboardingUnits()
+                                  builder: (context) => SignUp()
                               ),
                             );
                           },
                           gradient: CCColors.primaryGradient,
-                        ),
-                        SizedBox(height: 16.0,),
-                        SizedBox(
-                          height: 48.0,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()
-                                ),
-                              );
-                            },
-                            child: Text(
-                              "LOG IN",
-                              style: CCText.lightButton,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16.0,),
-                        FlatButton(
-                          child: Text(
-                            'Browse without signing in',
-                            style: TextStyle(
-                              color: Color(0xFF4E4B66),
-                              letterSpacing: 0.20,
-                            ),
-                          ),
-                          onPressed: () {
-                            ParentController.auth.handleAnonBrowse(context);
-                          },
                         )
                       ],
                     ),
