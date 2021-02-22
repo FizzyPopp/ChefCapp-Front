@@ -17,6 +17,12 @@ class Preferences {
     // for default prefs:
     // import 'package:flutter_localizations/flutter_localizations.dart';
     // Locale myLocale = Localizations.localeOf(context);
+    // below is just for testing
+    this.metricVolume = true;
+    this.metricWeight = true;
+    this.metricTemperature = true;
+    this.allergies = ["goose"];
+    this.dietaryRestrictions = ["pesca-pescatarian"];
   }
 
   Preferences(bool metricVolume, bool metricWeight, bool metricTemperature, List<String> allergies, List<String> dietaryRestrictions) :
