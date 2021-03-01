@@ -24,7 +24,7 @@ class OnboardingAllergies extends StatelessWidget {
                     ),
                     child: AutoSizeText(
                       "Do you have any food allergies?",
-                      style: CCText.mobileDisplayLarge,
+                      style: CCText.mobileDisplayLargeBold,
                       maxLines: 3,
                     ),
                   ),

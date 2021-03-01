@@ -59,7 +59,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         child: AutoSizeText(
                           "Log in for a personalized experience",
-                          style: CCText.mobileDisplayLarge,
+                          style: CCText.mobileDisplayLargeBold,
                           maxLines: 2,
                         ),
                       ),

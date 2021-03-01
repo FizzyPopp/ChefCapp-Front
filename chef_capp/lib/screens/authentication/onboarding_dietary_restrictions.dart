@@ -23,7 +23,7 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                     ),
                     child: AutoSizeText(
                       "Do you have any dietary restrictions?",
-                      style: CCText.mobileDisplayLarge,
+                      style: CCText.mobileDisplayLargeBold,
                       maxLines: 3,
                     ),
                   ),
