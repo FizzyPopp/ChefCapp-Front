@@ -30,12 +30,10 @@ export 'package:chef_capp/models/interfaces/equals_interface.dart';
 export 'package:chef_capp/models/interfaces/ingredient_interface.dart';
 
 export 'package:chef_capp/screens/app.dart';
-
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/onboarding.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
 export 'package:chef_capp/screens/drawer/drawer_notifications.dart';
-
 export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
