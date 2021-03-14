@@ -20,7 +20,22 @@ class _OnboardingUnitsState extends State<OnboardingUnits> {
         child: ListView(
           children: [
             Container(
+              alignment: Alignment.centerLeft,
               height: 48.0,
+              child: FlatButton.icon(
+                icon: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  size: 14.0,
+                  color: CCText.lightButton.color,
+                ),
+                label: Text(
+                  'BACK',
+                  style: CCText.lightButton,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,10 +46,9 @@ class _OnboardingUnitsState extends State<OnboardingUnits> {
                     horizontal: 32.0,
                     vertical: 12.0,
                   ),
-                  child: AutoSizeText(
+                  child: Text(
                     "What measurement units do you use?",
-                    style: CCText.mobileDisplayLarge,
-                    maxLines: 3,
+                    style: CCText.mobileDisplayLarge(context),
                   ),
                 ),
                 Padding(
@@ -169,72 +183,6 @@ class _OnboardingUnitsState extends State<OnboardingUnits> {
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class UnitChip extends StatelessWidget {
-  final Function onSelected;
-  final bool selected;
-  final String firstLabel;
-  final String secondLabel;
-
-  final Color myTextColor = CCColors.secondaryDark;
-  final Color myActiveTextColor = Colors.white;
-
-  UnitChip({
-    @required this.selected,
-    @required this.firstLabel,
-    this.secondLabel,
-    @required this.onSelected,
-  });
-
-  Widget fullLabel() {
-    if (secondLabel == null) {
-      return Text(
-        firstLabel,
-        style: TextStyle(
-          color: selected ? myActiveTextColor : myTextColor,
-        ),
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: Column(
-          children: [
-            Text(
-              firstLabel,
-              style: TextStyle(
-                color: selected ? myActiveTextColor : myTextColor,
-              ),
-            ),
-            SizedBox(height: 3.0,),
-            Text(
-              secondLabel,
-              style: TextStyle(
-                color: selected ? myActiveTextColor : myTextColor,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ChoiceChip(
-      label: fullLabel(),
-      selectedColor: CCColors.secondaryDark,
-      backgroundColor: Colors.transparent,
-      selected: selected,
-      onSelected: onSelected,
-      shape: StadiumBorder(
-        side: BorderSide(
-          color: CCColors.secondaryDark,
-          width: 2.0,
         ),
       ),
     );
