@@ -84,7 +84,7 @@ class PreferenceChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilterChip(
       label: Text(
-        'label',
+        this.label,
         style: TextStyle(
           color: selected ? _myActiveTextColor : _myTextColor,
         ),

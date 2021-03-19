@@ -17,6 +17,8 @@ import 'package:chef_capp/index.dart';
 // then these strings can be stored in: sql, nosql, individual files, or one giant file
 // need to store preferences locally in case they sign in anonymously
 
+// NEED TO USE LOCAL STORE / LOCAL CACHE
+
 class DatabaseService {
   SharedPreferences _localStore;
   Preferences _userPreferences;
@@ -62,6 +64,19 @@ class DatabaseService {
   Future<void> storeAppUser(AppUser u) async {
     SharedPreferences store = await _getLocalStore();
     store.setString("appUser", jsonEncode(u.toJson()));
+  }
+
+  Future<List<String>> getAllergenCategories() async {
+    await init();
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient-metadata').doc('allergens').get();
+
+    if (!snapshot.exists) {
+      return [];
+    }
+
+    var categories = snapshot.data()["keys"];
+    return (categories != null) ? List<String>.from(categories) : [];
   }
 
   Future<Preferences> getUserPreferences() async {

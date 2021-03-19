@@ -59,16 +59,19 @@ class OnboardingAllergies extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 0,
                     ),
-                    child: Wrap(
-                      children: [
-                        PreferenceChip(
-                          label: 'Label',
-                          selected: false,
-                          onSelected: (bool selected) {
-
-                          },
-                        )
-                      ],
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return Wrap(
+                          children: data.allergenCategories.map((label) => PreferenceChip(
+                            label: label,
+                            selected: data.allergicToCategories.contains(label),
+                            onSelected: (bool selected) {
+                              data.allergicToCategory(label, selected);
+                            },
+                          )).toList(),
+                          spacing: 8.0,
+                        );
+                      }
                     ),
                   ),
                   Padding(

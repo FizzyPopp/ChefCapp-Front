@@ -4,12 +4,22 @@ import 'package:chef_capp/index.dart';
 /// backed by a Preferences model
 class PreferencesController with ChangeNotifier {
   Preferences _p;
+  List<String> _allergenCategories;
+  List<String> _allergicToCategories;
 
   PreferencesController() {
     // this is just for testing. Should actually get it from DatabaseService
     // DatabaseService will return a Preferences.localized() if it can't find any existing
+    // should have a "refresh" function which queries db again ?
     this._p = Preferences.localized();
-    // should have a "refresh" function which queries db again
+    _allergenCategories = [];
+    _allergicToCategories = [];
+    populateAllergenCategories();
+  }
+
+  Future<void> populateAllergenCategories() async {
+    _allergenCategories = await ParentService.database.getAllergenCategories();
+    this.notifyListeners();
   }
 
   Preferences get preferences => this._p.copy();
@@ -19,6 +29,8 @@ class PreferencesController with ChangeNotifier {
   bool get metricTemperature => this._p.metricTemperature;
   List<String> get allergies => [...this._p.allergies];
   List<String> get dietaryRestrictions => [...this._p.dietaryRestrictions];
+  List<String> get allergenCategories => [...this._allergenCategories];
+  List<String> get allergicToCategories => [...this._allergicToCategories];
 
   set metricVolume(bool v) {
     this._p.metricVolume = v;
@@ -43,6 +55,15 @@ class PreferencesController with ChangeNotifier {
   set dietaryRestrictions(List<String> dr) {
     this._p.dietaryRestrictions = [...dr];
     this.notifyListeners();
+  }
+
+  void allergicToCategory(String label, bool selected) {
+    if (selected) {
+      _allergicToCategories.add(label);
+    } else {
+      _allergicToCategories = _allergicToCategories.where((c) => c != label).toList();
+    }
+    notifyListeners();
   }
 
   Preferences get model => Preferences.fromJson(_p.toJson());
