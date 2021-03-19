@@ -1,18 +1,36 @@
 import 'package:chef_capp/index.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingDietaryRestrictions extends StatelessWidget {
+  bool _chipSelectedDemo = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              height: 48.0,
-            ),
-            Expanded(
-              child: Column(
+    return ChangeNotifierProvider.value(
+      value: ParentController.preferences,
+      child: Scaffold(
+        body: SafeArea(
+          child: ListView(
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 48.0,
+                child: FlatButton.icon(
+                  icon: Icon(
+                    Icons.arrow_back_ios_sharp,
+                    size: 14.0,
+                    color: CCText.lightButton.color,
+                  ),
+                  label: Text(
+                    'BACK',
+                    style: CCText.lightButton,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -21,18 +39,89 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 12.0,
                     ),
-                    child: AutoSizeText(
-                      "Do you have any dietary restrictions?",
-                      style: CCText.mobileDisplayLargeBold,
-                      maxLines: 3,
+                    child: Text(
+                      "Do you have any dietary preferences?",
+                      style: CCText.mobileDisplayLarge(context),
                     ),
                   ),
-/*                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Image.asset("assets/images/onboarding/onboarding001.png"),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 12.0,
                     ),
-                  ),*/
+                    child: Text(
+                      "Select the food groups members of your household would"
+                          " like to avoid:",
+                      style: CCText.mobileDisplaySmall,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 0,
+                    ),
+                    child: Wrap(
+                      children: [
+                        PreferenceChip(
+                          label: 'Label',
+                          selected: _chipSelectedDemo,
+                          onSelected: (bool selected) {
+
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 12.0,
+                    ),
+                    child: Text(
+                      "Want to avoid specific ingredients?",
+                      style: CCText.mobileDisplaySmall,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 12.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Search',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 0,
+                    ),
+                    child: Wrap(
+                      children: [
+                        PreferenceChip(
+                          label: 'Label',
+                          selected: _chipSelectedDemo,
+                          onSelected: (bool selected) {
+
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 12.0,
+                    ),
+                    child: Text(
+                      "Chef Capp will personalize your recipe feed based on your "
+                          "dietary preferences.",
+                      style: CCText.mobileTextSmall,
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32.0,
@@ -55,14 +144,14 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                             );
                           },
                           gradient: CCColors.primaryGradient,
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
