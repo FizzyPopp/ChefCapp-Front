@@ -39,4 +39,14 @@ class Preferences {
   factory Preferences.fromJson(Map<String, dynamic> json) => _$PreferencesFromJson(json);
 
   Map<String, dynamic> toJson() => _$PreferencesToJson(this);
+
+  static Preferences fromDB(data) {
+    return Preferences(
+      data["metricVolume"] ?? true,
+      data["metricWeight"] ?? true,
+      data["metricTemperature"] ?? true,
+      List<String>.from(data["allergies"]) ?? [],
+      List<String>.from(data["dietaryRestrictions"]) ?? []
+    );
+  }
 }

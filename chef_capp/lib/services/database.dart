@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
@@ -19,9 +18,14 @@ import 'package:chef_capp/index.dart';
 // need to store preferences locally in case they sign in anonymously
 
 class DatabaseService {
-  FirebaseAuth _auth;
-  User _user;
   SharedPreferences _localStore;
+  Preferences _userPreferences;
+
+  Preferences get userPreferences => Preferences.fromJson(_userPreferences.toJson());
+
+  void clearUserPreferences() {
+    _userPreferences = null;
+  }
 
   Future<bool> init() async {
     bool appStarted = await ParentService.init();
@@ -60,6 +64,45 @@ class DatabaseService {
     store.setString("appUser", jsonEncode(u.toJson()));
   }
 
+  Future<Preferences> getUserPreferences() async {
+    if (_userPreferences != null) {
+      return userPreferences;
+    }
+
+    await init();
+
+    User user = ParentService.auth.user;
+
+    if (user == null || user.isAnonymous) {
+      return Preferences.localized();
+    }
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('userPreferences').doc(user.uid).get();
+
+    if (!snapshot.exists) {
+      return Preferences.localized();
+    }
+
+    _userPreferences = Preferences.fromDB(snapshot.data());
+    return userPreferences;
+  }
+
+  Future<bool> saveUserPreferences(Preferences prefs) async {
+    await init();
+
+    User user = ParentService.auth.user;
+
+    if (user == null || user.isAnonymous) {
+      return false;
+    }
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('userPreferences').doc(user.uid).get();
+    await snapshot.reference.set(prefs.toJson());
+    _userPreferences = prefs;
+
+    return true;
+  }
+
   Future<RecipePreview> getTestRecipePreview() async {
     await init();
 
@@ -70,7 +113,7 @@ class DatabaseService {
       throw ("Document does not exist");
     }
 
-    return RecipePreview.fromDB(snapshot.data, imgURL);
+    return RecipePreview.fromDB(snapshot.data(), imgURL);
   }
 
   Future<List<RecipePreview>> getRecipePreviews() async {

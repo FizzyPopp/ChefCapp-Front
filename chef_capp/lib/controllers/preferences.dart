@@ -44,4 +44,6 @@ class PreferencesController with ChangeNotifier {
     this._p.dietaryRestrictions = [...dr];
     this.notifyListeners();
   }
+
+  Preferences get model => Preferences.fromJson(_p.toJson());
 }
