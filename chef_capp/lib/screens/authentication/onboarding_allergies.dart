@@ -89,11 +89,18 @@ class OnboardingAllergies extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 12.0,
                     ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Search',
-                      ),
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Search',
+                          ),
+                          onChanged: (text) {
+                            data.filterIngredients(text);
+                          }
+                        );
+                      }
                     ),
                   ),
                   Padding(
@@ -101,16 +108,13 @@ class OnboardingAllergies extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 0,
                     ),
-                    child: Wrap(
-                      children: [
-                        PreferenceChip(
-                          label: 'Label',
-                          selected: false,
-                          onSelected: (bool selected) {
-
-                          },
-                        )
-                      ],
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return Wrap(
+                          children: getChips(data),
+                          spacing: 8.0
+                        );
+                      }
                     ),
                   ),
                   Padding(
@@ -157,5 +161,35 @@ class OnboardingAllergies extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> getChips (PreferencesController data) {
+    List<DBIngredient> first = [];
+    for (final id in data.selectedAllergenIngredients) {
+      first.add(data.allIngredients.where((ingr) => ingr.id == id).toList()[0]);
+    }
+    List<DBIngredient> second = data.filteredIngredients.where((ingr) => !data.selectedAllergenIngredients.contains(ingr.id)).toList();
+
+    List<Widget> firstWidgets = first.map((ingr) =>
+      PreferenceChip(
+        label: ingr.name,
+        selected: true,
+        onSelected: (bool selected) {
+          data.handleChipTouch(ingr.id, selected);
+        }
+      )
+    ).toList();
+
+    List<Widget> secondWidgets = second.map((ingr) =>
+        PreferenceChip(
+            label: ingr.name,
+            selected: false,
+            onSelected: (bool selected) {
+              data.handleChipTouch(ingr.id, selected);
+            }
+        )
+    ).toList();
+
+    return (new List.from(firstWidgets)..addAll(secondWidgets));
   }
 }

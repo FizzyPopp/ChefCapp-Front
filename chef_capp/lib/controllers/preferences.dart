@@ -6,6 +6,9 @@ class PreferencesController with ChangeNotifier {
   Preferences _p;
   List<String> _allergenCategories;
   List<String> _allergicToCategories;
+  List<DBIngredient> _allIngredients;
+  List<DBIngredient> _filteredIngredients;
+  List<ID> _selectedAllergenIngredients;
 
   PreferencesController() {
     // this is just for testing. Should actually get it from DatabaseService
@@ -14,7 +17,16 @@ class PreferencesController with ChangeNotifier {
     this._p = Preferences.localized();
     _allergenCategories = [];
     _allergicToCategories = [];
+    _allIngredients = [];
+    _filteredIngredients = [];
+    _selectedAllergenIngredients = [];
     populateAllergenCategories();
+    populateIngredients();
+  }
+
+  Future<void> populateIngredients() async {
+    _allIngredients = await ParentService.database.getIngredients();
+    this.notifyListeners();
   }
 
   Future<void> populateAllergenCategories() async {
@@ -31,6 +43,9 @@ class PreferencesController with ChangeNotifier {
   List<String> get dietaryRestrictions => [...this._p.dietaryRestrictions];
   List<String> get allergenCategories => [...this._allergenCategories];
   List<String> get allergicToCategories => [...this._allergicToCategories];
+  List<DBIngredient> get allIngredients => [ ...this._allIngredients ];
+  List<DBIngredient> get filteredIngredients => [ ...this._filteredIngredients ];
+  List<ID> get selectedAllergenIngredients => [ ...this._selectedAllergenIngredients ];
 
   set metricVolume(bool v) {
     this._p.metricVolume = v;
@@ -55,6 +70,25 @@ class PreferencesController with ChangeNotifier {
   set dietaryRestrictions(List<String> dr) {
     this._p.dietaryRestrictions = [...dr];
     this.notifyListeners();
+  }
+
+  void handleChipTouch(ID touchedId, bool selected) {
+    if (selected) {
+      _selectedAllergenIngredients.add(touchedId);
+    } else {
+      _selectedAllergenIngredients = _selectedAllergenIngredients.where((id) => !id.equals(touchedId)).toList();
+    }
+    notifyListeners();
+  }
+
+  void filterIngredients(String query) {
+    query = query.trim().toLowerCase();
+    if (query == "") {
+      _filteredIngredients = [];
+    } else {
+      _filteredIngredients = _allIngredients.where((ingr) => ingr.name.contains(query)).toList();
+    }
+    notifyListeners();
   }
 
   void allergicToCategory(String label, bool selected) {

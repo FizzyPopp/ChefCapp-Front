@@ -118,6 +118,24 @@ class DatabaseService {
     return true;
   }
 
+  Future<List<DBIngredient>> getIngredients() async {
+    await init();
+
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient').get();
+    List<QueryDocumentSnapshot> docs = snapshot.docs;
+
+    print(docs[0].data());
+
+    List<DBIngredient> out = [];
+    for (final doc in docs) {
+      out.add(DBIngredient.fromDB(doc.data()));
+    }
+
+    // TODO: check if any duplicates, take most recent if there are
+
+    return out;
+  }
+
   Future<RecipePreview> getTestRecipePreview() async {
     await init();
 
