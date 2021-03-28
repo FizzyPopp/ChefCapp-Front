@@ -62,11 +62,11 @@ class OnboardingAllergies extends StatelessWidget {
                     child: Consumer<PreferencesController>(
                       builder: (context, data, _) {
                         return Wrap(
-                          children: data.allergenCategories.map((label) => PreferenceChip(
-                            label: label,
-                            selected: data.allergicToCategories.contains(label),
+                          children: data.allergenCategories.map((x) => PreferenceChip(
+                            label: x["name"],
+                            selected: x["selected"],
                             onSelected: (bool selected) {
-                              data.allergicToCategory(label, selected);
+                              data.updateAllergenCategory(x["name"], selected);
                             },
                           )).toList(),
                           spacing: 8.0,
@@ -165,17 +165,17 @@ class OnboardingAllergies extends StatelessWidget {
 
   List<Widget> getChips (PreferencesController data) {
     List<DBIngredient> first = [];
-    for (final id in data.selectedAllergenIngredients) {
+    for (final id in data.allergenIngredients) {
       first.add(data.allIngredients.where((ingr) => ingr.id == id).toList()[0]);
     }
-    List<DBIngredient> second = data.filteredIngredients.where((ingr) => !data.selectedAllergenIngredients.contains(ingr.id)).toList();
+    List<DBIngredient> second = data.filteredIngredients.where((ingr) => !data.allergenIngredients.contains(ingr.id)).toList();
 
     List<Widget> firstWidgets = first.map((ingr) =>
       PreferenceChip(
         label: ingr.name,
         selected: true,
         onSelected: (bool selected) {
-          data.handleChipTouch(ingr.id, selected);
+          data.updateAllergenIngredient(ingr.id, selected);
         }
       )
     ).toList();
@@ -185,7 +185,7 @@ class OnboardingAllergies extends StatelessWidget {
             label: ingr.name,
             selected: false,
             onSelected: (bool selected) {
-              data.handleChipTouch(ingr.id, selected);
+              data.updateAllergenIngredient(ingr.id, selected);
             }
         )
     ).toList();

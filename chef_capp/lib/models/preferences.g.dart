@@ -11,8 +11,14 @@ Preferences _$PreferencesFromJson(Map<String, dynamic> json) {
     json['metricVolume'] as bool,
     json['metricWeight'] as bool,
     json['metricTemperature'] as bool,
-    (json['allergies'] as List)?.map((e) => e as String)?.toList(),
-    (json['dietaryRestrictions'] as List)?.map((e) => e as String)?.toList(),
+    (json['allergyIngredients'] as List)
+        ?.map((e) => e == null ? null : ID.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    (json['allergyCategories'] as List)?.map((e) => e as String)?.toList(),
+    (json['dietaryIngredients'] as List)
+        ?.map((e) => e == null ? null : ID.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    (json['dietaryCategories'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 
@@ -21,6 +27,10 @@ Map<String, dynamic> _$PreferencesToJson(Preferences instance) =>
       'metricVolume': instance.metricVolume,
       'metricWeight': instance.metricWeight,
       'metricTemperature': instance.metricTemperature,
-      'allergies': instance.allergies,
-      'dietaryRestrictions': instance.dietaryRestrictions,
+      'allergyIngredients':
+          instance.allergyIngredients?.map((e) => e?.toJson())?.toList(),
+      'allergyCategories': instance.allergyCategories,
+      'dietaryIngredients':
+          instance.dietaryIngredients?.map((e) => e?.toJson())?.toList(),
+      'dietaryCategories': instance.dietaryCategories,
     };

@@ -60,16 +60,19 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 0,
                     ),
-                    child: Wrap(
-                      children: [
-                        PreferenceChip(
-                          label: 'Label',
-                          selected: _chipSelectedDemo,
-                          onSelected: (bool selected) {
-
-                          },
-                        )
-                      ],
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return Wrap(
+                          children: data.dietaryCategories.map((x) => PreferenceChip(
+                            label: x["name"],
+                            selected: x["selected"],
+                            onSelected: (bool selected) {
+                              data.updateDietaryCategory(x["name"], selected);
+                            },
+                          )).toList(),
+                          spacing: 8.0,
+                        );
+                      }
                     ),
                   ),
                   Padding(
@@ -87,11 +90,18 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 12.0,
                     ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Search',
-                      ),
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Search',
+                          ),
+                          onChanged: (text) {
+                            data.filterIngredients(text);
+                          }
+                        );
+                      }
                     ),
                   ),
                   Padding(
@@ -99,16 +109,13 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 0,
                     ),
-                    child: Wrap(
-                      children: [
-                        PreferenceChip(
-                          label: 'Label',
-                          selected: _chipSelectedDemo,
-                          onSelected: (bool selected) {
-
-                          },
-                        )
-                      ],
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return Wrap(
+                          children: getChips(data),
+                            spacing: 8.0
+                        );
+                      }
                     ),
                   ),
                   Padding(
@@ -155,5 +162,35 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> getChips (PreferencesController data) {
+    List<DBIngredient> first = [];
+    for (final id in data.dietaryIngredients) {
+      first.add(data.allIngredients.where((ingr) => ingr.id == id).toList()[0]);
+    }
+    List<DBIngredient> second = data.filteredIngredients.where((ingr) => !data.dietaryIngredients.contains(ingr.id)).where((ingr) => !data.allergenIngredients.contains(ingr.id)).toList();
+
+    List<Widget> firstWidgets = first.map((ingr) =>
+        PreferenceChip(
+            label: ingr.name,
+            selected: true,
+            onSelected: (bool selected) {
+              data.updateDietaryIngredient(ingr.id, selected);
+            }
+        )
+    ).toList();
+
+    List<Widget> secondWidgets = second.map((ingr) =>
+        PreferenceChip(
+            label: ingr.name,
+            selected: false,
+            onSelected: (bool selected) {
+              data.updateDietaryIngredient(ingr.id, selected);
+            }
+        )
+    ).toList();
+
+    return (new List.from(firstWidgets)..addAll(secondWidgets));
   }
 }

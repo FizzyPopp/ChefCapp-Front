@@ -124,14 +124,31 @@ class DatabaseService {
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient').get();
     List<QueryDocumentSnapshot> docs = snapshot.docs;
 
-    print(docs[0].data());
+    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<int> covered = [];
+    for (int i = 0; i < docs.length; i++) {
+      if (covered.contains(i)) {
+        continue;
+      }
 
-    List<DBIngredient> out = [];
-    for (final doc in docs) {
-      out.add(DBIngredient.fromDB(doc.data()));
+      covered.add(i);
+      int mostRecent = i;
+      for (int j = i+1; j < docs.length; j++) {
+        if (docs[j].data()["id"] == docs[mostRecent].data()["id"]) {
+          covered.add(j);
+          if (docs[j].data()["timestamp"] > docs[mostRecent].data()["timestamp"]) {
+            mostRecent = j;
+          }
+        }
+      }
+
+      unique.add(docs[mostRecent].data());
     }
 
-    // TODO: check if any duplicates, take most recent if there are
+    List<DBIngredient> out = [];
+    for (Map<String, dynamic> data in unique) {
+      out.add(DBIngredient.fromDB(data));
+    }
 
     return out;
   }
