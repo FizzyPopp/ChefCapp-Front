@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:chef_capp/screens/authentication/onboarding_units.dart';
 
 class Onboarding extends StatelessWidget {
   @override
@@ -23,7 +24,7 @@ class Onboarding extends StatelessWidget {
                     ),
                     child: AutoSizeText(
                       "Welcome to Chef Capp",
-                      style: CCText.mobileDisplayLarge,
+                      style: CCText.mobileDisplayLargeBold,
                       maxLines: 2,
                     ),
                   ),
@@ -50,7 +51,7 @@ class Onboarding extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignUp()
+                                  builder: (context) => OnboardingUnits()
                               ),
                             );
                           },

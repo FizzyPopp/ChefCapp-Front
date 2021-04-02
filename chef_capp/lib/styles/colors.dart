@@ -5,11 +5,17 @@ class CCColors {
 
   static const Color primary = Color(0xFFFF5722);
 
-  static const Color secondary = Color(0xFFEF0081);
+  static const Color secondary = Color(0xFF03DAC5);
+
+  static const Color secondaryDark = Color(0xFF198F83);
 
   static const Color successDark = Color(0xFF177D2D);
 
+  static const Color error = Color(0xFFEF0081);
+
   static const Color errorDark = Color(0xFF9A175E);
+
+  static const Color greyscale40 = Color(0xFFA0A3BD);
 
   static const Gradient primaryGradient = LinearGradient(
     colors: <Color>[

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chef_capp/index.dart';
 
@@ -18,10 +17,17 @@ import 'package:chef_capp/index.dart';
 // then these strings can be stored in: sql, nosql, individual files, or one giant file
 // need to store preferences locally in case they sign in anonymously
 
+// NEED TO USE LOCAL STORE / LOCAL CACHE
+
 class DatabaseService {
-  FirebaseAuth _auth;
-  User _user;
   SharedPreferences _localStore;
+  Preferences _userPreferences;
+
+  Preferences get userPreferences => Preferences.fromJson(_userPreferences.toJson());
+
+  void clearUserPreferences() {
+    _userPreferences = null;
+  }
 
   Future<bool> init() async {
     bool appStarted = await ParentService.init();
@@ -60,6 +66,93 @@ class DatabaseService {
     store.setString("appUser", jsonEncode(u.toJson()));
   }
 
+  Future<List<String>> getAllergenCategories() async {
+    await init();
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient-metadata').doc('allergens').get();
+
+    if (!snapshot.exists) {
+      return [];
+    }
+
+    var categories = snapshot.data()["keys"];
+    return (categories != null) ? List<String>.from(categories) : [];
+  }
+
+  Future<Preferences> getUserPreferences() async {
+    if (_userPreferences != null) {
+      return userPreferences;
+    }
+
+    await init();
+
+    User user = ParentService.auth.user;
+
+    if (user == null || user.isAnonymous) {
+      return Preferences.localized();
+    }
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('userPreferences').doc(user.uid).get();
+
+    if (!snapshot.exists) {
+      return Preferences.localized();
+    }
+
+    _userPreferences = Preferences.fromDB(snapshot.data());
+    return userPreferences;
+  }
+
+  Future<bool> saveUserPreferences(Preferences prefs) async {
+    await init();
+
+    User user = ParentService.auth.user;
+
+    if (user == null || user.isAnonymous) {
+      return false;
+    }
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('userPreferences').doc(user.uid).get();
+    await snapshot.reference.set(prefs.toJson());
+    _userPreferences = prefs;
+
+    return true;
+  }
+
+  Future<List<DBIngredient>> getIngredients() async {
+    await init();
+
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient').get();
+    List<QueryDocumentSnapshot> docs = snapshot.docs;
+
+    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<int> covered = [];
+    for (int i = 0; i < docs.length; i++) {
+      if (covered.contains(i)) {
+        continue;
+      }
+
+      covered.add(i);
+      int mostRecent = i;
+      for (int j = i+1; j < docs.length; j++) {
+        if (docs[j].data()["id"] == docs[mostRecent].data()["id"]) {
+          covered.add(j);
+          if (docs[j].data()["timestamp"] > docs[mostRecent].data()["timestamp"]) {
+            mostRecent = j;
+          }
+        }
+      }
+
+      unique.add(docs[mostRecent].data());
+    }
+
+    List<DBIngredient> out = [];
+    for (Map<String, dynamic> data in unique) {
+      out.add(DBIngredient.fromDB(data));
+    }
+
+    return out;
+  }
+
   Future<RecipePreview> getTestRecipePreview() async {
     await init();
 
@@ -70,7 +163,7 @@ class DatabaseService {
       throw ("Document does not exist");
     }
 
-    return RecipePreview.fromDB(snapshot.data, imgURL);
+    return RecipePreview.fromDB(snapshot.data(), imgURL);
   }
 
   Future<List<RecipePreview>> getRecipePreviews() async {

@@ -18,11 +18,9 @@ class ParentController {
   static AuthController _authController;
   static DiscoverController _discoverController;
   static InventoryController _inventoryController;
+  static PreferencesController _preferencesController;
 
   static void set appUser(AppUser user) {
-    if (_appUser != null) {
-      throw("User already present");
-    }
     _appUser = user;
   }
 
@@ -49,5 +47,12 @@ class ParentController {
       _inventoryController = InventoryController();
     }
     return _inventoryController;
+  }
+
+  static PreferencesController get preferences {
+    if (_preferencesController == null) {
+      _preferencesController = PreferencesController();
+    }
+    return _preferencesController;
   }
 }
