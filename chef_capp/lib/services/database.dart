@@ -19,6 +19,12 @@ import 'package:chef_capp/index.dart';
 
 // NEED TO USE LOCAL STORE / LOCAL CACHE
 
+
+// FOR NEXT SPRINT / COOLDOWN:
+// get recipes loading on the home screen
+// - don't worry about collections, history, and favourites (hide them)
+// - list of all recipes, should lazy-load
+
 class DatabaseService {
   SharedPreferences _localStore;
   Preferences _userPreferences;

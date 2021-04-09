@@ -16,6 +16,7 @@ class RecipeHomePage extends StatelessWidget {
             selector: (_, model) => model.custom,
             builder: (context, data, _) {
               return VerticalListBuilder(<Widget>[
+                /*
                 Selector<DiscoverController, List<RecipeCollectionData>>(
                     selector: (_, model) => model.collections,
                     builder: (context, data, _) {
@@ -56,7 +57,7 @@ class RecipeHomePage extends StatelessWidget {
                         widgetList: data.map((rd) => rd.toMiniCard(context)).toList(),
                       );
                     }
-                ),
+                ),*/
                 ...(data.map((rd) => rd.toFullCard(context)).toList())
               ]);
             }
