@@ -46,6 +46,11 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Dietary Restrictions"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => OnboardingAllergies()
+              ));
+            },
           ),
           ListTile(
             title: Text("Unit Preferences"),
