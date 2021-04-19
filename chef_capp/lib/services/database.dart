@@ -124,13 +124,56 @@ class DatabaseService {
     return true;
   }
 
+  Future<DBIngredient> getDBIngredient(ID id) async {
+    await init();
+
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient').where("id", isEqualTo: id.hash).get();
+    List<QueryDocumentSnapshot> docs = snapshot.docs;
+
+    if (docs.length == 0) {
+      return null;
+    }
+
+    List<Map<String, dynamic>> unique = [];
+    List<int> covered = [];
+    for (int i = 0; i < docs.length; i++) {
+      if (covered.contains(i)) {
+        continue;
+      }
+
+      covered.add(i);
+      int mostRecent = i;
+      for (int j = i+1; j < docs.length; j++) {
+        if (docs[j].data()["id"] == docs[mostRecent].data()["id"]) {
+          covered.add(j);
+          if (docs[j].data()["timestamp"] > docs[mostRecent].data()["timestamp"]) {
+            mostRecent = j;
+          }
+        }
+      }
+
+      unique.add(docs[mostRecent].data());
+    }
+
+    List<DBIngredient> out = [];
+    for (Map<String, dynamic> data in unique) {
+      out.add(DBIngredient.fromDB(data));
+    }
+
+    if (out.length == 0) {
+      return null;
+    } else {
+      return out[0];
+    }
+  }
+
   Future<List<DBIngredient>> getIngredients() async {
     await init();
 
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient').get();
     List<QueryDocumentSnapshot> docs = snapshot.docs;
 
-    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<Map<String, dynamic>> unique = [];
     List<int> covered = [];
     for (int i = 0; i < docs.length; i++) {
       if (covered.contains(i)) {
