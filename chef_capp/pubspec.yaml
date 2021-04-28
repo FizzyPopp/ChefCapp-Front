@@ -65,6 +65,12 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: CCIcons
+      fonts:
+        - asset:  fonts/CCIcons.ttf
+
+
   assets:
     - assets/images/
     - assets/images/onboarding/
