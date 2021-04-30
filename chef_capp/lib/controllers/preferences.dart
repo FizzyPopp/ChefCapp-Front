@@ -148,7 +148,6 @@ class PreferencesController with ChangeNotifier {
   }
 
   Future<void> done(BuildContext context) async {
-    RegisterState registerState = ParentService.auth.getRegisterState();
     LoginState loginState = ParentService.auth.getLoginState();
 
     if (loginState == LoginState.LoggedIn) {

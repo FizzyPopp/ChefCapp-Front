@@ -2,10 +2,6 @@ import 'package:chef_capp/index.dart';
 import 'package:provider/provider.dart';
 
 class RecipeHomePage extends StatelessWidget {
-  RecipeHomePage() {
-    ParentController.discover.genDummyLists();
-  }
-
   @override
   Widget build(BuildContext context) {
     return

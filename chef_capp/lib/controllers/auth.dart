@@ -108,31 +108,33 @@ class AuthController with ChangeNotifier {
   }
 
   Future<void> handleForgotPassword(BuildContext context, String email) {
-    ParentService.auth.sendPasswordResetEmail(email).then((success) async {
+    return ParentService.auth.sendPasswordResetEmail(email).then((success) async {
       if (success) {
         _resetEmailSent = ResetEmailStatus.sent;
       } else {
         _resetEmailSent = ResetEmailStatus.failed;
       }
       notifyListeners();
+      return;
     });
   }
 
   Future<void> handleAnonBrowse(BuildContext context) {
-    ParentService.auth.loginAnon().then((success) async {
+    return ParentService.auth.loginAnon().then((success) async {
       if (success) {
         Navigator.pushNamed(context, '/home');
       } else {
         print("cannot browse");
       }
       notifyListeners();
+      return;
     });
   }
 
   Future<void> handleLogin(BuildContext context, String email, String password) {
     _loggingIn = true;
     notifyListeners();
-    ParentService.auth.loginEmailPassword(email, password).then((success) async {
+    return ParentService.auth.loginEmailPassword(email, password).then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
             '/home', (Route<dynamic> route) => false);
@@ -141,6 +143,7 @@ class AuthController with ChangeNotifier {
       }
       _loggingIn = false;
       notifyListeners();
+      return;
     });
   }
 
@@ -148,7 +151,7 @@ class AuthController with ChangeNotifier {
     // what do we do with the name?
     _signingUp = true;
     notifyListeners();
-    ParentService.auth.register(email, password).then((success) async {
+    return ParentService.auth.register(email, password).then((success) async {
       if (success) {
         ParentService.database.saveUserPreferences(ParentController.preferences.model);
         Navigator.pushNamedAndRemoveUntil(context,
@@ -160,11 +163,12 @@ class AuthController with ChangeNotifier {
       }
       _signingUp = false;
       notifyListeners();
+      return;
     });
   }
 
   Future<void> handleLogout(BuildContext context) {
-    ParentService.auth.logout().then((success) async {
+    return ParentService.auth.logout().then((success) async {
       if (success) {
         Navigator.pushNamedAndRemoveUntil(context,
             '/', (Route<dynamic> route) => false);
@@ -172,6 +176,7 @@ class AuthController with ChangeNotifier {
         print("cannot logout");
       }
       notifyListeners();
+      return;
     });
   }
 }
