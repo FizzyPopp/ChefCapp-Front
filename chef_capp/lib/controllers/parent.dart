@@ -21,9 +21,6 @@ class ParentController {
   static PreferencesController _preferencesController;
 
   static void set appUser(AppUser user) {
-    if (_appUser != null) {
-      throw("User already present");
-    }
     _appUser = user;
   }
 

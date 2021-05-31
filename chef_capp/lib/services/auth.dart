@@ -12,6 +12,8 @@ class AuthService {
    _loginState = LoginState.NotLoggedIn;
   }
 
+  User get user => _user;
+
   Future<bool> init() async {
     bool appStarted = await ParentService.init();
     if (!appStarted) {
@@ -51,6 +53,7 @@ class AuthService {
       } else {
         _user = creds.user;
         _loginState = LoginState.Anonymous;
+        ParentService.database.getUserPreferences();
         return true;
       }
     } else {
@@ -78,6 +81,7 @@ class AuthService {
       } else {
         _user = creds.user;
         _loginState = LoginState.LoggedIn;
+        ParentService.database.getUserPreferences();
         return true;
       }
     } else {
@@ -107,6 +111,8 @@ class AuthService {
       } else {
         _user = creds.user;
         _registerState = RegisterState.Registered;
+        _loginState = LoginState.LoggedIn;
+        ParentService.database.getUserPreferences();
         return true;
       }
     } else {
@@ -130,6 +136,7 @@ class AuthService {
   Future<bool> logout() async {
     try {
       await _auth.signOut();
+      ParentService.database.clearUserPreferences();
       return true;
     } catch (e) {
       return false;

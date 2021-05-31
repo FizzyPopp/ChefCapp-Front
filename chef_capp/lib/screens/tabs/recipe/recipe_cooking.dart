@@ -253,8 +253,7 @@ class CookingStep extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           padding: EdgeInsets.symmetric(horizontal: xMargins * 2),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/endTest');
-            //Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       );

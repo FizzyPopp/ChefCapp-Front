@@ -24,7 +24,7 @@ class Onboarding extends StatelessWidget {
                     ),
                     child: AutoSizeText(
                       "Welcome to Chef Capp",
-                      style: CCText.mobileDisplayLarge,
+                      style: CCText.mobileDisplayLargeBold,
                       maxLines: 2,
                     ),
                   ),

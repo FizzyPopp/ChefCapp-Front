@@ -1,7 +1,7 @@
 export 'package:flutter/material.dart';
 export 'package:json_annotation/json_annotation.dart';
 export 'package:tuple/tuple.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+export 'package:flutter_spinkit/flutter_spinkit.dart';
 
 export 'dart:convert';
 
@@ -28,14 +28,14 @@ export 'package:chef_capp/models/dummy.dart';
 export 'package:chef_capp/models/interfaces/recipe_interface.dart';
 export 'package:chef_capp/models/interfaces/equals_interface.dart';
 export 'package:chef_capp/models/interfaces/ingredient_interface.dart';
+export 'package:chef_capp/models/db_ingredient.dart';
 
 export 'package:chef_capp/screens/app.dart';
-
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/onboarding.dart';
+export 'package:chef_capp/screens/authentication/onboarding_dietary_restrictions.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
 export 'package:chef_capp/screens/drawer/drawer_notifications.dart';
-
 export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
 export 'package:chef_capp/screens/tabs/discover_homepage.dart';
 export 'package:chef_capp/screens/tabs/kitchen_homepage.dart';
@@ -59,11 +59,13 @@ export 'package:chef_capp/controllers/models/recipe_data.dart';
 export 'package:chef_capp/controllers/models/recipe_collection_data.dart';
 export 'package:chef_capp/controllers/models/ingredients_wrangler.dart';
 
-export 'package:chef_capp/services/parent.dart';
-export 'package:chef_capp/services/database.dart';
 export 'package:chef_capp/services/auth.dart';
+export 'package:chef_capp/services/database.dart';
+export 'package:chef_capp/services/jagers.dart';
+export 'package:chef_capp/services/parent.dart';
 
 export 'package:chef_capp/styles/colors.dart';
+export 'package:chef_capp/styles/icons.dart';
 export 'package:chef_capp/styles/text.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';
@@ -74,6 +76,7 @@ export 'package:chef_capp/utilities/spacing.dart';
 export 'package:chef_capp/widgets/appbars.dart';
 export 'package:chef_capp/widgets/buttons.dart';
 export 'package:chef_capp/widgets/cards.dart';
+export 'package:chef_capp/widgets/chips.dart';
 export 'package:chef_capp/widgets/drawers.dart';
 export 'package:chef_capp/widgets/list_builders.dart';
 export 'package:chef_capp/widgets/list_rows.dart';

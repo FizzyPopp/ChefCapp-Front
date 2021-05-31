@@ -15,12 +15,12 @@ class ParentService {
       _fireState = FireState.Initializing;
       await Firebase.initializeApp();
       _fireState = FireState.Initialized;
-      return true;
-    } else if (_fireState == FireState.Initialized) {
-      return true;
     } else {
-      return false;
+      while (_fireState != FireState.Initialized) {
+        await Future.delayed(Duration(milliseconds: 10));
+      }
     }
+    return true;
   }
 
   static DatabaseService get database {

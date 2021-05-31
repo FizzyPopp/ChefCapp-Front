@@ -150,6 +150,7 @@ class AuthController with ChangeNotifier {
     notifyListeners();
     ParentService.auth.register(email, password).then((success) async {
       if (success) {
+        ParentService.database.saveUserPreferences(ParentController.preferences.model);
         Navigator.pushNamedAndRemoveUntil(context,
             '/home', (Route<dynamic> route) => false);
       } else {

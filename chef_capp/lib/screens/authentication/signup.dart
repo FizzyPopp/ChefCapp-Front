@@ -49,7 +49,7 @@ class SignUp extends StatelessWidget {
                 ),
                 child: AutoSizeText(
                   "Sign up to start cooking",
-                  style: CCText.mobileDisplayLarge,
+                  style: CCText.mobileDisplayLargeBold,
                   maxLines: 2,
                 ),
               ),

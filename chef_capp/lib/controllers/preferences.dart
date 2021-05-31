@@ -5,11 +5,40 @@ import 'package:chef_capp/index.dart';
 class PreferencesController with ChangeNotifier {
   Preferences _p;
 
+  List<String> _allAllergenCategories;
+  List<String> _allDietaryCategories;
+  List<DBIngredient> _allIngredients;
+  List<DBIngredient> _filteredIngredients;
+
   PreferencesController() {
     // this is just for testing. Should actually get it from DatabaseService
     // DatabaseService will return a Preferences.localized() if it can't find any existing
+    // should have a "refresh" function which queries db again ?
     this._p = Preferences.localized();
-    // should have a "refresh" function which queries db again
+
+    _allAllergenCategories = [];
+    _allDietaryCategories = [];
+    _allIngredients = [];
+    _filteredIngredients = [];
+
+    populateAllergenCategories();
+    populateIngredients();
+  }
+
+  Future<void> populateIngredients() async {
+    _allIngredients = await ParentService.database.getIngredients();
+    this.notifyListeners();
+  }
+
+  Future<void> populateAllergenCategories() async {
+    _allAllergenCategories = await ParentService.database.getAllergenCategories();
+    populateDietaryCategories();
+    this.notifyListeners();
+  }
+
+  Future<void> populateDietaryCategories() async {
+    _allDietaryCategories = _allAllergenCategories;
+    this.notifyListeners();
   }
 
   Preferences get preferences => this._p.copy();
@@ -17,8 +46,34 @@ class PreferencesController with ChangeNotifier {
   bool get metricVolume => this._p.metricVolume;
   bool get metricWeight => this._p.metricWeight;
   bool get metricTemperature => this._p.metricTemperature;
-  List<String> get allergies => [...this._p.allergies];
-  List<String> get dietaryRestrictions => [...this._p.dietaryRestrictions];
+
+  List<DBIngredient> get allIngredients => [ ...this._allIngredients ];
+
+  List<DBIngredient> get filteredIngredients => [ ...this._filteredIngredients ];
+
+  List<Map> get allergenCategories {
+    var out = this._allAllergenCategories.map((s) => { "name": s, "selected": false }).toList();
+    for (final a in out) {
+      if (this._p.allergyCategories.contains(a["name"])) {
+        a["selected"] = true;
+      }
+    }
+    return out;
+  }
+
+  List<ID> get allergenIngredients => [ ...this._p.allergyIngredients ];
+
+  List<Map> get dietaryCategories {
+    var out = this._allDietaryCategories.where((s) => !this._p.allergyCategories.contains(s)).map((s) => { "name": s, "selected": false }).toList();
+    for (final a in out) {
+      if (this._p.dietaryCategories.contains(a["name"])) {
+        a["selected"] = true;
+      }
+    }
+    return out;
+  }
+
+  List<ID> get dietaryIngredients => [ ...this._p.dietaryIngredients ];
 
   set metricVolume(bool v) {
     this._p.metricVolume = v;
@@ -35,13 +90,59 @@ class PreferencesController with ChangeNotifier {
     this.notifyListeners();
   }
 
-  set allergies(List<String> a) {
-    this._p.allergies = [...a];
-    this.notifyListeners();
+  void updateAllergenCategory(String name, bool selected) {
+    if (selected) {
+      if (!this._p.allergyCategories.contains(name)) {
+        this._p.allergyCategories.add(name);
+      }
+    } else {
+      this._p.allergyCategories = this._p.allergyCategories.where((a) => a != name).toList();
+    }
+    notifyListeners();
   }
 
-  set dietaryRestrictions(List<String> dr) {
-    this._p.dietaryRestrictions = [...dr];
-    this.notifyListeners();
+  void updateAllergenIngredient(ID id, bool selected) {
+    if (selected) {
+      if (!this._p.allergyIngredients.contains(id)) {
+        this._p.allergyIngredients.add(id);
+      }
+    } else {
+      this._p.allergyIngredients = this._p.allergyIngredients.where((a) => a != id).toList();
+    }
+    notifyListeners();
   }
+
+  void updateDietaryCategory(String name, bool selected) {
+    if (selected) {
+      if (!this._p.dietaryCategories.contains(name)) {
+        this._p.dietaryCategories.add(name);
+      }
+    } else {
+      this._p.dietaryCategories = this._p.dietaryCategories.where((a) => a != name).toList();
+    }
+    notifyListeners();
+  }
+
+  void updateDietaryIngredient(ID id, bool selected) {
+    if (selected) {
+      if (!this._p.dietaryIngredients.contains(id)) {
+        this._p.dietaryIngredients.add(id);
+      }
+    } else {
+      this._p.dietaryIngredients = this._p.dietaryIngredients.where((a) => a != id).toList();
+    }
+    notifyListeners();
+  }
+
+  void filterIngredients(String query) {
+    query = query.trim().toLowerCase();
+    if (query == "") {
+      _filteredIngredients = [];
+    } else {
+      _filteredIngredients = _allIngredients.where((ingr) => ingr.name.contains(query)).toList();
+    }
+    notifyListeners();
+  }
+
+  Preferences get model => Preferences.fromJson(_p.toJson());
 }
