@@ -71,7 +71,8 @@ class RecipeHeader extends StatelessWidget with PreferredSizeWidget {
         Container(
           decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,
-              borderRadius: BorderRadius.circular(20)),
+              //borderRadius: BorderRadius.circular(20)
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

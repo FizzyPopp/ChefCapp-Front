@@ -1,7 +1,7 @@
 export 'package:flutter/material.dart';
 export 'package:json_annotation/json_annotation.dart';
 export 'package:tuple/tuple.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+export 'package:flutter_spinkit/flutter_spinkit.dart';
 
 export 'dart:convert';
 
@@ -59,11 +59,13 @@ export 'package:chef_capp/controllers/models/recipe_data.dart';
 export 'package:chef_capp/controllers/models/recipe_collection_data.dart';
 export 'package:chef_capp/controllers/models/ingredients_wrangler.dart';
 
-export 'package:chef_capp/services/parent.dart';
-export 'package:chef_capp/services/database.dart';
 export 'package:chef_capp/services/auth.dart';
+export 'package:chef_capp/services/database.dart';
+export 'package:chef_capp/services/jagers.dart';
+export 'package:chef_capp/services/parent.dart';
 
 export 'package:chef_capp/styles/colors.dart';
+export 'package:chef_capp/styles/icons.dart';
 export 'package:chef_capp/styles/text.dart';
 
 export 'package:chef_capp/utilities/dummies.dart';

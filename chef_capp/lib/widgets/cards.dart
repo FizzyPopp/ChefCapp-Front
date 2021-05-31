@@ -145,7 +145,6 @@ class FullRecipeCard extends StatelessWidget {
                         children: <Widget>[
                           Wrap(
                             direction: Axis.horizontal,
-                            alignment: WrapAlignment.spaceBetween,
                             runSpacing: gutters / 2,
                             children: <Widget>[
                               Row(
@@ -163,6 +162,9 @@ class FullRecipeCard extends StatelessWidget {
                                     style: _cardCaptionStyle(context),
                                   ),
                                 ],
+                              ),
+                              SizedBox(
+                                width: 16.0,
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.min,

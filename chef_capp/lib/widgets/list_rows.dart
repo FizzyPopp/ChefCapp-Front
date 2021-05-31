@@ -1,4 +1,6 @@
 import 'package:chef_capp/index.dart';
+import 'package:chef_capp/styles/icons.dart';
+import 'package:flutter/cupertino.dart';
 
 class ButtonRow extends StatelessWidget {
   final String headingText;
@@ -50,6 +52,53 @@ class IngredientRow extends StatelessWidget {
   final bool available;
 
   IngredientRow({
+    @required this.quantity,
+    @required this.ingredient,
+    @required this.available,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: xMargins,
+          vertical: gutters / 2,
+        ),
+        child: Row(
+          children: <Widget>[
+            Jagers.ingredientIcon(),
+            SizedBox(width: gutters,),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  
+                ),
+              ),
+            ),
+            SizedBox(width: gutters,),
+            Icon(
+              Icons.chevron_right,
+              size: 24,
+              color: CCColors.greyscale40,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class OldIngredientRow extends StatelessWidget {
+  final String quantity;
+  final String ingredient;
+  final bool available;
+
+  OldIngredientRow({
     @required this.quantity,
     @required this.ingredient,
     @required this.available,
