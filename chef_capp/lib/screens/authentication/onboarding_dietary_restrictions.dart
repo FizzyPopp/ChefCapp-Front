@@ -134,25 +134,24 @@ class OnboardingDietaryRestrictions extends StatelessWidget {
                       horizontal: 32.0,
                       vertical: 16.0,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        GradientButton(
-                          child: Text(
-                            "NEXT",
-                            style: CCText.darkButton,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUp()
+                    child: Consumer<PreferencesController>(
+                      builder: (context, data, _) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            GradientButton(
+                              child: Text(
+                                "NEXT",
+                                style: CCText.darkButton,
                               ),
-                            );
-                          },
-                          gradient: CCColors.primaryGradient,
-                        ),
-                      ],
+                              onPressed: () {
+                                data.done(context);
+                              },
+                              gradient: CCColors.primaryGradient,
+                            ),
+                          ],
+                        );
+                      }
                     ),
                   ),
                 ],

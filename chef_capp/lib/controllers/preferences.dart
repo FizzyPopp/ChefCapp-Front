@@ -11,10 +11,8 @@ class PreferencesController with ChangeNotifier {
   List<DBIngredient> _filteredIngredients;
 
   PreferencesController() {
-    // this is just for testing. Should actually get it from DatabaseService
-    // DatabaseService will return a Preferences.localized() if it can't find any existing
-    // should have a "refresh" function which queries db again ?
     this._p = Preferences.localized();
+    getModel();
 
     _allAllergenCategories = [];
     _allDietaryCategories = [];
@@ -23,6 +21,11 @@ class PreferencesController with ChangeNotifier {
 
     populateAllergenCategories();
     populateIngredients();
+  }
+
+  Future<void> getModel() async {
+    this._p = await ParentService.database.getUserPreferences();
+    notifyListeners();
   }
 
   Future<void> populateIngredients() async {
@@ -142,6 +145,26 @@ class PreferencesController with ChangeNotifier {
       _filteredIngredients = _allIngredients.where((ingr) => ingr.name.contains(query)).toList();
     }
     notifyListeners();
+  }
+
+  Future<void> done(BuildContext context) async {
+    RegisterState registerState = ParentService.auth.getRegisterState();
+    LoginState loginState = ParentService.auth.getLoginState();
+
+    if (loginState == LoginState.LoggedIn) {
+      int count = 0;
+      Navigator.popUntil(context, (route) {
+        return count++ == 2;
+      });
+      ParentService.database.saveUserPreferences(ParentController.preferences.model);
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SignUp()
+        ),
+      );
+    }
   }
 
   Preferences get model => Preferences.fromJson(_p.toJson());

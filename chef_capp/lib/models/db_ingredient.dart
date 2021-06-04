@@ -3,6 +3,7 @@ import 'package:chef_capp/index.dart';
 
 @JsonSerializable(explicitToJson: true)
 // need to include a category?? (see kitchen_homepage.dart)
+// YES, and maybe other info
 class DBIngredient {
   // will need a heck of a lot more fields and maybe more classes to fully describe an ingredient
   final ID _id;

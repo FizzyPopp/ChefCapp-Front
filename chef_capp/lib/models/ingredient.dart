@@ -12,6 +12,7 @@ class Ingredient implements IngredientInterface {
   final String _unit;
   final String _category;
   final List<double> _range;
+  DBIngredient _dbIngredient;
 
   Ingredient(ID id, String name, String plural, double quantity, String unit, String category) :
         this._id = id,
@@ -20,7 +21,10 @@ class Ingredient implements IngredientInterface {
         this._quantity = quantity,
         this._unit = unit,
         this._category = category,
-        this._range = [quantity, quantity];
+        this._range = [quantity, quantity],
+        this._dbIngredient = null {
+    getDBIngredient();
+  }
 
   Ingredient.fromRange(IngredientRange ir) :
         this._id = ir.id,
@@ -29,7 +33,10 @@ class Ingredient implements IngredientInterface {
         this._quantity = ir.quantity,
         this._unit = ir.unit,
         this._category = ir.category,
-        this._range = [ir.quantity, ir.quantity];
+        this._range = [ir.quantity, ir.quantity],
+        this._dbIngredient = null {
+    getDBIngredient();
+  }
 
   ID get id => _id;
 
@@ -48,6 +55,10 @@ class Ingredient implements IngredientInterface {
   factory Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
 
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
+
+  Future<void> getDBIngredient() async {
+    this._dbIngredient = await ParentService.database.getDBIngredient(this._id);
+  }
 
   bool equals(Ingredient other) {
     return this.id.equals(other.id);

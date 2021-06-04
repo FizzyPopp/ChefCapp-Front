@@ -34,6 +34,8 @@ export 'package:chef_capp/screens/app.dart';
 export 'package:chef_capp/screens/authentication/login.dart';
 export 'package:chef_capp/screens/authentication/onboarding.dart';
 export 'package:chef_capp/screens/authentication/onboarding_dietary_restrictions.dart';
+export 'package:chef_capp/screens/authentication/onboarding_allergies.dart';
+export 'package:chef_capp/screens/authentication/onboarding_units.dart';
 export 'package:chef_capp/screens/authentication/signup.dart';
 export 'package:chef_capp/screens/drawer/drawer_notifications.dart';
 export 'package:chef_capp/screens/drawer/drawer_preferences.dart';
