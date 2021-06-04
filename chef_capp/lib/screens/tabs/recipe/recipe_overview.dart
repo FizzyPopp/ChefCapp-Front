@@ -153,8 +153,7 @@ class IngredientsOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var r = ingredients
-        .map((i) => IngredientRow(
-            quantity: i.amount, ingredient: i.name, available: true))
+        .map((i) => IngredientRow(i))
         .toList();
     return VerticalListBuilder([...r, SizedBox(height: 60.0)]);
   }

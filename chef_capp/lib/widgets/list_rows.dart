@@ -47,15 +47,16 @@ class ButtonRow extends StatelessWidget {
 }
 
 class IngredientRow extends StatelessWidget {
-  final String quantity;
-  final String ingredient;
-  final bool available;
+  final Ingredient ingredient;
+  String _quantity;
+  String _name;
+  bool _available;
 
-  IngredientRow({
-    @required this.quantity,
-    @required this.ingredient,
-    @required this.available,
-  });
+  IngredientRow(@required this.ingredient) {
+    this._quantity = ingredient.amount;
+    this._name = ingredient.name;
+    this._available = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class IngredientRow extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            Jagers.ingredientIcon(),
+            Jagers.ingredientIcon(this.ingredient),
             SizedBox(width: gutters,),
             Expanded(
               child: RichText(
