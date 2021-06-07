@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:chef_capp/styles/icons.dart';
 import 'package:provider/provider.dart';
 
 class RecipeOverview extends StatelessWidget {
@@ -152,6 +153,18 @@ class IngredientsOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prefs = ParentController.preferences.model;
+
+    /*
+    print(prefs.toJson());
+    for (final i in ingredients) {
+      print(i.toJson());
+    }
+    */
+
+    var allergyIngredients = prefs.allergyIngredients.map((i) => i.hash);
+    var dietaryIngredients = prefs.dietaryIngredients.map((i) => i.hash);
+
     var r = ingredients
         .map((i) => IngredientRow(i))
         .toList();

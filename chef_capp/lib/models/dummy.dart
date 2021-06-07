@@ -103,8 +103,8 @@ class Dummy {
     ID iid = id();
     return Ingredient(
         iid,
-        "${_ingredients[i]} [id: ${iid}]",
-        "${_ingredients[i]} plural [id: ${iid}]",
+        "${_ingredients[i]} [id: $iid]",
+        "${_ingredients[i]} plural [id: $iid]",
         (100 * rnd.nextDouble()),
         "g",
         (rnd.nextDouble() > .5) ? "A Category" : "B Category",
@@ -138,7 +138,6 @@ class Dummy {
   }
 
   static AppUser user(int seed) {
-    Random rnd = Random(seed);
     return AppUser(
         id(),
         "loblaw@lawblog.com"

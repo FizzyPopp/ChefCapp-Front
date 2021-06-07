@@ -1,7 +1,5 @@
 import 'package:chef_capp/index.dart';
 
-import 'dart:math';
-
 class ConfettiSample extends StatelessWidget {
   const ConfettiSample({Key key}) : super(key: key);
 

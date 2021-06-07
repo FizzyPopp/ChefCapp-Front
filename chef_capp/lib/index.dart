@@ -70,7 +70,6 @@ export 'package:chef_capp/styles/colors.dart';
 export 'package:chef_capp/styles/icons.dart';
 export 'package:chef_capp/styles/text.dart';
 
-export 'package:chef_capp/utilities/dummies.dart';
 export 'package:chef_capp/utilities/media_queries.dart';
 export 'package:chef_capp/utilities/sizing.dart';
 export 'package:chef_capp/utilities/spacing.dart';

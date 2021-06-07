@@ -221,7 +221,7 @@ class DatabaseService {
     QuerySnapshot qs = await FirebaseFirestore.instance.collection('recipe').get();
     String imgURL = await getImageURL('img/recipes/f680874b-cb0b-4b25-ba74-a8ed3982420.jpg');
 
-    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<Map<String, dynamic>> unique = <Map<String, dynamic>>[];
     List<int> covered = [];
     for (int i = 0; i < qs.docs.length; i++) {
       if (covered.contains(i)) {
@@ -257,7 +257,7 @@ class DatabaseService {
     QuerySnapshot qs = await FirebaseFirestore.instance.collection('step').where('id', whereIn: rp.stepIDs).get();
 
     // find the most recent version of each step and save it to "unique"
-    List<Map<String, dynamic>> unique = List<Map<String, dynamic>>();
+    List<Map<String, dynamic>> unique = <Map<String, dynamic>>[];
     List<int> covered = [];
     for (int i = 0; i < qs.docs.length; i++) {
       if (covered.contains(i)) {

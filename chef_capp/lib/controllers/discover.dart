@@ -1,5 +1,4 @@
 import 'package:chef_capp/index.dart';
-import 'dart:math';
 
 /// Responsible for the Discover homepage, as well as generic lists of recipes (collections, history, favorites)
 class DiscoverController with ChangeNotifier {
@@ -13,10 +12,10 @@ class DiscoverController with ChangeNotifier {
   int _heroStart; // used to give each recipe card a unique hero id
 
   DiscoverController() {
-    collections = List<RecipeCollectionData>();
-    recent = List<RecipeData>();
-    favorite = List<RecipeData>();
-    custom = List<RecipeData>();
+    collections = <RecipeCollectionData>[];
+    recent = <RecipeData>[];
+    favorite = <RecipeData>[];
+    custom = <RecipeData>[];
     _heroStart = 0;
 
     testActualRecipes();
@@ -41,40 +40,6 @@ class DiscoverController with ChangeNotifier {
     notifyListeners();
   }
 
-  void genDummyLists() {
-    Random rnd = Random(ParentController.SEED);
-
-    if (collections.length == 0) {
-      int lim = rnd.nextInt(5) + 1;
-      for (int i = 0; i < lim; i++) {
-        collections.add(RecipeCollectionData(Dummy.recipeCollection(rnd.nextInt(1000)), _genHeroID(), _genHeroID, _updateGeneric));
-      }
-    }
-
-    if (recent.length == 0) {
-      int lim = rnd.nextInt(5) + 3;
-      for (int i = 0; i < lim; i++) {
-        recent.add(RecipeData(Dummy.recipe(rnd.nextInt(1000)), _genHeroID()));
-      }
-    }
-
-    if (favorite.length == 0) {
-      int lim = rnd.nextInt(5) + 3;
-      for (int i = 0; i < lim; i++) {
-        favorite.add(RecipeData(Dummy.recipe(rnd.nextInt(1000)), _genHeroID()));
-      }
-    }
-
-    /*
-    if (custom.length == 0) {
-      int lim = rnd.nextInt(5) + 3;
-      for (int i = 0; i < lim; i++) {
-        custom.add(RecipeData(Dummy.recipe(rnd.nextInt(1000)), _genHeroID()));
-      }
-    }
-     */
-  }
-
   void discoverHistory(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
       builder: (BuildContext context) =>
@@ -95,10 +60,5 @@ class DiscoverController with ChangeNotifier {
             ),
         settings: RouteSettings(name: context.widget.runtimeType.toString()),
     ));
-  }
-
-  void _updateGeneric(List<RecipeData> c) {
-    generic = List.from(c);
-    notifyListeners();
   }
 }

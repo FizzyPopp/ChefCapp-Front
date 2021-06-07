@@ -14,7 +14,7 @@ class Jagers {
     "wheat": Icon(CCIcons.allergyWheat),
   };
 
-  static Icon ingredientIcon(Ingredient ingredient) {
+  static Widget ingredientIcon(Ingredient ingredient) {
     Widget out = SizedBox(height: 0, width: 0,);
     var allergenList = ParentController.preferences.allergenCategories;
 

@@ -14,19 +14,11 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 class ParentController {
   static final FirebaseAnalytics analytics = FirebaseAnalytics();
   static const int SEED = 2;
-  static AppUser _appUser;
+  static AppUser appUser;
   static AuthController _authController;
   static DiscoverController _discoverController;
   static InventoryController _inventoryController;
   static PreferencesController _preferencesController;
-
-  static void set appUser(AppUser user) {
-    _appUser = user;
-  }
-
-  static AppUser get appUser {
-    return _appUser;
-  }
 
   static AuthController get auth {
     if (_authController == null) {

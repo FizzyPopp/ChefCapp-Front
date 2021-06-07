@@ -19,7 +19,7 @@ class IngredientsWrangler {
     Map<String, List<IngredientInterface>> out = Map<String, List<IngredientInterface>>();
     base.forEach((ingr) {
       if (!out.containsKey(ingr.category)) {
-        out[ingr.category] = List<IngredientInterface>();
+        out[ingr.category] = <IngredientInterface>[];
       }
       out[ingr.category].add(ingr);
     });

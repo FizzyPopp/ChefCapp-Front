@@ -1,6 +1,5 @@
 import 'package:chef_capp/index.dart';
 import 'package:chef_capp/screens/authentication/forgot_password.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {

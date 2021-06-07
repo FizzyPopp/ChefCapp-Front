@@ -2,7 +2,6 @@ import 'package:chef_capp/index.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingDietaryRestrictions extends StatelessWidget {
-  bool _chipSelectedDemo = false;
 
   @override
   Widget build(BuildContext context) {

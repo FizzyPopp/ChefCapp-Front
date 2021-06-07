@@ -16,7 +16,7 @@ class InventoryController with ChangeNotifier {
   List<IngredientInterface> genDummyList() {
     int lim = 20;
     Random rnd = Random(ParentController.SEED);
-    List<IngredientInterface> out = List<IngredientInterface>();
+    List<IngredientInterface> out = [];
     for (int i = 0; i < lim; i++) {
       if (rnd.nextDouble() > .6) {
         out.add(Dummy.ingredient(rnd.nextInt(1000)));
