@@ -56,6 +56,8 @@ class IngredientRow extends StatelessWidget {
     this._quantity = ingredient.amount;
     this._name = ingredient.name;
     this._available = true;
+    var allergens = ParentController.preferences.allergenCategories;
+    allergens.contains(ingredient);
   }
 
   @override

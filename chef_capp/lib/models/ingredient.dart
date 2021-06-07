@@ -12,6 +12,7 @@ class Ingredient implements IngredientInterface {
   final String _unit;
   final String _category;
   final List<double> _range;
+  final List<String> _allergens = [];
   DBIngredient _dbIngredient;
 
   Ingredient(ID id, String name, String plural, double quantity, String unit, String category) :
@@ -51,6 +52,8 @@ class Ingredient implements IngredientInterface {
   String get category => _category;
 
   List<double> get range => [..._range];
+
+  List<String> get allergens => [..._allergens];
 
   factory Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
 
