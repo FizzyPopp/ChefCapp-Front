@@ -9,17 +9,25 @@ class DBIngredient {
   final ID _id;
   final String _name;
   final int _timestamp;
+  final String _category;
+  final String _allergen;
 
-  DBIngredient(ID id, String name, int timestamp) :
+  DBIngredient(ID id, String name, int timestamp, String category, String allergen) :
         this._id = id,
         this._name = name,
-        this._timestamp = timestamp;
+        this._timestamp = timestamp,
+        this._category = category,
+        this._allergen = allergen;
 
   ID get id => _id;
 
   String get name => _name;
 
   int get timestamp => _timestamp;
+
+  String get category => _category;
+
+  String get allergen => _allergen;
 
   //factory DBIngredient.fromJson(Map<String, dynamic> json) => _$DBIngredientFromJson(json);
 
@@ -42,11 +50,15 @@ class DBIngredient {
     if (data["timestamp"] == null) {
       throw ("bad timestamp");
     }
+    if (data["category"] == null) {
+      throw("bad category");
+    }
+    // data["allergen"] is optional, so null is valid
 
     // parse
     String name = data["name"]["singular"].toLowerCase();
 
     // return
-    return DBIngredient(ID(data["id"]), name, data["timestamp"]);
+    return DBIngredient(ID(data["id"]), name, data["timestamp"], data["category"], data["allergen"]);
   }
 }

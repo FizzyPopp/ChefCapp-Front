@@ -1,4 +1,5 @@
 import 'package:chef_capp/index.dart';
+import 'package:chef_capp/styles/icons.dart';
 import 'package:provider/provider.dart';
 
 class RecipeOverview extends StatelessWidget {
@@ -151,9 +152,34 @@ class IngredientsOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prefs = ParentController.preferences.model;
+
+    /*
+    print(prefs.toJson());
+    for (final i in ingredients) {
+      print(i.toJson());
+    }
+    */
+
+    var allergyIngredients = prefs.allergyIngredients.map((i) => i.hash);
+    var dietaryIngredients = prefs.dietaryIngredients.map((i) => i.hash);
+
     var r = ingredients
-        .map((i) => IngredientRow(
-            quantity: i.amount, ingredient: i.name, available: true))
+        .map((i) {
+          var icon = Icons.check_circle;
+          var iconColor = Colors.green;
+          // go off of ingredient allergen, not ingredient category
+          if (allergyIngredients.contains(i.id.hash)) {
+            // is allergen
+            icon = CCIcons.peanuts;
+            iconColor = Colors.red;
+          } else if (dietaryIngredients.contains(i.id.hash)) {
+            // is dietarily restricted
+            icon = CCIcons.milk;
+            iconColor = Colors.orange;
+          }
+          return IngredientRow( quantity: i.amount, ingredient: i.name, available: true, icon: icon, iconColor: iconColor );
+        })
         .toList();
     return VerticalListBuilder([...r, SizedBox(height: 60.0)]);
   }

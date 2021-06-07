@@ -12,7 +12,7 @@ class PreferencesController with ChangeNotifier {
 
   PreferencesController() {
     this._p = Preferences.localized();
-    getModel();
+    _getModel();
 
     _allAllergenCategories = [];
     _allDietaryCategories = [];
@@ -23,7 +23,7 @@ class PreferencesController with ChangeNotifier {
     populateIngredients();
   }
 
-  Future<void> getModel() async {
+  Future<void> _getModel() async {
     this._p = await ParentService.database.getUserPreferences();
     notifyListeners();
   }

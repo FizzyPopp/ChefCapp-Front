@@ -48,7 +48,21 @@ class Ingredient implements IngredientInterface {
 
   String get unit => _unit;
 
-  String get category => _category;
+  String get category {
+    if (_dbIngredient != null) {
+      return _dbIngredient.category;
+    } else {
+      return this._category;
+    }
+  }
+
+  String get allergen {
+    if (_dbIngredient != null) {
+      return _dbIngredient.allergen;
+    } else {
+      return '';
+    }
+  }
 
   List<double> get range => [..._range];
 
@@ -168,7 +182,7 @@ class Ingredient implements IngredientInterface {
     // TODO: get category
 
     // return
-    return Ingredient(ID(data["id"]), name, plural, quantity, unit, "A Category");
+    return Ingredient(ID(data["id"]), name, plural, quantity, unit, "");
   }
 
   static List<Ingredient> listFromDB(data) {

@@ -2,6 +2,12 @@ import 'package:chef_capp/index.dart';
 import 'package:provider/provider.dart';
 
 class RecipeHomePage extends StatelessWidget {
+
+  RecipeHomePage() {
+    // warm up preferences
+    ParentController.preferences.model;
+  }
+
   @override
   Widget build(BuildContext context) {
     return

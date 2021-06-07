@@ -48,24 +48,42 @@ class IngredientRow extends StatelessWidget {
   final String quantity;
   final String ingredient;
   final bool available;
+  final IconData icon;
+  final Color iconColor;
 
   IngredientRow({
     @required this.quantity,
     @required this.ingredient,
     @required this.available,
+    this.icon,
+    this.iconColor,
   });
 
   Icon _icon() {
     if (available) {
-      return Icon(
-        Icons.check_circle,
-        color: Colors.green,
-      );
+      if (this.icon != null && this.iconColor != null) {
+        return Icon(
+          this.icon,
+          color: this.iconColor,
+        );
+      } else {
+        return Icon(
+          Icons.check_circle,
+          color: Colors.green,
+        );
+      }
     } else {
-      return Icon(
-        Icons.remove_circle,
-        color: Colors.red,
-      );
+      if (this.icon != null && this.iconColor != null) {
+        return Icon(
+          this.icon,
+          color: this.iconColor,
+        );
+      } else {
+        return Icon(
+          this.icon,
+          color: Colors.red,
+        );
+      }
     }
   }
 
