@@ -16,10 +16,11 @@ class Jagers {
 
   static Widget ingredientIcon(Ingredient ingredient) {
     Widget out = SizedBox(height: 0, width: 0,);
-    var allergenList = ParentController.preferences.allergenCategories;
+    //var allergenList = ParentController.preferences.allergenCategories;
 
     for (String type in ingredient.allergens) {
-      if (allergenList.contains(type)) {
+      //if (allergenList.contains(type)) {
+      if(_icons.containsKey(type)) {
         out = _icons[type];
         break;
       }

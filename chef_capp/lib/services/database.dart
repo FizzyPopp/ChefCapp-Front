@@ -127,7 +127,7 @@ class DatabaseService {
   Future<DBIngredient> getDBIngredient(ID id) async {
     await init();
 
-    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredient').where("id", isEqualTo: id.hash).get();
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('ingredients').where("id", isEqualTo: id.hash).get();
     List<QueryDocumentSnapshot> docs = snapshot.docs;
 
     if (docs.length == 0) {

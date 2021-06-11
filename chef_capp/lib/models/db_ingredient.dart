@@ -10,14 +10,14 @@ class DBIngredient {
   final String _name;
   final int _timestamp;
   final String _category;
-  final String _allergen;
+  final List<String> _allergens;
 
-  DBIngredient(ID id, String name, int timestamp, String category, String allergen) :
+  DBIngredient(ID id, String name, int timestamp, String category, List<String> allergens) :
         this._id = id,
         this._name = name,
         this._timestamp = timestamp,
         this._category = category,
-        this._allergen = allergen;
+        this._allergens = allergens;
 
   ID get id => _id;
 
@@ -27,7 +27,7 @@ class DBIngredient {
 
   String get category => _category;
 
-  String get allergen => _allergen;
+  List<String> get allergens => _allergens;
 
   //factory DBIngredient.fromJson(Map<String, dynamic> json) => _$DBIngredientFromJson(json);
 
@@ -53,12 +53,17 @@ class DBIngredient {
     if (data["category"] == null) {
       throw("bad category");
     }
-    // data["allergen"] is optional, so null is valid
+    // data["allergens"] is optional, so null is valid
 
     // parse
     String name = data["name"]["singular"].toLowerCase();
 
+    List<String> allergens = [];
+    if (data["allergens"] != null) {
+      allergens = List<String>.from(data["allergens"]);
+    }
+
     // return
-    return DBIngredient(ID(data["id"]), name, data["timestamp"], data["category"], data["allergen"]);
+    return DBIngredient(ID(data["id"]), name, data["timestamp"], data["category"], allergens);
   }
 }
